@@ -3,7 +3,11 @@ module EventSourcery
     class EventStore
       include EventSourcery::EventStore::EachByRange
 
-      def initialize(pg_connection, events_table_name: EventSourcery.config.events_table_name, lock_table: EventSourcery.config.lock_table_to_guarantee_linear_sequence_id_growth, write_events_function_name: EventSourcery.config.write_events_function_name, event_builder: EventSourcery.config.event_builder)
+      def initialize(pg_connection,
+                     events_table_name: EventSourcery.config.postgres.events_table_name,
+                     lock_table: EventSourcery.config.postgres.lock_table_to_guarantee_linear_sequence_id_growth,
+                     write_events_function_name: EventSourcery.config.postgres.write_events_function_name,
+                     event_builder: EventSourcery.config.event_builder)
         @pg_connection = pg_connection
         @events_table_name = events_table_name
         @write_events_function_name = write_events_function_name
