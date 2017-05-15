@@ -7,7 +7,7 @@ module EventSourcery
       def initialize(pg_connection:, timeout: 30, after_listen: proc { })
         @pg_connection = pg_connection
         @timeout = timeout
-        @events_queue = Utils::QueueWithIntervalCallback.new
+        @events_queue = QueueWithIntervalCallback.new
         @after_listen = after_listen
       end
 

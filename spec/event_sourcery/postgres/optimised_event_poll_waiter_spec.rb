@@ -3,8 +3,8 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
   subject(:waiter) { described_class.new(pg_connection: pg_connection, after_listen: after_listen) }
 
   before do
-    allow(EventSourcery::Utils::QueueWithIntervalCallback).to receive(:new)
-      .and_return(EventSourcery::Utils::QueueWithIntervalCallback.new(callback_interval: 0))
+    allow(EventSourcery::Postgres::QueueWithIntervalCallback).to receive(:new)
+      .and_return(EventSourcery::Postgres::QueueWithIntervalCallback.new(callback_interval: 0))
   end
 
   after do

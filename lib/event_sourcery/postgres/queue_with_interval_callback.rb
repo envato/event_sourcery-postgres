@@ -1,5 +1,5 @@
 module EventSourcery
-  module Utils
+  module Postgres
     class QueueWithIntervalCallback < ::Queue
       attr_accessor :callback
 
