@@ -1,5 +1,8 @@
 require "bundler/setup"
 require "event_sourcery/postgres"
+require 'event_sourcery/rspec/event_store_shared_examples'
+
+Dir.glob(File.dirname(__FILE__) + '/support/**/*.rb') { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
