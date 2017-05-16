@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sequel', '~> 4.38'
   spec.add_dependency 'pg'
   spec.add_dependency 'event_sourcery'
-  spec.add_development_dependency "bundler", "~> 1.14"
+  spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "pry"
