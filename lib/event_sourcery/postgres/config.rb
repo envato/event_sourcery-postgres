@@ -10,6 +10,7 @@ module EventSourcery
                     :auto_create_projector_tracker,
                     :event_tracker,
                     :projections_database,
+                    :event_store,
                     :event_source,
                     :event_sink
 
@@ -24,7 +25,7 @@ module EventSourcery
       end
 
       def event_store
-        EventStore.new(event_store_database)
+        @event_store ||= EventStore.new(event_store_database)
       end
 
       def event_source
