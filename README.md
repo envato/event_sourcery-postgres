@@ -10,7 +10,7 @@ gem 'event_sourcery-postgres'
 
 ## Configure
 
-```
+```ruby
 EventSourcery::Postgres.configure do |config|
   config.event_store_database = Sequel.connect(...)
   config.projections_database = Sequel.connect(...)
@@ -27,7 +27,7 @@ end
 
 ### Event Store
 
-```
+```ruby
 ItemAdded = EventSourcery::Event
 
 EventSourcery::Postgres.event_store.sink(ItemAdded.new(aggregate_id: uuid, body: { }}))
@@ -38,7 +38,7 @@ end
 
 ### Projectors & Reactors
 
-```
+```ruby
 class ItemProjector
   include EventSourcery::Postgres::Projector
 
