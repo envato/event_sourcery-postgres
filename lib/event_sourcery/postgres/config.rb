@@ -42,12 +42,4 @@ module EventSourcery
       end
     end
   end
-
-  Config.class_eval do
-    attr_reader :postgres
-
-    def postgres
-      @postgres ||= Postgres::Config.new
-    end
-  end
 end

@@ -37,7 +37,7 @@ RSpec.describe EventSourcery::Postgres::Tracker do
 
     context 'auto create projector tracker disabled' do
       before do
-        allow(EventSourcery.config.postgres).to receive(:auto_create_projector_tracker).and_return(false)
+        allow(EventSourcery::Postgres.config).to receive(:auto_create_projector_tracker).and_return(false)
       end
 
       it 'raises error' do

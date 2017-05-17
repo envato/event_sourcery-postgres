@@ -27,7 +27,7 @@ def create_events_schema(pg_connection)
   EventSourcery::Postgres::Schema.create_event_store(db: pg_connection)
 end
 
-event_store = EventSourcery.config.postgres.event_store
+event_store = EventSourcery::Postgres.config.event_store
 
 EVENT_TYPES = %i[
   item_added

@@ -17,8 +17,8 @@ module EventSourcery
       end
 
       module InstanceMethods
-        def initialize(tracker: EventSourcery.config.postgres.event_tracker,
-                       db_connection: EventSourcery.config.postgres.projections_database)
+        def initialize(tracker: EventSourcery::Postgres.config.event_tracker,
+                       db_connection: EventSourcery::Postgres.config.projections_database)
           @tracker = tracker
           @db_connection = db_connection
         end

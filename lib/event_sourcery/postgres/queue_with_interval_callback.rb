@@ -3,7 +3,7 @@ module EventSourcery
     class QueueWithIntervalCallback < ::Queue
       attr_accessor :callback
 
-      def initialize(callback: proc { }, callback_interval: EventSourcery.config.postgres.callback_interval_if_no_new_events, poll_interval: 0.1)
+      def initialize(callback: proc { }, callback_interval: EventSourcery::Postgres.config.callback_interval_if_no_new_events, poll_interval: 0.1)
         @callback = callback
         @callback_interval = callback_interval
         @poll_interval = poll_interval

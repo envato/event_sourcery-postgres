@@ -43,10 +43,10 @@ RSpec.describe EventSourcery::Postgres::Reactor do
     before do
       allow(EventSourcery::Postgres::Tracker).to receive(:new).with(projections_database).and_return(event_tracker)
 
-      EventSourcery.configure do |config|
-        config.postgres.event_source = event_source
-        config.postgres.event_sink = event_sink
-        config.postgres.projections_database = projections_database
+      EventSourcery::Postgres.configure do |config|
+        config.event_source = event_source
+        config.event_sink = event_sink
+        config.projections_database = projections_database
       end
     end
 

@@ -57,8 +57,8 @@ RSpec.describe EventSourcery::Postgres::Projector do
     before do
       allow(EventSourcery::Postgres::Tracker).to receive(:new).with(projections_database).and_return(event_tracker)
 
-      EventSourcery.configure do |config|
-        config.postgres.projections_database = projections_database
+      EventSourcery::Postgres.configure do |config|
+        config.projections_database = projections_database
       end
     end
 

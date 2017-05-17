@@ -4,9 +4,9 @@ module EventSourcery
       include EventSourcery::EventStore::EachByRange
 
       def initialize(pg_connection,
-                     events_table_name: EventSourcery.config.postgres.events_table_name,
-                     lock_table: EventSourcery.config.postgres.lock_table_to_guarantee_linear_sequence_id_growth,
-                     write_events_function_name: EventSourcery.config.postgres.write_events_function_name,
+                     events_table_name: EventSourcery::Postgres.config.events_table_name,
+                     lock_table: EventSourcery::Postgres.config.lock_table_to_guarantee_linear_sequence_id_growth,
+                     write_events_function_name: EventSourcery::Postgres.config.write_events_function_name,
                      event_builder: EventSourcery.config.event_builder)
         @pg_connection = pg_connection
         @events_table_name = events_table_name
