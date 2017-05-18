@@ -25,9 +25,7 @@ module EventSourcery
       end
 
       def processed_event(processor_name, event_id)
-        table.
-          where(name: processor_name.to_s).
-                update(last_processed_event_id: event_id)
+        update_last_processed_event_id(processor_name, event_id)
         true
       end
 
@@ -39,7 +37,7 @@ module EventSourcery
       end
 
       def reset_last_processed_event_id(processor_name)
-        table.where(name: processor_name.to_s).update(last_processed_event_id: 0)
+        update_last_processed_event_id(processor_name, 0)
       end
 
       def last_processed_event_id(processor_name)
@@ -54,6 +52,15 @@ module EventSourcery
       end
 
       private
+
+      def update_last_processed_event_id(processor_name, event_id)
+        table.where(name: processor_name.to_s).update(last_processed_event_id: event_id)
+        notify_processor_update(processor_name) if EventSourcery::Postgres.config.notify_processor_updates
+      end
+
+      def notify_processor_update(processor_name)
+        @connection.notify("processor_update_#{processor_name}")
+      end
 
       def obtain_global_lock_on_processor(processor_name)
         lock_obtained = @connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})").to_a.first[:pg_try_advisory_lock]

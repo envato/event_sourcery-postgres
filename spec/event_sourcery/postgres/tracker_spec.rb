@@ -49,11 +49,28 @@ RSpec.describe EventSourcery::Postgres::Tracker do
   describe '#processed_event' do
     before do
       setup_table
+      allow(connection).to receive(:notify)
     end
 
     it 'updates the tracker entry to the given ID' do
       postgres_tracker.processed_event(processor_name, 1)
       expect(last_processed_event_id).to eq 1
+    end
+
+    it 'does not notify that the processor has updated' do
+      postgres_tracker.processed_event(processor_name, 1)
+      expect(connection).to_not have_received(:notify)
+    end
+
+    context 'notify processor updates enabled' do
+      before do
+        allow(EventSourcery::Postgres.config).to receive(:notify_processor_updates).and_return(true)
+      end
+
+      it 'notifies that the processor has updated' do
+        postgres_tracker.processed_event(processor_name, 1)
+        expect(connection).to have_received(:notify).with('processor_update_blah')
+      end
     end
   end
 
@@ -124,12 +141,25 @@ RSpec.describe EventSourcery::Postgres::Tracker do
   describe '#reset_last_processed_event_id' do
     before do
       setup_table
+      allow(connection).to receive(:notify)
     end
 
     it 'resets the last processed event back to 0' do
       postgres_tracker.processed_event(processor_name, 1)
       postgres_tracker.reset_last_processed_event_id(processor_name)
       expect(last_processed_event_id).to eq 0
+    end
+
+    context 'notify processor updates enabled' do
+      before do
+        allow(EventSourcery::Postgres.config).to receive(:notify_processor_updates).and_return(true)
+      end
+
+      it 'notifies that the processor has updated' do
+        postgres_tracker.processed_event(processor_name, 1)
+        postgres_tracker.reset_last_processed_event_id(processor_name)
+        expect(connection).to have_received(:notify).with('processor_update_blah').exactly(2).times
+      end
     end
   end
 
