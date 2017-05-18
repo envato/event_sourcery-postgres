@@ -4,6 +4,11 @@ RSpec.describe EventSourcery::Postgres::Tracker do
   let(:processor_name) { 'blah' }
   let(:table) { connection[table_name] }
   let(:track_entry) { table.where(name: processor_name).first }
+  let(:notifier) { instance_double(EventSourcery::Postgres::ThrottledNotifier, notify: true) }
+
+  before do
+    allow(EventSourcery::Postgres::ThrottledNotifier).to receive(:new).and_return(notifier)
+  end
 
   after do
     release_advisory_locks
@@ -54,6 +59,22 @@ RSpec.describe EventSourcery::Postgres::Tracker do
     it 'updates the tracker entry to the given ID' do
       postgres_tracker.processed_event(processor_name, 1)
       expect(last_processed_event_id).to eq 1
+    end
+
+    it 'does not notify that the processor has updated' do
+      postgres_tracker.processed_event(processor_name, 1)
+      expect(notifier).to_not have_received(:notify)
+    end
+
+    context 'notify processor updates enabled' do
+      before do
+        allow(EventSourcery::Postgres.config).to receive(:notify_processor_updates).and_return(true)
+      end
+
+      it 'notifies that the processor has updated' do
+        postgres_tracker.processed_event(processor_name, 1)
+        expect(notifier).to have_received(:notify).with('blah')
+      end
     end
   end
 
@@ -130,6 +151,24 @@ RSpec.describe EventSourcery::Postgres::Tracker do
       postgres_tracker.processed_event(processor_name, 1)
       postgres_tracker.reset_last_processed_event_id(processor_name)
       expect(last_processed_event_id).to eq 0
+    end
+
+    it 'does not notify that the processor has updated' do
+      postgres_tracker.processed_event(processor_name, 1)
+      postgres_tracker.reset_last_processed_event_id(processor_name)
+      expect(notifier).to_not have_received(:notify)
+    end
+
+    context 'notify processor updates enabled' do
+      before do
+        allow(EventSourcery::Postgres.config).to receive(:notify_processor_updates).and_return(true)
+      end
+
+      it 'notifies that the processor has updated twice' do
+        postgres_tracker.processed_event(processor_name, 1)
+        postgres_tracker.reset_last_processed_event_id(processor_name)
+        expect(notifier).to have_received(:notify).with('blah').exactly(2).times
+      end
     end
   end
 

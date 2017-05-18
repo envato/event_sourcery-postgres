@@ -8,6 +8,7 @@ module EventSourcery
                     :aggregates_table_name,
                     :callback_interval_if_no_new_events,
                     :auto_create_projector_tracker,
+                    :notify_processor_updates,
                     :event_tracker,
                     :projections_database,
                     :event_store,
@@ -22,6 +23,7 @@ module EventSourcery
         @callback_interval_if_no_new_events = 10
         @event_store_database = nil
         @auto_create_projector_tracker = true
+        @notify_processor_updates = false
       end
 
       def event_store
