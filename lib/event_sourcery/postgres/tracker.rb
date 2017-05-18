@@ -55,11 +55,11 @@ module EventSourcery
 
       def update_last_processed_event_id(processor_name, event_id)
         table.where(name: processor_name.to_s).update(last_processed_event_id: event_id)
-        notify_processor_update(processor_name) if EventSourcery::Postgres.config.notify_processor_updates
+        throttled_notifier.notify(processor_name.to_s) if EventSourcery::Postgres.config.notify_processor_updates
       end
 
-      def notify_processor_update(processor_name)
-        @connection.notify("processor_update_#{processor_name}")
+      def throttled_notifier
+        @throttled_notifier ||= ThrottledNotifier.new(@connection)
       end
 
       def obtain_global_lock_on_processor(processor_name)
