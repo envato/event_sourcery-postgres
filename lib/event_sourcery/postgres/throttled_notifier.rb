@@ -28,13 +28,16 @@ module EventSourcery
 
       def unthrottle_after_time_period(processor_name)
         Thread.new do
-          sleep seconds_between_calls
+          loop do
+            sleep seconds_between_calls
 
-          throttled[processor_name] = false
-
-          if notify_after_throttle[processor_name]
-            notify_after_throttle[processor_name] = false
-            notify(processor_name)
+            if notify_after_throttle[processor_name]
+              notify_after_throttle[processor_name] = false
+              notify_unthrottled(processor_name)
+            else
+              throttled[processor_name] = false
+              break
+            end
           end
         end
       end
