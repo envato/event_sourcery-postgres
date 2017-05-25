@@ -2,6 +2,4 @@ source 'https://rubygems.org'
 
 gemspec
 
-source 'https://rubygems.envato.com/' do
-  gem 'event_sourcery'
-end
+gem 'event_sourcery', git: 'git@github.com:envato/event_sourcery.git', tag: 'v0.10.0'
