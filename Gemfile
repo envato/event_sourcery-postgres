@@ -2,4 +2,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'event_sourcery', git: 'git@github.com:envato/event_sourcery.git', branch: 'remove_postgres'
+source 'https://rubygems.envato.com/' do
+  gem 'event_sourcery'
+end
