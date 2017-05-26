@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "event_sourcery/postgres"
 require 'event_sourcery/rspec/event_store_shared_examples'
+require 'timeout'
 
 Dir.glob(File.dirname(__FILE__) + '/support/**/*.rb') { |f| require f }
 
