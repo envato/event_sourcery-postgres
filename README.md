@@ -77,7 +77,17 @@ EventSourcery::EventProcessing::ESPRunner.new(
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+To release a new version:
+
+1. Update the version number in `lib/event_sourcery/postgres/version.rb`
+2. Get this change onto master via the normal PR process
+3. Run `gem_push=false be rake release`,
+   this will create a git tag for the version,
+   push tags up to GitHub, and package the code in a `.gem` file.
+4. Manually upload the generated gem file (`pkg/event_sourcery-postgres-#{version}.gem`) to
+   [rubygems.envato.com](https://rubygems.envato.com).
 
 ## Contributing
 
