@@ -1,9 +1,9 @@
 module EventSourcery
   module Postgres
     class Tracker
-      DEFAULT_TABLE_NAME = :projector_tracker
-
-      def initialize(connection, table_name: DEFAULT_TABLE_NAME, obtain_processor_lock: true)
+      def initialize(connection = EventSourcery::Postgres.config.projections_database,
+                     table_name: EventSourcery::Postgres.config.tracker_table_name,
+                     obtain_processor_lock: true)
         @connection = connection
         @table_name = table_name
         @obtain_processor_lock = obtain_processor_lock

@@ -6,6 +6,7 @@ module EventSourcery
                     :write_events_function_name,
                     :events_table_name,
                     :aggregates_table_name,
+                    :tracker_table_name,
                     :callback_interval_if_no_new_events,
                     :auto_create_projector_tracker,
                     :event_tracker,
@@ -19,6 +20,7 @@ module EventSourcery
         @write_events_function_name = 'writeEvents'
         @events_table_name = :events
         @aggregates_table_name = :aggregates
+        @tracker_table_name = :projector_tracker
         @callback_interval_if_no_new_events = 10
         @event_store_database = nil
         @auto_create_projector_tracker = true
