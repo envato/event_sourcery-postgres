@@ -26,15 +26,17 @@ module EventSourcery
             block.call
           end
         }
+      ensure
+        shutdown!
       end
+
+      private
 
       def shutdown!
         if @listen_thread.alive?
           @listen_thread.kill
         end
       end
-
-      private
 
       def ensure_listen_thread_alive!
         if !@listen_thread.alive?

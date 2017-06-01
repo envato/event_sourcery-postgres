@@ -107,7 +107,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
       projector = new_projector
       expect {
         projector.project(event)
-      }.to raise_error(EventSourcery::UnableToProcessEventError)
+      }.to raise_error(EventSourcery::EventProcessingError)
     end
   end
 
