@@ -174,13 +174,10 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           emits_events EchoEvent
 
           process TermsAccepted do |event|
-            @event = event
             emit_event(EchoEvent.new(aggregate_id: event.aggregate_id, body: event.body)) do
               TestActioner.action(event.id)
             end
           end
-
-          attr_reader :event
         end
       }
 
