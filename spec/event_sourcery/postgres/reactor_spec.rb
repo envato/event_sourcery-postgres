@@ -239,7 +239,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         it 'raises an error' do
           expect {
             reactor.process(event_1)
-          }.to raise_error(EventSourcery::Postgres::Reactor::UndeclaredEventEmissionError)
+          }.to raise_error(EventSourcery::EventProcessingError)
         end
       end
 

@@ -15,6 +15,8 @@ RSpec.describe EventSourcery::Postgres::TableOwner do
 
   subject(:table_owner) { table_owner_class.new(pg_connection) }
 
+  after { release_advisory_locks }
+
   describe '#setup' do
     before do
       pg_connection.execute('DROP TABLE IF EXISTS sales')

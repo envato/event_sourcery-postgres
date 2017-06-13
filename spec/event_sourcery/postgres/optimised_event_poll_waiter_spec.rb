@@ -7,10 +7,6 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
       .and_return(EventSourcery::Postgres::QueueWithIntervalCallback.new(callback_interval: 0))
   end
 
-  after do
-    waiter.shutdown!
-  end
-
   def notify_event_ids(*ids)
     ids.each do |id|
       pg_connection.notify('new_event', payload: id)
@@ -53,6 +49,36 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
       expect {
         waiter.poll { }
       }.to raise_error(described_class::ListenThreadDied)
+    end
+  end
+
+  context "when an error is raised" do
+    let(:thread) { double }
+
+    before { allow(Thread).to receive(:new).and_return(thread) }
+
+    context "when the listening thread is alive" do
+      it "kills the listening thread" do
+        allow(thread).to receive(:alive?).and_return(true)
+        expect(thread).to receive(:kill)
+
+        waiter.poll(after_listen: proc { notify_event_ids(1) }) do
+          @called = true
+          throw :stop
+        end
+      end
+    end
+
+    context "when the listening thread is not alive" do
+      it "does not try to kill any listening threads" do
+        allow(thread).to receive(:alive?).and_return(false)
+        expect(thread).to_not receive(:kill)
+
+        waiter.poll(after_listen: proc { notify_event_ids(1) }) do
+          @called = true
+          throw :stop
+        end
+      end
     end
   end
 end
