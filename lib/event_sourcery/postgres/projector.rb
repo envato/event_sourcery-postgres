@@ -10,7 +10,6 @@ module EventSourcery
 
           class << self
             alias project process
-            alias projects_events processes_events
             alias projector_name processor_name
           end
         end
