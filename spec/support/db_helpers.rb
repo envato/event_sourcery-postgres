@@ -22,9 +22,7 @@ module DBHelpers
     if ENV['BUILDKITE']
       'postgres://buildkite-agent:127.0.0.1:5432/'
     else
-      ENV.fetch('BOXEN_POSTGRESQL_URL') {
-        'postgres://127.0.0.1:5432/'
-      }
+      ENV.fetch('BOXEN_POSTGRESQL_URL') { 'postgres://127.0.0.1:5432/' }
     end
   end
 
