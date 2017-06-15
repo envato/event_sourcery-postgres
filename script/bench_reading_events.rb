@@ -47,9 +47,7 @@ NUM_EVENTS = 10_000
 puts "Creating #{NUM_EVENTS} events"
 time = Benchmark.realtime do
   uuid = SecureRandom.uuid
-  NUM_EVENTS.times do
-    event_store.sink(new_event(uuid))
-  end
+  NUM_EVENTS.times { event_store.sink(new_event(uuid)) }
 end
 puts "Took #{time} to create events"
 
