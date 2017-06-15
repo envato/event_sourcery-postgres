@@ -122,9 +122,7 @@ NUM_WRITER_PROCESSES.times do
     # inserts and no gaps are detected
     event_store = EventSourcery::Postgres::EventStore.new(db, lock_table: false)
     puts "#{Process.pid}: starting to write events"
-    until stop
-      event_store.sink(new_event)
-    end
+    event_store.sink(new_event) until stop
   end
 end
 
