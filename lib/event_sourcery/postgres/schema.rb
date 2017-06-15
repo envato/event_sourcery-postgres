@@ -22,6 +22,7 @@ module EventSourcery
           column :type,           :varchar, null: false, size: 255
           column :body,           :json,    null: false
           column :version,        :bigint,  null: false
+          column :causation_id,   :uuid
           column :created_at,     :'timestamp without time zone', null: false, default: Sequel.lit("(now() at time zone 'utc')")
           index [:aggregate_id, :version], unique: true
           index :uuid, unique: true
