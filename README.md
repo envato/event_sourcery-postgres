@@ -1,5 +1,7 @@
 # EventSourcery::Postgres
 
+[![Build Status](https://travis-ci.org/envato/event_sourcery-postgres.svg?branch=master)](https://travis-ci.org/envato/event_sourcery-postgres)
+
 ## Development Status
 
 EventSourcery is currently being used in production by multiple apps but we
