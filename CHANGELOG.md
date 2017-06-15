@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.2.0] - 2017-6-1
 ### Changed
-- Make `EventSourcery::Postgres::OptimisedEventPollWaiter#shutdown` private 
+- Make `EventSourcery::Postgres::OptimisedEventPollWaiter#shutdown` private
 - Updated `EventSourcery::Postgres::OptimisedEventPollWaiter#poll` to ensure that `#shutdown!` is run when an error is raised
 or when the loop stops
-- Remove dynamic emit events methods
+- Remove dynamic emit events methods from reactors (e.g. emit_item_added)
 - The emit_events method now accepts typed events instead of symbols
 
 ### Added
