@@ -1,5 +1,11 @@
 # EventSourcery::Postgres
 
+## Development Status
+
+EventSourcery is currently being used in production by multiple apps but we
+haven't finalized the API yet and things are still moving rapidly. Until we
+release a 1.0 things may change without first being deprecated.
+
 ## Installation
 
 Add this line to your application's Gemfile:
