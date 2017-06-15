@@ -28,7 +28,7 @@ module DBHelpers
 
   def reset_database
     connection.execute('truncate table aggregates')
-    %w(events events_without_optimistic_locking).each do |table|
+    %w(events events_without_optimistic_locking).each do |_|
       connection.execute('truncate table events')
       connection.execute('alter sequence events_id_seq restart with 1')
     end
