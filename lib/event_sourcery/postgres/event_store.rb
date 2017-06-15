@@ -39,9 +39,7 @@ module EventSourcery
         if event_types
           query = query.where(type: event_types)
         end
-        query.map do |event_row|
-          build_event(event_row)
-        end
+        query.map { |event_row| build_event(event_row) }
       end
 
       def latest_event_id(event_types: nil)
