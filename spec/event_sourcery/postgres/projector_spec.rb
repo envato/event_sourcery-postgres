@@ -4,14 +4,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
       include EventSourcery::Postgres::Projector
       processor_name 'test_processor'
 
-      processes_events :terms_accepted
-
       table :profiles do
         column :user_uuid, 'UUID NOT NULL'
         column :terms_accepted, 'BOOLEAN DEFAULT FALSE'
       end
 
-      def process(event)
+      process TermsAccepted do |event|
         @processed_event = event
         table.insert(user_uuid: event.aggregate_id,
                      terms_accepted: true)
@@ -23,11 +21,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
   let(:projector_name) { 'my_projector' }
   let(:tracker) { EventSourcery::Postgres::Tracker.new(pg_connection) }
   let(:events) { [] }
+
   def new_projector(&block)
     Class.new do
       include EventSourcery::Postgres::Projector
       processor_name 'test_processor'
-      processes_events :terms_accepted
 
       table :profiles do
         column :user_uuid, 'UUID NOT NULL'
@@ -80,7 +78,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
   end
 
   describe '#project' do
-    let(:event) { new_event(type: :terms_accepted) }
+    let(:event) { TermsAccepted.new }
 
     it "processes events via project method" do
       projector = new_projector do
@@ -102,29 +100,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
       projector.project(event)
       expect(projector.processed_event).to eq(event)
     end
-
-    it 'raises if neither are defined' do
-      projector = new_projector
-      expect {
-        projector.project(event)
-      }.to raise_error(EventSourcery::EventProcessingError)
-    end
-  end
-
-  describe '.projects_events' do
-    it 'is aliased to processes_events' do
-      projector_class = Class.new do
-        include EventSourcery::Postgres::Projector
-        projects_events :item_added
-      end
-      expect(projector_class.processes?(:item_added)).to eq true
-    end
   end
 
   describe '#process' do
     before { projector.reset }
 
-    let(:event) { EventSourcery::Event.new(body: {}, aggregate_id: aggregate_id, type: :terms_accepted, id: 1) }
+    let(:event) { TermsAccepted.new(body: {}, aggregate_id: aggregate_id, id: 1) }
 
     it "processes events it's interested in" do
       projector.process(event)
@@ -140,8 +121,6 @@ RSpec.describe EventSourcery::Postgres::Projector do
       Class.new do
         include EventSourcery::Postgres::Projector
         processor_name 'test_processor'
-
-        processes_events :terms_accepted
 
         table :profiles do
           column :user_uuid, 'UUID NOT NULL'
