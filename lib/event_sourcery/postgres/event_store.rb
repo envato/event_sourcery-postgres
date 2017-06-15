@@ -44,9 +44,7 @@ module EventSourcery
 
       def latest_event_id(event_types: nil)
         latest_event = events_table
-        if event_types
-          latest_event = latest_event.where(type: event_types)
-        end
+        latest_event = latest_event.where(type: event_types) if event_types
         latest_event = latest_event.order(:id).last
         if latest_event
           latest_event[:id]
