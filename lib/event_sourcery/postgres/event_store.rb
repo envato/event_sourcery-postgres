@@ -99,7 +99,7 @@ module EventSourcery
         SQL
       end
 
-      def sql_literal_array(events, type, &block)
+      def sql_literal_array(events, type)
         sql_array = events.map do |event|
           to_sql_literal(yield event)
         end.join(', ')
