@@ -71,9 +71,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     end
 
     context 'when the aggregate exists' do
-      before do
-        add_event
-      end
+      before { add_event }
 
       context 'with a correct expected version - 1' do
         it 'saves the event with and sets the aggregate version to version 2' do
