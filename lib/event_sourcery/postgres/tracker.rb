@@ -27,7 +27,7 @@ module EventSourcery
       def processed_event(processor_name, event_id)
         table.
           where(name: processor_name.to_s).
-                update(last_processed_event_id: event_id)
+          update(last_processed_event_id: event_id)
         true
       end
 
