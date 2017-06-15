@@ -12,7 +12,7 @@ module EventSourcery
 
       module ClassMethods
         def emits_events(*event_types)
-          @emits_event_types = event_types.map(&:to_s)
+          @emits_event_types = event_types
         end
 
         def emit_events
@@ -24,7 +24,7 @@ module EventSourcery
         end
 
         def emits_event?(event_type)
-          emit_events.include?(event_type.to_s)
+          emit_events.include?(event_type)
         end
       end
 
@@ -57,7 +57,7 @@ module EventSourcery
         else
           Event.new(event_or_hash)
         end
-        raise UndeclaredEventEmissionError unless self.class.emits_event?(event.type)
+        raise UndeclaredEventEmissionError unless self.class.emits_event?(event.class)
         event.body.merge!(DRIVEN_BY_EVENT_PAYLOAD_KEY => _event.id)
         invoke_action_and_emit_event(event, block)
         EventSourcery.logger.debug { "[#{self.processor_name}] Emitted event: #{event.inspect}" }

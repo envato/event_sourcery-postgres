@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated `EventSourcery::Postgres::OptimisedEventPollWaiter#poll` to ensure that `#shutdown!` is run when an error is raised
 or when the loop stops
 - Remove dynamic emit events methods
+- The emit_events method now accepts typed events instead of symbols
 
 ### Added
 - Configure projector tracker table name via `EventSourcery::Postgres.configure`
