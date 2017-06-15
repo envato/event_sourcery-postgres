@@ -3,7 +3,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
   ItemViewed = Class.new(EventSourcery::Event)
   EchoEvent = Class.new(EventSourcery::Event)
 
-  let(:reactor_class) {
+  let(:reactor_class) do
     Class.new do
       include EventSourcery::Postgres::Reactor
 
@@ -15,8 +15,8 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
       attr_reader :processed_event
     end
-  }
-  let(:reactor_class_with_emit) {
+  end
+  let(:reactor_class_with_emit) do
     Class.new do
       include EventSourcery::Postgres::Reactor
 
@@ -26,7 +26,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
       def process(event)
       end
     end
-  }
+  end
 
   let(:tracker) { EventSourcery::EventProcessing::EventTrackers::Memory.new }
   let(:reactor_name) { 'my_reactor' }
@@ -159,7 +159,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
       let(:event_5) { TermsAccepted.new(id: 5, aggregate_id: aggregate_id, body: { time: Time.now }) }
       let(:event_6) { EchoEvent.new(id: 6, aggregate_id: aggregate_id, body: event_3.body.merge(EventSourcery::Postgres::Reactor::DRIVEN_BY_EVENT_PAYLOAD_KEY => 3)) }
       let(:events) { [event_1, event_2, event_3, event_4] }
-      let(:action_stub_class) {
+      let(:action_stub_class) do
         Class.new do
           def self.action(id)
             actioned << id
@@ -169,8 +169,8 @@ RSpec.describe EventSourcery::Postgres::Reactor do
             @actions ||= []
           end
         end
-      }
-      let(:reactor_class) {
+      end
+      let(:reactor_class) do
         Class.new do
           include EventSourcery::Postgres::Reactor
 
@@ -186,7 +186,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
           attr_reader :event
         end
-      }
+      end
 
       before do
         reactor.setup
@@ -202,7 +202,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
       end
 
       context "when the event emitted doesn't take actions" do
-        let(:reactor_class) {
+        let(:reactor_class) do
           Class.new do
             include EventSourcery::Postgres::Reactor
 
@@ -213,7 +213,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
               emit_event(EchoEvent.new(aggregate_id: event.aggregate_id, body: event.body))
             end
           end
-        }
+        end
 
         it 'processes the events as usual' do
           [event_1, event_2, event_3, event_4, event_5].each do |event|
@@ -224,7 +224,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
       end
 
       context "when the event emitted hasn't been defined in emit_events" do
-        let(:reactor_class) {
+        let(:reactor_class) do
           Class.new do
             include EventSourcery::Postgres::Reactor
 
@@ -235,7 +235,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
               emit_event(ItemViewed.new(aggregate_id: event.aggregate_id, body: event.body))
             end
           end
-        }
+        end
 
         it 'raises an error' do
           expect {
@@ -246,7 +246,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
       context 'when body is yielded to the emit block' do
         let(:events) { [] }
-        let(:reactor_class) {
+        let(:reactor_class) do
           Class.new do
             include EventSourcery::Postgres::Reactor
 
@@ -259,7 +259,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
               end
             end
           end
-        }
+        end
 
         it 'can manupulate the event body as part of the action' do
           reactor.process(event_1)
