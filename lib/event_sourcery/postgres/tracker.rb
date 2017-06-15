@@ -44,9 +44,7 @@ module EventSourcery
 
       def last_processed_event_id(processor_name)
         track_entry = table.where(name: processor_name.to_s).first
-        if track_entry
-          track_entry[:last_processed_event_id]
-        end
+        track_entry[:last_processed_event_id] if track_entry
       end
 
       def tracked_processors
