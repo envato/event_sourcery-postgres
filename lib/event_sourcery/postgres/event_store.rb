@@ -36,9 +36,7 @@ module EventSourcery
                 order(:id).
                 where(Sequel.lit('id >= ?', id)).
                 limit(limit)
-        if event_types
-          query = query.where(type: event_types)
-        end
+        query = query.where(type: event_types) if event_types
         query.map { |event_row| build_event(event_row) }
       end
 
