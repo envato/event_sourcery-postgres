@@ -51,9 +51,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
       result = connection[:aggregates].
                where(aggregate_id: aggregate_id).
                first
-      if result
-        result[:version]
-      end
+      result[:version] if result
     end
 
     context "when the aggregate doesn't exist" do
