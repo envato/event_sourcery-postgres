@@ -18,12 +18,12 @@ module EventSourcery
         end
         start_async(after_listen: after_listen)
         catch(:stop) do
-          block.call
+          yield
           loop do
             ensure_listen_thread_alive!
             wait_for_new_event_to_appear
             clear_new_event_queue
-            block.call
+            yield
           end
         end
       ensure
