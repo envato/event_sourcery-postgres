@@ -132,7 +132,7 @@ stop = false
 Signal.trap(:INT) { stop = true }
 
 def wait_for_missing_ids(db, first_sequence, last_sequence, attempt: 1)
-  missing_ids = db[:events].where(Sequel.lit("id > ? AND id < ?", first_sequence, last_sequence)).order(:id).map {|e| e[:id] }
+  missing_ids = db[:events].where(Sequel.lit('id > ? AND id < ?', first_sequence, last_sequence)).order(:id).map {|e| e[:id] }
   expected_missing_ids = (first_sequence+1)..(last_sequence-1)
   if missing_ids == expected_missing_ids.to_a
     print "Missing events showed up after #{attempt} subsequent query. IDs: #{missing_ids}"
@@ -168,12 +168,12 @@ end
 Process.waitall
 
 puts
-puts "Looking for gaps in sequence IDs in events table:"
+puts 'Looking for gaps in sequence IDs in events table:'
 ids = db[:events].select(:id).order(:id).all.map { |e| e[:id] }
 expected_ids = (ids.min..ids.max).to_a
 missing_ids = (expected_ids - ids)
 if missing_ids.empty?
-  puts "No remaining gaps"
+  puts 'No remaining gaps'
 else
   missing_ids.each do |id|
     puts "Unable to find row with sequence ID #{id}"
