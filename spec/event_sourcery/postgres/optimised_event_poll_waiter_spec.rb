@@ -52,13 +52,13 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
     end
   end
 
-  context "when an error is raised" do
+  context 'when an error is raised' do
     let(:thread) { double }
 
     before { allow(Thread).to receive(:new).and_return(thread) }
 
-    context "when the listening thread is alive" do
-      it "kills the listening thread" do
+    context 'when the listening thread is alive' do
+      it 'kills the listening thread' do
         allow(thread).to receive(:alive?).and_return(true)
         expect(thread).to receive(:kill)
 
@@ -69,8 +69,8 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
       end
     end
 
-    context "when the listening thread is not alive" do
-      it "does not try to kill any listening threads" do
+    context 'when the listening thread is not alive' do
+      it 'does not try to kill any listening threads' do
         allow(thread).to receive(:alive?).and_return(false)
         expect(thread).to_not receive(:kill)
 

@@ -82,7 +82,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
   describe '#project' do
     let(:event) { new_event(type: :terms_accepted) }
 
-    it "processes events via project method" do
+    it 'processes events via project method' do
       projector = new_projector do
         def project(event)
           @processed_event = event
@@ -170,7 +170,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
     context 'when an error occurs processing the event' do
 
-      it "rolls back the projected changes" do
+      it 'rolls back the projected changes' do
         projector.raise_error = true
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
         expect(connection[:profiles].count).to eq 0
@@ -183,7 +183,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
         allow(tracker).to receive(:processed_event).and_raise(StandardError)
       end
 
-      it "rolls back the projected changes" do
+      it 'rolls back the projected changes' do
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
         expect(connection[:profiles].count).to eq 0
       end

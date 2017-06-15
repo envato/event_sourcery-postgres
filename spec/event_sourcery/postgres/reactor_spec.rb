@@ -190,7 +190,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
       before do
         reactor.setup
-        stub_const("TestActioner", action_stub_class)
+        stub_const('TestActioner', action_stub_class)
       end
 
       def event_count
@@ -263,12 +263,12 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
         it 'can manupulate the event body as part of the action' do
           reactor.process(event_1)
-          expect(latest_events(1).first.body["token"]).to eq 'secret-identifier'
+          expect(latest_events(1).first.body['token']).to eq 'secret-identifier'
         end
 
         it 'stores the driven by event id in the body' do
           reactor.process(event_1)
-          expect(latest_events(1).first.body["_driven_by_event_id"]).to eq event_1.id
+          expect(latest_events(1).first.body['_driven_by_event_id']).to eq event_1.id
         end
       end
     end
