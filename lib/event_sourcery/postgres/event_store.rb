@@ -33,9 +33,9 @@ module EventSourcery
 
       def get_next_from(id, event_types: nil, limit: 1000)
         query = events_table.
-          order(:id).
-          where(Sequel.lit('id >= ?', id)).
-          limit(limit)
+                order(:id).
+                where(Sequel.lit('id >= ?', id)).
+                limit(limit)
         if event_types
           query = query.where(type: event_types)
         end
@@ -70,9 +70,7 @@ module EventSourcery
           subscription_master: subscription_master,
           on_new_events: block
         }
-        EventSourcery::EventStore::Subscription.new(args).tap do |s|
-          s.start
-        end
+        EventSourcery::EventStore::Subscription.new(args).tap(&:start)
       end
 
       private
