@@ -33,15 +33,11 @@ module EventSourcery
       private
 
       def shutdown!
-        if @listen_thread.alive?
-          @listen_thread.kill
-        end
+        @listen_thread.kill if @listen_thread.alive?
       end
 
       def ensure_listen_thread_alive!
-        if !@listen_thread.alive?
-          raise ListenThreadDied
-        end
+        raise ListenThreadDied unless @listen_thread.alive?
       end
 
       def wait_for_new_event_to_appear
