@@ -4,7 +4,7 @@ module EventSourcery
     class OptimisedEventPollWaiter
       ListenThreadDied = Class.new(StandardError)
 
-      def initialize(pg_connection:, timeout: 30, after_listen: proc { })
+      def initialize(pg_connection:, timeout: 30, after_listen: proc {})
         @pg_connection = pg_connection
         @timeout = timeout
         @events_queue = QueueWithIntervalCallback.new
@@ -17,7 +17,7 @@ module EventSourcery
           block.call
         end
         start_async(after_listen: after_listen)
-        catch(:stop) {
+        catch(:stop) do
           block.call
           loop do
             ensure_listen_thread_alive!
@@ -25,7 +25,7 @@ module EventSourcery
             clear_new_event_queue
             block.call
           end
-        }
+        end
       ensure
         shutdown!
       end
@@ -54,10 +54,10 @@ module EventSourcery
 
       def start_async(after_listen: nil)
         after_listen_callback = if after_listen
-                                  proc {
+                                  proc do
                                     after_listen.call
                                     @after_listen.call if @after_listen
-                                  }
+                                  end
                                 else
                                   @after_listen
                                 end
