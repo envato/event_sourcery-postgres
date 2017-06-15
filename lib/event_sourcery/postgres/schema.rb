@@ -17,12 +17,12 @@ module EventSourcery
         db.run 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp"'
         db.create_table(table_name) do
           primary_key :id, type: :Bignum
-          column :uuid, 'uuid default uuid_generate_v4() not null'
-          column :aggregate_id, 'uuid not null'
-          column :type, 'varchar(255) not null'
-          column :body, 'json not null'
-          column :version, 'bigint not null'
-          column :created_at, 'timestamp without time zone not null default (now() at time zone \'utc\')'
+          column :uuid,           :uuid,    null: false, default: Sequel.lit('uuid_generate_v4()')
+          column :aggregate_id,   :uuid,    null: false
+          column :type,           :varchar, null: false, size: 255
+          column :body,           :json,    null: false
+          column :version,        :bigint,  null: false
+          column :created_at,     :'timestamp without time zone', null: false, default: Sequel.lit("(now() at time zone 'utc')")
           index [:aggregate_id, :version], unique: true
           index :uuid, unique: true
           index :type
@@ -33,8 +33,8 @@ module EventSourcery
       def create_aggregates(db: EventSourcery::Postgres.config.event_store_database,
                             table_name: EventSourcery::Postgres.config.aggregates_table_name)
         db.create_table(table_name) do
-          primary_key :aggregate_id, 'uuid not null'
-          column :version, 'bigint default 1'
+          primary_key :aggregate_id, :uuid
+          column :version, :bigint, default: 1
         end
       end
 
