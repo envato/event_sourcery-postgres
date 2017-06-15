@@ -57,9 +57,11 @@ module EventSourcery
                                 else
                                   @after_listen
                                 end
-        @listen_thread = Thread.new { listen_for_new_events(loop: true,
-                                                            after_listen: after_listen_callback,
-                                                            timeout: @timeout) }
+        @listen_thread = Thread.new do
+          listen_for_new_events(loop: true,
+                                after_listen: after_listen_callback,
+                                timeout: @timeout)
+        end
       end
 
       def listen_for_new_events(loop: true, after_listen: nil, timeout: 30)
@@ -67,9 +69,7 @@ module EventSourcery
                               loop: loop,
                               after_listen: after_listen,
                               timeout: timeout) do |_channel, _pid, _payload|
-          if @events_queue.empty?
-            @events_queue.push(:new_event_arrived)
-          end
+          @events_queue.push(:new_event_arrived) if @events_queue.empty?
         end
       end
     end
