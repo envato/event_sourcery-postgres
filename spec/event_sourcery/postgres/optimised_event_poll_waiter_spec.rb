@@ -1,5 +1,5 @@
 RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
-  let(:after_listen) { proc { } }
+  let(:after_listen) { proc {} }
   subject(:waiter) { described_class.new(pg_connection: pg_connection, after_listen: after_listen) }
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
   end
 
   it 'does an initial call' do
-    waiter.poll(after_listen: proc { }) do
+    waiter.poll(after_listen: proc {}) do
       @called = true
       throw :stop
     end
@@ -47,7 +47,7 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
 
     it 'raise an error' do
       expect {
-        waiter.poll { }
+        waiter.poll {}
       }.to raise_error(described_class::ListenThreadDied)
     end
   end

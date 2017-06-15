@@ -1,5 +1,5 @@
 RSpec.describe EventSourcery::Postgres::Projector do
-  let(:projector_class) {
+  let(:projector_class) do
     Class.new do
       include EventSourcery::Postgres::Projector
       processor_name 'test_processor'
@@ -19,7 +19,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       attr_reader :processed_event
     end
-  }
+  end
   let(:projector_name) { 'my_projector' }
   let(:tracker) { EventSourcery::Postgres::Tracker.new(pg_connection) }
   let(:events) { [] }
@@ -40,12 +40,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
     end.new(tracker: tracker, db_connection: pg_connection)
   end
 
-  subject(:projector) {
+  subject(:projector) do
     projector_class.new(
       tracker: tracker,
       db_connection: connection
     )
-  }
+  end
   let(:aggregate_id) { SecureRandom.uuid }
 
   after { release_advisory_locks }
@@ -136,7 +136,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
     let(:event_store) { double(:event_store) }
     let(:events) { [new_event(id: 1), new_event(id: 2)] }
     let(:subscription_master) { spy(EventSourcery::EventStore::SignalHandlingSubscriptionMaster) }
-    let(:projector_class) {
+    let(:projector_class) do
       Class.new do
         include EventSourcery::Postgres::Projector
         processor_name 'test_processor'
@@ -156,7 +156,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
           raise 'boo' if raise_error
         end
       end
-    }
+    end
 
     before do
       allow(event_store).to receive(:subscribe).and_yield(events).once

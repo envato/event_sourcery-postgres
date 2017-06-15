@@ -49,8 +49,8 @@ RSpec.describe EventSourcery::Postgres::EventStore do
 
     def aggregate_version
       result = connection[:aggregates].
-        where(aggregate_id: aggregate_id).
-        first
+               where(aggregate_id: aggregate_id).
+               first
       if result
         result[:version]
       end
