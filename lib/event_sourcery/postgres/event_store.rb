@@ -113,12 +113,12 @@ module EventSourcery
       def to_sql_literal(value)
         return 'null' unless value
         wrapped_value = if Time === value
-          value.iso8601(6)
-        elsif Hash === value
-          Sequel.pg_json(value)
-        else
-          value
-        end
+                          value.iso8601(6)
+                        elsif Hash === value
+                          Sequel.pg_json(value)
+                        else
+                          value
+                        end
         @pg_connection.literal(wrapped_value)
       end
 
