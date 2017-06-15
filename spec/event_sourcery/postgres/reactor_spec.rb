@@ -270,11 +270,6 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           expect(latest_events(1).first.body["_driven_by_event_id"]).to eq event_1.id
         end
       end
-
-      it 'adds methods to emit permitted events' do
-        allow(reactor).to receive(:emit_event).with(type: 'echo_event', aggregate_id: 123, body: { a: :b })
-        reactor.emit_echo_event(123, { a: :b })
-      end
     end
   end
 end
