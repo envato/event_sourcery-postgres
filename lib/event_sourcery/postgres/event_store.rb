@@ -57,8 +57,8 @@ module EventSourcery
         end
       end
 
-      def get_events_for_aggregate_id(id)
-        events_table.where(aggregate_id: id).order(:version).map do |event_hash|
+      def get_events_for_aggregate_id(aggregate_id)
+        events_table.where(aggregate_id: aggregate_id.to_str).order(:version).map do |event_hash|
           build_event(event_hash)
         end
       end

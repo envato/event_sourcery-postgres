@@ -15,6 +15,34 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     end
   end
 
+  describe '#get_events_for_aggregate_id' do
+    RSpec.shared_examples 'gets events for a specific aggregate id' do
+      before do
+        event_store.sink(new_event(aggregate_id: aggregate_id, type: 'item_added'))
+        event_store.sink(new_event(aggregate_id: aggregate_id, type: 'item_updated'))
+        event_store.sink(new_event(aggregate_id: SecureRandom.uuid, type: 'i_should_not_be_loaded'))
+      end
+
+      subject(:events) { event_store.get_events_for_aggregate_id(uuid) }
+
+      specify do
+        expect(events.map(&:type)).to eq(['item_added', 'item_updated'])
+      end
+    end
+
+    context 'when aggregate_id is a string' do
+      include_examples 'gets events for a specific aggregate id' do
+        let(:uuid) { aggregate_id }
+      end
+    end
+
+    context 'when aggregate_id is convertible to a string' do
+      include_examples 'gets events for a specific aggregate id' do
+        let(:uuid) { double(to_str: aggregate_id) }
+      end
+    end
+  end
+
   describe '#subscribe' do
     let(:event) { new_event(aggregate_id: aggregate_id) }
     let(:subscription_master) { spy(EventSourcery::EventStore::SignalHandlingSubscriptionMaster) }
