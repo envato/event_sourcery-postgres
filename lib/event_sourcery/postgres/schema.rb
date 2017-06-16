@@ -1,7 +1,7 @@
 module EventSourcery
   module Postgres
     module Schema
-      extend self
+      module_function
 
       def create_event_store(db: EventSourcery::Postgres.config.event_store_database,
                              events_table_name: EventSourcery::Postgres.config.events_table_name,

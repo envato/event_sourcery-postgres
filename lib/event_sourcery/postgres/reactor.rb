@@ -51,10 +51,10 @@ module EventSourcery
 
       def emit_event(event_or_hash, &block)
         event = if Event === event_or_hash
-          event_or_hash
-        else
-          Event.new(event_or_hash)
-        end
+                  event_or_hash
+                else
+                  Event.new(event_or_hash)
+                end
         raise UndeclaredEventEmissionError unless self.class.emits_event?(event.class)
         event = event.with(causation_id: _event.uuid)
         invoke_action_and_emit_event(event, block)
