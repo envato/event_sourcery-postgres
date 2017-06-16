@@ -15,6 +15,17 @@ module EventSourcery
         @event_builder = event_builder
       end
 
+      # Like water flowing into a sink evenually it will go down the drain
+      # into the goodness of the plumbing system.
+      # So to will the given events you put in this 'sink'. Except the plumbing
+      # system is the data base events table.
+      # This can raise db connection errors.
+      #
+      # @param event_or_events the event or events to save
+      # @param expected_version the version to save with the event, default nil
+      #
+      # @raise [DatabaseError] if something goes wrong with the database
+      # @raise [ConcurrencyError] if there was a concurrency conflict
       def sink(event_or_events, expected_version: nil)
         events = Array(event_or_events)
         aggregate_ids = events.map(&:aggregate_id).uniq
