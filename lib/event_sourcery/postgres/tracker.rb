@@ -1,6 +1,8 @@
 module EventSourcery
   module Postgres
     class Tracker
+      # This will set up a persisted event id tracker for processors.
+
       def initialize(connection = EventSourcery::Postgres.config.projections_database,
                      table_name: EventSourcery::Postgres.config.tracker_table_name,
                      obtain_processor_lock: true)
