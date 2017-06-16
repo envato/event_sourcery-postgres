@@ -1,5 +1,13 @@
 # EventSourcery::Postgres
 
+[![Build Status](https://travis-ci.org/envato/event_sourcery-postgres.svg?branch=master)](https://travis-ci.org/envato/event_sourcery-postgres)
+
+## Development Status
+
+EventSourcery is currently being used in production by multiple apps but we
+haven't finalized the API yet and things are still moving rapidly. Until we
+release a 1.0 things may change without first being deprecated.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -75,7 +83,7 @@ EventSourcery::EventProcessing::ESPRunner.new(
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. (This will install dependencies and recreate the test database.) Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 
