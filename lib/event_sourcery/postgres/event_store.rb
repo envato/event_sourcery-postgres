@@ -42,6 +42,15 @@ module EventSourcery
         end
       end
 
+      # Get the next set of events from the given event id. You can
+      # specify event typs and a limit.
+      # Default limit is 1000 and the default event types will be all.
+      #
+      # @param id the event id to get next envents from
+      # @param event_types the event types to filter, default nil = all
+      # @param limit the limit to the results, default 1000
+      #
+      # @return [Array] array of found events
       def get_next_from(id, event_types: nil, limit: 1000)
         query = events_table.
           order(:id).
@@ -55,6 +64,11 @@ module EventSourcery
         end
       end
 
+      # Get last event id for a given event types.
+      #
+      # @param event_types the type of event(s) to filter
+      #
+      # @return the latest event id
       def latest_event_id(event_types: nil)
         latest_event = events_table
         if event_types
@@ -68,12 +82,23 @@ module EventSourcery
         end
       end
 
+      # Get the events for a given aggregate id.
+      #
+      # @param id the aggregate id to filter for
+      #
+      # @return [Array] of found events
       def get_events_for_aggregate_id(id)
         events_table.where(aggregate_id: id).order(:version).map do |event_hash|
           build_event(event_hash)
         end
       end
 
+      # Subscribe to events.
+      #
+      # @param from_id subscribe from a starting event id. default will be from the start.
+      # @param event_types the event_types to subscribe to, default all.
+      # @param after_listen the after listen call back block. default nil.
+      # @param subscription_master the subscription master block
       def subscribe(from_id:, event_types: nil, after_listen: nil, subscription_master:, &block)
         poll_waiter = OptimisedEventPollWaiter.new(pg_connection: @pg_connection, after_listen: after_listen)
         args = {
