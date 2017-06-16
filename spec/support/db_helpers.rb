@@ -11,19 +11,11 @@ module DBHelpers
   end
 
   module_function def new_connection
-    if ENV['CI']
-      Sequel.connect(adapter: 'postgres', database: 'event_sourcery_test')
-    else
-      Sequel.connect("#{postgres_url}event_sourcery_test")
-    end
+    Sequel.connect("#{postgres_url}event_sourcery_test")
   end
 
   module_function def postgres_url
-    if ENV['BUILDKITE']
-      'postgres://buildkite-agent:127.0.0.1:5432/'
-    else
-      ENV.fetch('BOXEN_POSTGRESQL_URL') { 'postgres://127.0.0.1:5432/' }
-    end
+    ENV.fetch('BOXEN_POSTGRESQL_URL', 'postgres://127.0.0.1:5432/')
   end
 
   def reset_database
