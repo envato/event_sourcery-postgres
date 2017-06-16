@@ -6,11 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
-- The event store persists the event `causation_id`. To facilitate this
-  a `causation_id` column has been added to the `events` table and the
-  `write_events` function has been altered. Event Sourcery apps will need
-  to ensure these DB changes have been applied to use this version of
-  Event Sourcery.
+- The event store persists the event `correlation_id` and `causation_id`.
+  To facilitate this `correlation_id` and `causation_id` columns have been
+  added to the `events` table and the `write_events` function has been
+  altered. Event Sourcery apps will need to ensure these DB changes have
+  been applied to use this version of Event Sourcery.
 
 ## [0.2.0] - 2017-6-1
 ### Changed
