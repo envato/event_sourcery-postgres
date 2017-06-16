@@ -41,7 +41,7 @@ def new_event
 end
 
 Benchmark.ips do |b|
-  b.report("event_store.sink") do
+  b.report('event_store.sink') do
     event_store.sink(new_event)
   end
 end

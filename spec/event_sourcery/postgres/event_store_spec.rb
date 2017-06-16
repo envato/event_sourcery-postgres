@@ -63,11 +63,9 @@ RSpec.describe EventSourcery::Postgres::EventStore do
 
     def aggregate_version
       result = connection[:aggregates].
-        where(aggregate_id: aggregate_id).
-        first
-      if result
-        result[:version]
-      end
+               where(aggregate_id: aggregate_id).
+               first
+      result[:version] if result
     end
 
     context "when the aggregate doesn't exist" do
@@ -87,9 +85,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     end
 
     context 'when the aggregate exists' do
-      before do
-        add_event
-      end
+      before { add_event }
 
       context 'with a correct expected version - 1' do
         it 'saves the event with and sets the aggregate version to version 2' do

@@ -36,19 +36,13 @@ module EventSourcery
           order(:id).
           where(Sequel.lit('id >= ?', id)).
           limit(limit)
-        if event_types
-          query = query.where(type: event_types)
-        end
-        query.map do |event_row|
-          build_event(event_row)
-        end
+        query = query.where(type: event_types) if event_types
+        query.map { |event_row| build_event(event_row) }
       end
 
       def latest_event_id(event_types: nil)
         latest_event = events_table
-        if event_types
-          latest_event = latest_event.where(type: event_types)
-        end
+        latest_event = latest_event.where(type: event_types) if event_types
         latest_event = latest_event.order(:id).last
         if latest_event
           latest_event[:id]
@@ -74,9 +68,7 @@ module EventSourcery
           subscription_master: subscription_master,
           on_new_events: block
         }
-        EventSourcery::EventStore::Subscription.new(args).tap do |s|
-          s.start
-        end
+        EventSourcery::EventStore::Subscription.new(args).tap(&:start)
       end
 
       private
@@ -113,7 +105,7 @@ module EventSourcery
 
       def sql_literal_array(events, type, &block)
         sql_array = events.map do |event|
-         to_sql_literal(block.call(event))
+          to_sql_literal(block.call(event))
         end.join(', ')
         "array[#{sql_array}]::#{type}[]"
       end
@@ -125,12 +117,12 @@ module EventSourcery
       def to_sql_literal(value)
         return 'null' unless value
         wrapped_value = if Time === value
-          value.iso8601(6)
-        elsif Hash === value
-          Sequel.pg_json(value)
-        else
-          value
-        end
+                          value.iso8601(6)
+                        elsif Hash === value
+                          Sequel.pg_json(value)
+                        else
+                          value
+                        end
         @pg_connection.literal(wrapped_value)
       end
 

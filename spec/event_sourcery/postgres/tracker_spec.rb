@@ -47,9 +47,7 @@ RSpec.describe EventSourcery::Postgres::Tracker do
   end
 
   describe '#processed_event' do
-    before do
-      setup_table
-    end
+    before { setup_table }
 
     it 'updates the tracker entry to the given ID' do
       postgres_tracker.processed_event(processor_name, 1)
@@ -63,7 +61,6 @@ RSpec.describe EventSourcery::Postgres::Tracker do
     context 'when the block succeeds' do
       it 'marks the event as processed' do
         postgres_tracker.processing_event(processor_name, 1) do
-
         end
         expect(last_processed_event_id).to eq 1
       end
@@ -72,11 +69,11 @@ RSpec.describe EventSourcery::Postgres::Tracker do
     context 'when the block raises' do
       it "doesn't mark the event as processed and raises an error" do
         expect(last_processed_event_id).to eq 0
-        expect {
+        expect do
           postgres_tracker.processing_event(processor_name, 1) do
             raise 'boo'
           end
-        }.to raise_error(RuntimeError)
+        end.to raise_error(RuntimeError)
         expect(last_processed_event_id).to eq 0
       end
     end
@@ -84,32 +81,28 @@ RSpec.describe EventSourcery::Postgres::Tracker do
     context 'unable to lock tracker row' do
       let(:db) { new_connection }
 
-      it "raises an error" do
-        expect {
+      it 'raises an error' do
+        expect do
           tracker = described_class.new(db, table_name: table_name)
           tracker.setup(processor_name)
-        }.to raise_error(EventSourcery::UnableToLockProcessorError)
+        end.to raise_error(EventSourcery::UnableToLockProcessorError)
       end
 
       context 'with obtain_processor_lock: false' do
         it "doesn't raises an error" do
-          expect {
+          expect do
             tracker = described_class.new(db, table_name: table_name, obtain_processor_lock: false)
             tracker.setup(processor_name)
-          }.to_not raise_error
+          end.to_not raise_error
         end
       end
 
-      after do
-        release_advisory_locks(db)
-      end
+      after { release_advisory_locks(db) }
     end
   end
 
   describe '#last_processed_event_id' do
-    before do
-      setup_table
-    end
+    before { setup_table }
 
     it 'starts at 0' do
       expect(last_processed_event_id).to eq 0
@@ -122,9 +115,7 @@ RSpec.describe EventSourcery::Postgres::Tracker do
   end
 
   describe '#reset_last_processed_event_id' do
-    before do
-      setup_table
-    end
+    before { setup_table }
 
     it 'resets the last processed event back to 0' do
       postgres_tracker.processed_event(processor_name, 1)

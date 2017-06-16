@@ -67,7 +67,7 @@ module EventSourcery
       end
 
       def table_name_prefixed(name)
-        [table_prefix, name].compact.join("_").to_sym
+        [table_prefix, name].compact.join('_').to_sym
       end
     end
   end

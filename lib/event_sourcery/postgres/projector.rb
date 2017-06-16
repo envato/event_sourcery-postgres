@@ -6,12 +6,12 @@ module EventSourcery
         base.prepend(TableOwner)
         base.include(InstanceMethods)
         base.class_eval do
-          alias project process
+          alias_method :project, :process
 
           class << self
-            alias project process
-            alias projects_events processes_events
-            alias projector_name processor_name
+            alias_method :project, :process
+            alias_method :projects_events, :processes_events
+            alias_method :projector_name, :processor_name
           end
         end
       end
