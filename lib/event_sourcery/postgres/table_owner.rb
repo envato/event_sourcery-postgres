@@ -9,15 +9,23 @@ module EventSourcery
       end
 
       module ClassMethods
+        # Hash of the tables and thier corresponding blocks.
+        #
+        # @return [Hash] hash keyed by table names and block values
         def tables
           @tables ||= {}
         end
 
+        # For the givent table name assign to give block as the value.
+        #
+        # @param name the name of the table
+        # @param block the block of code to assign for the table
         def table(name, &block)
           tables[name] = block
         end
       end
 
+      # Create each table.
       def setup
         self.class.tables.each do |table_name, schema_block|
           prefixed_name = table_name_prefixed(table_name)
@@ -26,6 +34,7 @@ module EventSourcery
         super if defined?(super)
       end
 
+      # Reset by dropping each table.
       def reset
         self.class.tables.keys.each do |table_name|
           prefixed_name = table_name_prefixed(table_name)
@@ -37,6 +46,8 @@ module EventSourcery
         setup
       end
 
+      # This will truncate all the tables and reset the tracker back to 0,
+      # done as a transaction.
       def truncate
         self.class.tables.each do |table_name, _|
           @db_connection.transaction do
