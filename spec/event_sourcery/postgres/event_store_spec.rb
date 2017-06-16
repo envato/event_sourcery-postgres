@@ -18,15 +18,15 @@ RSpec.describe EventSourcery::Postgres::EventStore do
   describe '#get_events_for_aggregate_id' do
     RSpec.shared_examples 'gets events for a specific aggregate id' do
       before do
-        event_store.sink(new_event(aggregate_id: aggregate_id, type: 'item_added'))
-        event_store.sink(new_event(aggregate_id: aggregate_id, type: 'item_updated'))
+        event_store.sink(new_event(aggregate_id: aggregate_id, type: 'event_with_a_string_id'))
+        event_store.sink(new_event(aggregate_id: double(to_str: aggregate_id), type: 'event_with_a_stringifiable_id'))
         event_store.sink(new_event(aggregate_id: SecureRandom.uuid, type: 'i_should_not_be_loaded'))
       end
 
       subject(:events) { event_store.get_events_for_aggregate_id(uuid) }
 
       specify do
-        expect(events.map(&:type)).to eq(['item_added', 'item_updated'])
+        expect(events.map(&:type)).to eq(['event_with_a_string_id', 'event_with_a_stringifiable_id'])
       end
     end
 

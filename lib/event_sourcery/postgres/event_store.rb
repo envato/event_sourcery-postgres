@@ -97,7 +97,7 @@ module EventSourcery
         causation_ids = sql_literal_array(events, 'uuid', &:causation_id)
         <<-SQL
           select #{@write_events_function_name}(
-            #{sql_literal(aggregate_id, 'uuid')},
+            #{sql_literal(aggregate_id.to_str, 'uuid')},
             #{types},
             #{sql_literal(expected_version, 'int')},
             #{bodies},
