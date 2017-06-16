@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.3.0] - 2017-6-16
 ### Changed
 - The event store persists the event `correlation_id` and `causation_id`.
   To facilitate this `correlation_id` and `causation_id` columns have been
