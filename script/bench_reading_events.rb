@@ -29,11 +29,11 @@ end
 
 event_store = EventSourcery::Postgres.config.event_store
 
-EVENT_TYPES = %i(
+EVENT_TYPES = %i[
   item_added
   item_removed
   item_starred
-).freeze
+].freeze
 
 def new_event(uuid)
   EventSourcery::Event.new(type: EVENT_TYPES.sample,
