@@ -28,9 +28,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
     end
   end
 
-  let(:tracker) { EventSourcery::EventProcessing::EventTrackers::Memory.new }
+  let(:tracker) { EventSourcery::Memory::Tracker.new }
   let(:reactor_name) { 'my_reactor' }
-  let(:event_store) { EventSourcery::EventStore::Memory.new(events) }
+  let(:event_store) { EventSourcery::Memory::EventStore.new(events) }
   let(:event_source) { EventSourcery::EventStore::EventSource.new(event_store) }
 
   let(:event_sink) { EventSourcery::EventStore::EventSink.new(event_store) }

@@ -22,6 +22,7 @@ module EventSourcery
           column :type,           :varchar, null: false, size: 255
           column :body,           :json,    null: false
           column :version,        :bigint,  null: false
+          column :correlation_id, :uuid
           column :causation_id,   :uuid
           column :created_at,     :'timestamp without time zone', null: false, default: Sequel.lit("(now() at time zone 'utc')")
           index [:aggregate_id, :version], unique: true
@@ -44,7 +45,15 @@ module EventSourcery
                                      events_table_name: EventSourcery::Postgres.config.events_table_name,
                                      aggregates_table_name: EventSourcery::Postgres.config.aggregates_table_name)
         db.run <<-SQL
-create or replace function #{function_name}(_aggregateId uuid, _eventTypes varchar[], _expectedVersion int, _bodies json[], _createdAtTimes timestamp without time zone[], _eventUUIDs uuid[], _causationIds uuid[], _lockTable boolean) returns void as $$
+create or replace function #{function_name}(_aggregateId uuid,
+                                            _eventTypes varchar[],
+                                            _expectedVersion int,
+                                            _bodies json[],
+                                            _createdAtTimes timestamp without time zone[],
+                                            _eventUUIDs uuid[],
+                                            _correlationIds uuid[],
+                                            _causationIds uuid[],
+                                            _lockTable boolean) returns void as $$
 declare
 currentVersion int;
 body json;
@@ -104,9 +113,18 @@ loop
   end if;
 
   insert into #{events_table_name}
-    (uuid, aggregate_id, type, body, version, causation_id, created_at)
+    (uuid, aggregate_id, type, body, version, correlation_id, causation_id, created_at)
   values
-    (_eventUUIDs[index], _aggregateId, _eventTypes[index], body, eventVersion, _causationIds[index], createdAt)
+    (
+      _eventUUIDs[index],
+      _aggregateId,
+      _eventTypes[index],
+      body,
+      eventVersion,
+      _correlationIds[index],
+      _causationIds[index],
+      createdAt
+    )
   returning id into eventId;
 
   eventVersion := eventVersion + 1;

@@ -51,8 +51,8 @@ module EventSourcery
         end
       end
 
-      def get_events_for_aggregate_id(id)
-        events_table.where(aggregate_id: id).order(:version).map do |event_hash|
+      def get_events_for_aggregate_id(aggregate_id)
+        events_table.where(aggregate_id: aggregate_id.to_str).order(:version).map do |event_hash|
           build_event(event_hash)
         end
       end
@@ -86,15 +86,17 @@ module EventSourcery
         types = sql_literal_array(events, 'varchar', &:type)
         created_ats = sql_literal_array(events, 'timestamp without time zone', &:created_at)
         event_uuids = sql_literal_array(events, 'uuid', &:uuid)
+        correlation_ids = sql_literal_array(events, 'uuid', &:correlation_id)
         causation_ids = sql_literal_array(events, 'uuid', &:causation_id)
         <<-SQL
           select #{@write_events_function_name}(
-            #{sql_literal(aggregate_id, 'uuid')},
+            #{sql_literal(aggregate_id.to_str, 'uuid')},
             #{types},
             #{sql_literal(expected_version, 'int')},
             #{bodies},
             #{created_ats},
             #{event_uuids},
+            #{correlation_ids},
             #{causation_ids},
             #{sql_literal(@lock_table, 'boolean')}
           );
