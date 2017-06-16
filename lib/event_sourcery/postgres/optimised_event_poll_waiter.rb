@@ -14,16 +14,16 @@ module EventSourcery
       def poll(after_listen: proc { }, &block)
         @events_queue.callback = proc do
           ensure_listen_thread_alive!
-          yield
+          block.call
         end
         start_async(after_listen: after_listen)
         catch(:stop) do
-          yield
+          block.call
           loop do
             ensure_listen_thread_alive!
             wait_for_new_event_to_appear
             clear_new_event_queue
-            yield
+            block.call
           end
         end
       ensure
