@@ -11,18 +11,31 @@ module EventSourcery
       end
 
       module ClassMethods
+        # Assign the types of events this reactor can emit.
+        #
+        # @param event_types the types of events this reactor can emit
         def emits_events(*event_types)
           @emits_event_types = event_types
         end
 
+        # Returns an array of which event types this reactor can emit.
+        #
+        # @return [Array] an array of the types of events this reactor can emit
         def emit_events
           @emits_event_types ||= []
         end
 
+        # This will tell you if this reactor emits any type of event.
+        #
+        # @return [true, false] true if this emits events, false if not
         def emits_events?
           !emit_events.empty?
         end
 
+        # Will check if this reactor emits the given type of event.
+        #
+        # @param event_type the event type to check
+        # @return [true, false] true if it does emit the given event false if not
         def emits_event?(event_type)
           emit_events.include?(event_type)
         end
