@@ -94,6 +94,7 @@ module EventSourcery
         types = sql_literal_array(events, 'varchar', &:type)
         created_ats = sql_literal_array(events, 'timestamp without time zone', &:created_at)
         event_uuids = sql_literal_array(events, 'uuid', &:uuid)
+        correlation_ids = sql_literal_array(events, 'uuid', &:correlation_id)
         causation_ids = sql_literal_array(events, 'uuid', &:causation_id)
         <<-SQL
           select #{@write_events_function_name}(
@@ -103,6 +104,7 @@ module EventSourcery
             #{bodies},
             #{created_ats},
             #{event_uuids},
+            #{correlation_ids},
             #{causation_ids},
             #{sql_literal(@lock_table, 'boolean')}
           );
