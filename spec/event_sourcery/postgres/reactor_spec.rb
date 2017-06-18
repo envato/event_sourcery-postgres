@@ -153,11 +153,11 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
     context 'with a reactor that emits events' do
       let(:event_1) { TermsAccepted.new(id: 1, aggregate_id: aggregate_id, body: { time: Time.now }) }
-      let(:event_2) { EchoEvent.new(id: 2, aggregate_id: aggregate_id, body: event_1.body.merge(EventSourcery::Postgres::Reactor::DRIVEN_BY_EVENT_PAYLOAD_KEY => 1)) }
+      let(:event_2) { EchoEvent.new(id: 2, aggregate_id: aggregate_id, body: event_1.body, causation_id: event_1.uuid) }
       let(:event_3) { TermsAccepted.new(id: 3, aggregate_id: aggregate_id, body: { time: Time.now }) }
       let(:event_4) { TermsAccepted.new(id: 4, aggregate_id: aggregate_id, body: { time: Time.now }) }
       let(:event_5) { TermsAccepted.new(id: 5, aggregate_id: aggregate_id, body: { time: Time.now }) }
-      let(:event_6) { EchoEvent.new(id: 6, aggregate_id: aggregate_id, body: event_3.body.merge(EventSourcery::Postgres::Reactor::DRIVEN_BY_EVENT_PAYLOAD_KEY => 3)) }
+      let(:event_6) { EchoEvent.new(id: 6, aggregate_id: aggregate_id, body: event_3.body, causation_id: event_3.uuid) }
       let(:events) { [event_1, event_2, event_3, event_4] }
       let(:action_stub_class) do
         Class.new do
@@ -266,9 +266,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           expect(latest_events(1).first.body['token']).to eq 'secret-identifier'
         end
 
-        it 'stores the driven by event id in the body' do
+        it 'stores the event causation id' do
           reactor.process(event_1)
-          expect(latest_events(1).first.body['_driven_by_event_id']).to eq event_1.id
+          expect(latest_events(1).first.causation_id).to eq event_1.uuid
         end
       end
     end
