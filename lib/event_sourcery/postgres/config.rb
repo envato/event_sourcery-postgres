@@ -26,23 +26,14 @@ module EventSourcery
         @auto_create_projector_tracker = true
       end
 
-      # The event store.
-      #
-      # @return [EventStore]
       def event_store
         @event_store ||= EventStore.new(event_store_database)
       end
 
-      # The event source.
-      #
-      # @return [EventSource]
       def event_source
         @event_source ||= ::EventSourcery::EventStore::EventSource.new(event_store)
       end
 
-      # The event sink.
-      #
-      # @return [EventSink]
       def event_sink
         @event_sink ||= ::EventSourcery::EventStore::EventSink.new(event_store)
       end
