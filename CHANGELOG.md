@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Reactors store the UUID of the event being processed in the `causation_id`
+  of any emitted events. This replaces the old behaviour of storing id of the
+  event being processed in a `_driven_by_event_id` attribute in the emitted
+  event's body.
 
 ## [0.3.0] - 2017-6-16
 ### Changed
@@ -13,10 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   added to the `events` table and the `write_events` function has been
   altered. Event Sourcery apps will need to ensure these DB changes have
   been applied to use this version of Event Sourcery.
-- Reactors store the UUID of the event being processed in the `causation_id`
-  of any emitted events. This replaces the old behaviour of storing id of the
-  event being processed in a `_driven_by_event_id` attribute in the emitted
-  event's body.
 
 ## [0.2.0] - 2017-6-1
 ### Changed
