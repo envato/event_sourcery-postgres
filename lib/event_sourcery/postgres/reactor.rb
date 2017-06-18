@@ -18,8 +18,6 @@ module EventSourcery
           @emits_event_types = event_types
         end
 
-        # Returns an array of which event types this reactor can emit.
-        #
         # @return [Array] an array of the types of events this reactor can emit
         def emit_events
           @emits_event_types ||= []
