@@ -152,8 +152,23 @@ RSpec.describe EventSourcery::Postgres::Reactor do
     end
 
     context 'with a reactor that emits events' do
-      let(:event_1) { TermsAccepted.new(id: 1, aggregate_id: aggregate_id, body: { time: Time.now }) }
-      let(:event_2) { EchoEvent.new(id: 2, aggregate_id: aggregate_id, body: event_1.body, causation_id: event_1.uuid) }
+      let(:event_1) do
+        TermsAccepted.new(
+          id: 1,
+          aggregate_id: aggregate_id,
+          body: { time: Time.now },
+          correlation_id: SecureRandom.uuid,
+        )
+      end
+      let(:event_2) do
+        EchoEvent.new(
+          id: 2,
+          aggregate_id: aggregate_id,
+          body: event_1.body,
+          correlation_id: event_1.correlation_id,
+          causation_id: event_1.uuid,
+        )
+      end
       let(:event_3) { TermsAccepted.new(id: 3, aggregate_id: aggregate_id, body: { time: Time.now }) }
       let(:event_4) { TermsAccepted.new(id: 4, aggregate_id: aggregate_id, body: { time: Time.now }) }
       let(:event_5) { TermsAccepted.new(id: 5, aggregate_id: aggregate_id, body: { time: Time.now }) }
@@ -221,6 +236,16 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           end
           expect(event_count).to eq 8
         end
+
+        it 'stores the event causation id' do
+          reactor.process(event_1)
+          expect(latest_events(1).first.causation_id).to eq event_1.uuid
+        end
+
+        it 'stores the event correlation id' do
+          reactor.process(event_1)
+          expect(latest_events(1).first.correlation_id).to eq event_1.correlation_id
+        end
       end
 
       context "when the event emitted hasn't been defined in emit_events" do
@@ -269,6 +294,11 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         it 'stores the event causation id' do
           reactor.process(event_1)
           expect(latest_events(1).first.causation_id).to eq event_1.uuid
+        end
+
+        it 'stores the event correlation id' do
+          reactor.process(event_1)
+          expect(latest_events(1).first.correlation_id).to eq event_1.correlation_id
         end
       end
     end

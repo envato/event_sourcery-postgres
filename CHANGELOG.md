@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   event being processed in a `_driven_by_event_id` attribute in the emitted
   event's body.
 
+### Added
+- Reactors store the correlation id of the event being processed in the
+  `correlation_id` of any emitted events.
+
 ## [0.3.0] - 2017-6-16
 ### Changed
 - The event store persists the event `correlation_id` and `causation_id`.
