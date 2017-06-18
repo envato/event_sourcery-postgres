@@ -58,20 +58,18 @@ module EventSourcery
         end
       end
 
-      DRIVEN_BY_EVENT_PAYLOAD_KEY = :_driven_by_event_id
-
       private
 
       attr_reader :event_sink, :event_source
 
       def emit_event(event_or_hash, &block)
         event = if Event === event_or_hash
-          event_or_hash
-        else
-          Event.new(event_or_hash)
-        end
+                  event_or_hash
+                else
+                  Event.new(event_or_hash)
+                end
         raise UndeclaredEventEmissionError unless self.class.emits_event?(event.class)
-        event.body.merge!(DRIVEN_BY_EVENT_PAYLOAD_KEY => _event.id)
+        event = event.with(causation_id: _event.uuid)
         invoke_action_and_emit_event(event, block)
         EventSourcery.logger.debug { "[#{self.processor_name}] Emitted event: #{event.inspect}" }
       end

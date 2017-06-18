@@ -1,7 +1,7 @@
 module EventSourcery
   module Postgres
     module Schema
-      extend self
+      module_function
 
       # This will create the event store tables and functions
       # (event, aggregates, tracker and create or update functions)

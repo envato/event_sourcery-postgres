@@ -1,5 +1,5 @@
 RSpec.describe EventSourcery::Postgres::Projector do
-  let(:projector_class) {
+  let(:projector_class) do
     Class.new do
       include EventSourcery::Postgres::Projector
       processor_name 'test_processor'
@@ -19,7 +19,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       attr_reader :processed_event
     end
-  }
+  end
   let(:projector_name) { 'my_projector' }
   let(:tracker) { EventSourcery::Postgres::Tracker.new(pg_connection) }
   let(:events) { [] }
@@ -40,12 +40,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
     end.new(tracker: tracker, db_connection: pg_connection)
   end
 
-  subject(:projector) {
+  subject(:projector) do
     projector_class.new(
       tracker: tracker,
       db_connection: connection
     )
-  }
+  end
   let(:aggregate_id) { SecureRandom.uuid }
 
   after { release_advisory_locks }
@@ -82,7 +82,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
   describe '#project' do
     let(:event) { new_event(type: :terms_accepted) }
 
-    it "processes events via project method" do
+    it 'processes events via project method' do
       projector = new_projector do
         def project(event)
           @processed_event = event
@@ -136,7 +136,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
     let(:event_store) { double(:event_store) }
     let(:events) { [new_event(id: 1), new_event(id: 2)] }
     let(:subscription_master) { spy(EventSourcery::EventStore::SignalHandlingSubscriptionMaster) }
-    let(:projector_class) {
+    let(:projector_class) do
       Class.new do
         include EventSourcery::Postgres::Projector
         processor_name 'test_processor'
@@ -156,7 +156,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
           raise 'boo' if raise_error
         end
       end
-    }
+    end
 
     before do
       allow(event_store).to receive(:subscribe).and_yield(events).once
@@ -170,7 +170,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
     context 'when an error occurs processing the event' do
 
-      it "rolls back the projected changes" do
+      it 'rolls back the projected changes' do
         projector.raise_error = true
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
         expect(connection[:profiles].count).to eq 0
@@ -183,7 +183,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
         allow(tracker).to receive(:processed_event).and_raise(StandardError)
       end
 
-      it "rolls back the projected changes" do
+      it 'rolls back the projected changes' do
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
         expect(connection[:profiles].count).to eq 0
       end

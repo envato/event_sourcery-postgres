@@ -4,7 +4,7 @@ module EventSourcery
     class OptimisedEventPollWaiter
       ListenThreadDied = Class.new(StandardError)
 
-      def initialize(pg_connection:, timeout: 30, after_listen: proc { })
+      def initialize(pg_connection:, timeout: 30, after_listen: proc {})
         @pg_connection = pg_connection
         @timeout = timeout
         @events_queue = QueueWithIntervalCallback.new
@@ -17,7 +17,7 @@ module EventSourcery
           block.call
         end
         start_async(after_listen: after_listen)
-        catch(:stop) {
+        catch(:stop) do
           block.call
           loop do
             ensure_listen_thread_alive!
@@ -25,7 +25,7 @@ module EventSourcery
             clear_new_event_queue
             block.call
           end
-        }
+        end
       ensure
         shutdown!
       end
@@ -33,15 +33,11 @@ module EventSourcery
       private
 
       def shutdown!
-        if @listen_thread.alive?
-          @listen_thread.kill
-        end
+        @listen_thread.kill if @listen_thread.alive?
       end
 
       def ensure_listen_thread_alive!
-        if !@listen_thread.alive?
-          raise ListenThreadDied
-        end
+        raise ListenThreadDied unless @listen_thread.alive?
       end
 
       def wait_for_new_event_to_appear
@@ -54,16 +50,18 @@ module EventSourcery
 
       def start_async(after_listen: nil)
         after_listen_callback = if after_listen
-                                  proc {
+                                  proc do
                                     after_listen.call
                                     @after_listen.call if @after_listen
-                                  }
+                                  end
                                 else
                                   @after_listen
                                 end
-        @listen_thread = Thread.new { listen_for_new_events(loop: true,
-                                                            after_listen: after_listen_callback,
-                                                            timeout: @timeout) }
+        @listen_thread = Thread.new do
+          listen_for_new_events(loop: true,
+                                after_listen: after_listen_callback,
+                                timeout: @timeout)
+        end
       end
 
       def listen_for_new_events(loop: true, after_listen: nil, timeout: 30)
@@ -71,9 +69,7 @@ module EventSourcery
                               loop: loop,
                               after_listen: after_listen,
                               timeout: timeout) do |_channel, _pid, _payload|
-          if @events_queue.empty?
-            @events_queue.push(:new_event_arrived)
-          end
+          @events_queue.push(:new_event_arrived) if @events_queue.empty?
         end
       end
     end
