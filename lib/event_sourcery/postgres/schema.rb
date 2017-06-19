@@ -28,6 +28,8 @@ module EventSourcery
           index [:aggregate_id, :version], unique: true
           index :uuid, unique: true
           index :type
+          index :correlation_id
+          index :causation_id
           index :created_at
         end
       end
