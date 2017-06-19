@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Reactors store the correlation id of the event being processed in the
   `correlation_id` of any emitted events.
+- Added index on the `events` table for `correlation_id` and `causation_id`
+  columns.
 
 ## [0.3.0] - 2017-6-16
 ### Changed
