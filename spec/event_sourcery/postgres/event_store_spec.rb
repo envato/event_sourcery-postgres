@@ -30,6 +30,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
   end
 
   describe '#subscribe' do
+    let(:pg_connection) { new_connection }
     let(:event) { new_event(aggregate_id: aggregate_id) }
     let(:subscription_master) { spy(EventSourcery::EventStore::SignalHandlingSubscriptionMaster) }
 
