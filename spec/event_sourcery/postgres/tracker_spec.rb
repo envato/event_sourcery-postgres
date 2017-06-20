@@ -35,6 +35,19 @@ RSpec.describe EventSourcery::Postgres::Tracker do
       end
     end
 
+    context 'when table_name is a string' do
+      let(:table_name) { 'tracker' }
+
+      it 'does not raise an error' do
+        expect { postgres_tracker.setup(processor_name) }.not_to raise_error
+      end
+
+      it 'creates the table' do
+        postgres_tracker.setup(processor_name)
+        expect(connection.table_exists?(table_name)).to be_truthy
+      end
+    end
+
     context 'auto create projector tracker disabled' do
       before do
         allow(EventSourcery::Postgres.config).to receive(:auto_create_projector_tracker).and_return(false)
