@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.4.0] - 2017-6-21
 ### Changed
 - Reactors store the UUID of the event being processed in the `causation_id`
   of any emitted events. This replaces the old behaviour of storing id of the

@@ -6,15 +6,15 @@ require 'event_sourcery/postgres/version'
 Gem::Specification.new do |spec|
   spec.name          = 'event_sourcery-postgres'
   spec.version       = EventSourcery::Postgres::VERSION
-  # TODO: update authors
-  spec.authors       = ['Steve Hodgkiss']
-  spec.email         = ['steve@hodgkiss.me']
+
+  spec.authors       = ['Envato']
+  spec.email         = ['rubygems@envato.com']
 
   spec.summary       = 'Postgres event store for use with EventSourcery'
   spec.homepage      = 'https://github.com/envato/event_sourcery-postgres'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
+    f.match(%r{^(\.|bin/|Gemfile|Rakefile|script/|spec/)})
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
