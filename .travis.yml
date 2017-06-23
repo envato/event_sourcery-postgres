@@ -1,12 +1,19 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.2
-  - 2.3
-  - 2.4
+- 2.2
+- 2.3
+- 2.4
 before_install:
-  - gem install bundler
+- gem install bundler
 before_script:
-  - psql -c 'create database event_sourcery_test;' -U postgres
+- psql -c 'create database event_sourcery_test;' -U postgres
 addons:
   postgresql: 9.4
+notifications:
+  slack:
+    on_pull_requests: false
+    on_success: change
+    on_failure: always
+    rooms:
+      secure: MNBzPIAQOGxCxM+qV36yYQcrX3RBCKlOAmFP7FbyoavlGA0SHKZc3iuHS+Z23ci/6RD6vCqZNlHNcDosugETUmKRDJBhi3qN/W1HsDtThTT+UaTAYjqZAMYeQVnn/vlH5HGnFfPz75iQe87SkuaP/3y0EKnrJnoHMVR/kItHrv9JcxIsAryf8Lfu3c45TjYmwfRKmiblhoUzTfBpsxSM2s1OWiyQCG4vbjXZj3NIkkhUYC4Sd/Cd0u7BE734z1Uo8UKjuZTBCSyhynqUdXaZCzeDYWpnh27NkyWjl97r4gHNLYYPizpBonJUuX4F1E1Fr+kFGl8qFA1vR9hFLmATWmF3rodagarbAHPQ0/RcpgGW9m7+L6HCTtwLmsNr7ezueTdhYCiLgCO601lRF4fLI2OCGSeSxUYlHfexNZMiqd3/UC6nXGHbWUcTYzdgeTSKggeXiNwnmQYq90pxw7UIZ9r9gNiuBPKHeCOsF2//OynbYABO3bmvbktMsz5sZgl9zgeuXUQqCk6RVANxT+5uZUpPlg8WGsv17fxPmZTxjibk/yEgD6tT4gyIJw2Gn/y5W5WyzCpT8vHU/Dmhj9i/wIHONDLlaDIMO6N/S97UVk8KVhvKkcd//Isbw08HO29Rrv7yq4Hwsb7aIuXyayuEaXhxihz+7kPh1g6imHtXpOg=
