@@ -3,6 +3,12 @@ module EventSourcery
     module Schema
       module_function
 
+      # This will create the event store tables and functions
+      # (event, aggregates, tracker and create or update functions)
+      # for the given Postgres database.
+      # The default will be the one specified in the config.
+      #
+      # @param db the Postgres database to use
       def create_event_store(db: EventSourcery::Postgres.config.event_store_database,
                              events_table_name: EventSourcery::Postgres.config.events_table_name,
                              aggregates_table_name: EventSourcery::Postgres.config.aggregates_table_name,
@@ -12,6 +18,11 @@ module EventSourcery
         create_or_update_functions(db: db, events_table_name: events_table_name, function_name: write_events_function_name, aggregates_table_name: aggregates_table_name)
       end
 
+      # Create the events table. Needs the database and the table name.
+      # The defaults will be whats specified in config.
+      #
+      # @param db the Postgres database to use
+      # @param table_name the name of the events table
       def create_events(db: EventSourcery::Postgres.config.event_store_database,
                         table_name: EventSourcery::Postgres.config.events_table_name)
         db.run 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp"'
@@ -34,6 +45,11 @@ module EventSourcery
         end
       end
 
+      # Create the aggregates table. Needs the database and the table name.
+      # The defaults will be whats specified in config.
+      #
+      # @param db the Postgres database to use
+      # @param table_name the name of the aggregates table
       def create_aggregates(db: EventSourcery::Postgres.config.event_store_database,
                             table_name: EventSourcery::Postgres.config.aggregates_table_name)
         db.create_table(table_name) do
@@ -42,6 +58,14 @@ module EventSourcery
         end
       end
 
+      # Create the 'create or update' fucntions.
+      # Needs the database, table name, function name and aggregates table name.
+      # The defaults will be whats specified in config.
+      #
+      # @param db the Postgres database to use
+      # @param function_name the name of the write events function
+      # @param events_table_name the name of the events table
+      # @param aggregates_table_name the name of the aggregates table
       def create_or_update_functions(db: EventSourcery::Postgres.config.event_store_database,
                                      function_name: EventSourcery::Postgres.config.write_events_function_name,
                                      events_table_name: EventSourcery::Postgres.config.events_table_name,
@@ -138,6 +162,11 @@ $$ language plpgsql;
 SQL
       end
 
+      # Create the projector tracker table. Needs the database and the table name.
+      # The defaults will be whats specified in config.
+      #
+      # @param db the Postgres database to use
+      # @param table_name the name of the aggregates table
       def create_projector_tracker(db: EventSourcery::Postgres.config.projections_database,
                                    table_name: EventSourcery::Postgres.config.tracker_table_name)
         db.create_table(table_name) do
