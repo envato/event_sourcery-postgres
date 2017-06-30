@@ -25,9 +25,7 @@ module EventSourcery
 
         if processor_name
           create_track_entry_if_not_exists(processor_name)
-          if @obtain_processor_lock
-            obtain_global_lock_on_processor(processor_name)
-          end
+          obtain_global_lock_on_processor(processor_name) if @obtain_processor_lock
         end
       end
 
@@ -37,9 +35,7 @@ module EventSourcery
       # @param processor_name the name of the processor to udpate
       # @param event_id the event id number to update to
       def processed_event(processor_name, event_id)
-        table.
-          where(name: processor_name.to_s).
-          update(last_processed_event_id: event_id)
+        table.where(name: processor_name.to_s).update(last_processed_event_id: event_id)
         true
       end
 
@@ -68,8 +64,9 @@ module EventSourcery
       # @param processor_name the name of the processor you want to look up
       # @return [Int, nil] the value of the last event_id processed
       def last_processed_event_id(processor_name)
-        track_entry = table.where(name: processor_name.to_s).first
-        track_entry[:last_processed_event_id] if track_entry
+        if track_entry = table.where(name: processor_name.to_s).first
+          track_entry[:last_processed_event_id]
+        end
       end
 
       # Will return an array of all known tracked processors.
@@ -81,17 +78,38 @@ module EventSourcery
 
       private
 
+      def obtained_global_lock?(lock_id)
+        @connection.fetch("select pg_try_advisory_lock(#{lock_id})").to_a.first[:pg_try_advisory_lock]
+      end
+
+      def release_global_lock(lock_id)
+        @connection.execute("select pg_advisory_unlock(#{lock_id});")
+      end
+
       def obtain_global_lock_on_processor(processor_name)
-        lock_obtained = @connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})").to_a.first[:pg_try_advisory_lock]
-        if lock_obtained == false
+        unless obtained_global_lock?(@track_entry_id)
           raise UnableToLockProcessorError, "Unable to get a lock on #{processor_name} #{@track_entry_id}"
         end
       end
 
+      def exclusive(lock_id=1, &block)
+        if obtained_global_lock?(lock_id)
+          begin
+            yield
+          ensure
+            release_global_lock(lock_id)
+          end
+        end
+      end
+
       def create_table_if_not_exists
-        unless tracker_table_exists?
-          EventSourcery.logger.info { "Projector tracker missing - attempting to create 'projector_tracker' table" }
-          EventSourcery::Postgres::Schema.create_projector_tracker(db: @connection, table_name: @table_name)
+        attempt = 1
+        while !tracker_table_exists? && attempt < 5 do
+          exclusive do
+            EventSourcery.logger.info { "Projector tracker missing - attempting to create '#{@table_name}' table" }
+            EventSourcery::Postgres::Schema.create_projector_tracker(db: @connection, table_name: @table_name)
+          end
+          attempt += 1
         end
       end
 
