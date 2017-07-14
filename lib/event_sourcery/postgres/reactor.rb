@@ -74,7 +74,11 @@ module EventSourcery
 
       def invoke_action_and_emit_event(event, action)
         action.call(event.body) if action
-        event_sink.sink(event)
+        if event.valid?
+          event_sink.sink(event)
+        else
+          raise(EventSourcery::InvalidEventError, "#{event.class} not valid: #{event.validation_errors.values.join(', ')}")
+        end
       end
     end
   end
