@@ -301,6 +301,41 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           expect(latest_events(1).first.correlation_id).to eq event_1.correlation_id
         end
       end
+
+      context 'when the event is invalid' do
+        let(:events) { [] }
+
+        class InvalidEvent < EventSourcery::Event
+          attr_reader :validation_errors
+
+          def valid?
+            false
+          end
+
+          def validation_errors
+            { invalid_body: body }
+          end
+        end
+
+        let(:reactor_class) do
+          Class.new do
+            include EventSourcery::Postgres::Reactor
+
+            processes_events :terms_accepted
+            emits_events InvalidEvent
+
+            def process(event)
+              emit_event(InvalidEvent.new(aggregate_id: event.aggregate_id)) do |body|
+                body[:this] = 'event is invalid'
+              end
+            end
+          end
+        end
+
+        it 'raises an error' do
+          expect{ reactor.process(event_1) }.to raise_error /event is invalid/
+        end
+      end
     end
   end
 end
