@@ -7,6 +7,7 @@ module EventSourcery
                      table_name: EventSourcery::Postgres.config.tracker_table_name,
                      obtain_processor_lock: true)
         @connection = connection
+        @connection.extension :pg_json
         @table_name = table_name.to_sym
         @obtain_processor_lock = obtain_processor_lock
       end
