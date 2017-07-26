@@ -54,9 +54,9 @@ module EventSourcery
       private
 
       def setup_connection(sequel_connection)
-         return unless sequel_connection
+        return unless sequel_connection
 
-         sequel_connection.extension :pg_json
+        sequel_connection.extension :pg_json
       end
     end
   end
