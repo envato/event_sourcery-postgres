@@ -1,16 +1,11 @@
 module DBHelpers
   extend self
 
-  def pg_connection
-    $connection ||= new_connection
+  def db_connection
+    $db_connection ||= new_db_connection
   end
 
-  # TODO: switch references to connection to use pg_connection instead
-  def connection
-    @connection ||= pg_connection
-  end
-
-  module_function def new_connection
+  module_function def new_db_connection
     Sequel.connect("#{postgres_url}event_sourcery_test").extension(:pg_json)
   end
 
@@ -19,22 +14,22 @@ module DBHelpers
   end
 
   def reset_database
-    connection.execute('truncate table aggregates')
+    db_connection.execute('truncate table aggregates')
     %w(events events_without_optimistic_locking).each do |_|
-      connection.execute('truncate table events')
-      connection.execute('alter sequence events_id_seq restart with 1')
+      db_connection.execute('truncate table events')
+      db_connection.execute('alter sequence events_id_seq restart with 1')
     end
   end
 
   def recreate_database
-    pg_connection.execute('drop table if exists events')
-    pg_connection.execute('drop table if exists aggregates')
-    pg_connection.execute('drop table if exists projector_tracker')
-    EventSourcery::Postgres::Schema.create_event_store(db: pg_connection)
-    EventSourcery::Postgres::Schema.create_projector_tracker(db: pg_connection)
+    db_connection.execute('drop table if exists events')
+    db_connection.execute('drop table if exists aggregates')
+    db_connection.execute('drop table if exists projector_tracker')
+    EventSourcery::Postgres::Schema.create_event_store(db: db_connection)
+    EventSourcery::Postgres::Schema.create_projector_tracker(db: db_connection)
   end
 
-  def release_advisory_locks(connection=pg_connection)
+  def release_advisory_locks(connection = db_connection)
     connection.fetch('SELECT pg_advisory_unlock_all();').to_a
   end
 end

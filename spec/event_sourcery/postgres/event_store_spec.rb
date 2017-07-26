@@ -1,6 +1,6 @@
 RSpec.describe EventSourcery::Postgres::EventStore do
   let(:supports_versions) { true }
-  subject(:event_store) { described_class.new(pg_connection) }
+  subject(:event_store) { described_class.new(db_connection) }
 
   include_examples 'an event store'
 
@@ -8,7 +8,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     it 'notifies about a new event' do
       event_id = nil
       Timeout.timeout(1) do
-        pg_connection.listen('new_event', loop: false, after_listen: proc { add_event }) do |channel, pid, payload|
+        db_connection.listen('new_event', loop: false, after_listen: proc { add_event }) do |channel, pid, payload|
           event_id = Integer(payload)
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     end
 
     def aggregate_version
-      result = connection[:aggregates].
+      result = db_connection[:aggregates].
                where(aggregate_id: aggregate_id).
                first
       result[:version] if result
@@ -104,7 +104,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
 
     context 'when a database error occurs that is not a concurrency error' do
       before do
-        allow(connection).to receive(:run).and_raise(Sequel::DatabaseError)
+        allow(db_connection).to receive(:run).and_raise(Sequel::DatabaseError)
       end
 
       it 'raises it' do
