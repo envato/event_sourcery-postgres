@@ -46,6 +46,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
     before do
       allow(EventSourcery::Postgres::Tracker).to receive(:new).with(projections_database).and_return(event_tracker)
+      allow(projections_database).to receive(:extension).with(:pg_json)
 
       EventSourcery::Postgres.configure do |config|
         config.event_source = event_source
