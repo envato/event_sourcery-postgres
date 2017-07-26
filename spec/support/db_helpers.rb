@@ -11,7 +11,7 @@ module DBHelpers
   end
 
   module_function def new_connection
-    Sequel.connect("#{postgres_url}event_sourcery_test")
+    Sequel.connect("#{postgres_url}event_sourcery_test").extension(:pg_json)
   end
 
   module_function def postgres_url

@@ -1,6 +1,5 @@
 require 'sequel'
 
-Sequel.extension :pg_json
 Sequel.default_timezone = :utc
 
 require 'event_sourcery'
