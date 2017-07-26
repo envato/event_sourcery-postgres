@@ -3,10 +3,10 @@ module EventSourcery
     # This will set up a persisted event id tracker for processors.
     class Tracker
 
-      def initialize(connection = EventSourcery::Postgres.config.projections_database,
+      def initialize(db_connection = EventSourcery::Postgres.config.projections_database,
                      table_name: EventSourcery::Postgres.config.tracker_table_name,
                      obtain_processor_lock: true)
-        @connection = connection
+        @db_connection = db_connection
         @table_name = table_name.to_sym
         @obtain_processor_lock = obtain_processor_lock
       end
@@ -50,7 +50,7 @@ module EventSourcery
       # @param processor_name the name of the processor to update
       # @param event_id the event id number to update to
       def processing_event(processor_name, event_id)
-        @connection.transaction do
+        @db_connection.transaction do
           yield
           processed_event(processor_name, event_id)
         end
@@ -82,7 +82,7 @@ module EventSourcery
       private
 
       def obtain_global_lock_on_processor(processor_name)
-        lock_obtained = @connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})").to_a.first[:pg_try_advisory_lock]
+        lock_obtained = @db_connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})").to_a.first[:pg_try_advisory_lock]
         if lock_obtained == false
           raise UnableToLockProcessorError, "Unable to get a lock on #{processor_name} #{@track_entry_id}"
         end
@@ -91,7 +91,7 @@ module EventSourcery
       def create_table_if_not_exists
         unless tracker_table_exists?
           EventSourcery.logger.info { "Projector tracker missing - attempting to create 'projector_tracker' table" }
-          EventSourcery::Postgres::Schema.create_projector_tracker(db: @connection, table_name: @table_name)
+          EventSourcery::Postgres::Schema.create_projector_tracker(db: @db_connection, table_name: @table_name)
         end
       end
 
@@ -105,11 +105,11 @@ module EventSourcery
       end
 
       def table
-        @connection[@table_name]
+        @db_connection[@table_name]
       end
 
       def tracker_table_exists?
-        @connection.table_exists?(@table_name)
+        @db_connection.table_exists?(@table_name)
       end
     end
   end

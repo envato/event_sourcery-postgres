@@ -4,8 +4,8 @@ module EventSourcery
     class OptimisedEventPollWaiter
       ListenThreadDied = Class.new(StandardError)
 
-      def initialize(pg_connection:, timeout: 30, after_listen: proc {})
-        @pg_connection = pg_connection
+      def initialize(db_connection:, timeout: 30, after_listen: proc {})
+        @db_connection = db_connection
         @timeout = timeout
         @events_queue = QueueWithIntervalCallback.new
         @after_listen = after_listen
@@ -65,7 +65,7 @@ module EventSourcery
       end
 
       def listen_for_new_events(loop: true, after_listen: nil, timeout: 30)
-        @pg_connection.listen('new_event',
+        @db_connection.listen('new_event',
                               loop: loop,
                               after_listen: after_listen,
                               timeout: timeout) do |_channel, _pid, _payload|

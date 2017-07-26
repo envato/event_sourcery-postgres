@@ -38,25 +38,25 @@ module EventSourcery
         @event_sink ||= ::EventSourcery::EventStore::EventSink.new(event_store)
       end
 
-      def event_store_database=(sequel_connection)
-        setup_connection(sequel_connection)
+      def event_store_database=(db_connection)
+        setup_connection(db_connection)
 
-        @event_store_database = sequel_connection
+        @event_store_database = db_connection
       end
 
-      def projections_database=(sequel_connection)
-        setup_connection(sequel_connection)
+      def projections_database=(db_connection)
+        setup_connection(db_connection)
 
-        @projections_database = sequel_connection
-        @event_tracker = Postgres::Tracker.new(sequel_connection)
+        @projections_database = db_connection
+        @event_tracker = Postgres::Tracker.new(db_connection)
       end
 
       private
 
-      def setup_connection(sequel_connection)
-        return unless sequel_connection
+      def setup_connection(db_connection)
+        return unless db_connection
 
-        sequel_connection.extension :pg_json
+        db_connection.extension :pg_json
       end
     end
   end
