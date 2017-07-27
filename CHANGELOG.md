@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
-## [0.4.1] - 2017-7-27
+## [0.5.0] - 2017-7-27
 - First Version of YARD documentation.
 - Fix Sequel deprecation by globally loading pg extensions
 
