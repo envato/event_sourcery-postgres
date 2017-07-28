@@ -21,7 +21,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
     end
   end
   let(:projector_name) { 'my_projector' }
-  let(:tracker) { EventSourcery::Postgres::Tracker.new(pg_connection) }
+  let(:tracker) { EventSourcery::Postgres::Tracker.new(db_connection) }
   let(:events) { [] }
   def new_projector(&block)
     Class.new do
@@ -37,13 +37,13 @@ RSpec.describe EventSourcery::Postgres::Projector do
       class_eval(&block) if block_given?
 
       attr_reader :processed_event
-    end.new(tracker: tracker, db_connection: pg_connection)
+    end.new(tracker: tracker, db_connection: db_connection)
   end
 
   subject(:projector) do
     projector_class.new(
       tracker: tracker,
-      db_connection: connection
+      db_connection: db_connection
     )
   end
   let(:aggregate_id) { SecureRandom.uuid }
@@ -174,7 +174,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
       it 'rolls back the projected changes' do
         projector.raise_error = true
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
-        expect(connection[:profiles].count).to eq 0
+        expect(db_connection[:profiles].count).to eq 0
       end
     end
 
@@ -186,7 +186,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       it 'rolls back the projected changes' do
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
-        expect(connection[:profiles].count).to eq 0
+        expect(db_connection[:profiles].count).to eq 0
       end
     end
   end

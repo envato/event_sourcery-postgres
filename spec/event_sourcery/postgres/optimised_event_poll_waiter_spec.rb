@@ -1,6 +1,6 @@
 RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
   let(:after_listen) { proc {} }
-  subject(:waiter) { described_class.new(pg_connection: pg_connection, after_listen: after_listen) }
+  subject(:waiter) { described_class.new(db_connection: db_connection, after_listen: after_listen) }
 
   before do
     allow(EventSourcery::Postgres::QueueWithIntervalCallback).to receive(:new)
@@ -9,7 +9,7 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
 
   def notify_event_ids(*ids)
     ids.each do |id|
-      pg_connection.notify('new_event', payload: id)
+      db_connection.notify('new_event', payload: id)
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
 
   context 'when the listening thread dies' do
     before do
-      allow(pg_connection).to receive(:listen).and_raise(StandardError)
+      allow(db_connection).to receive(:listen).and_raise(StandardError)
     end
 
     it 'raise an error' do

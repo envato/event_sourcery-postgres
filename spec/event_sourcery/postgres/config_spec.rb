@@ -4,8 +4,8 @@ RSpec.describe EventSourcery::Postgres::Config do
   context 'when reading the event_store' do
     context 'and an event_store_database is set' do
       before do
-        allow(pg_connection).to receive(:extension).with(:pg_json)
-        config.event_store_database = pg_connection
+        allow(db_connection).to receive(:extension).with(:pg_json)
+        config.event_store_database = db_connection
       end
 
       it 'returns a EventSourcery::Postgres::EventStore' do
@@ -13,7 +13,7 @@ RSpec.describe EventSourcery::Postgres::Config do
       end
 
       it 'loads pg_json extension on database' do
-        expect(pg_connection).to have_received(:extension).with(:pg_json)
+        expect(db_connection).to have_received(:extension).with(:pg_json)
       end
     end
 
@@ -32,12 +32,12 @@ RSpec.describe EventSourcery::Postgres::Config do
 
   context 'setting the projections database' do
     before do
-      allow(pg_connection).to receive(:extension).with(:pg_json)
-      config.projections_database = pg_connection
+      allow(db_connection).to receive(:extension).with(:pg_json)
+      config.projections_database = db_connection
     end
 
     it 'sets the projections_database' do
-      expect(config.projections_database).to eq pg_connection
+      expect(config.projections_database).to eq db_connection
     end
 
     it 'sets the event_tracker' do
@@ -45,7 +45,7 @@ RSpec.describe EventSourcery::Postgres::Config do
     end
 
     it 'loads pg_json extension on database' do
-      expect(pg_connection).to have_received(:extension).with(:pg_json)
+      expect(db_connection).to have_received(:extension).with(:pg_json)
     end
   end
 end

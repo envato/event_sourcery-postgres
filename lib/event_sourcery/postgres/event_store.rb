@@ -3,12 +3,12 @@ module EventSourcery
     class EventStore
       include EventSourcery::EventStore::EachByRange
 
-      def initialize(pg_connection,
+      def initialize(db_connection,
                      events_table_name: EventSourcery::Postgres.config.events_table_name,
                      lock_table: EventSourcery::Postgres.config.lock_table_to_guarantee_linear_sequence_id_growth,
                      write_events_function_name: EventSourcery::Postgres.config.write_events_function_name,
                      event_builder: EventSourcery.config.event_builder)
-        @pg_connection = pg_connection
+        @db_connection = db_connection
         @events_table_name = events_table_name
         @write_events_function_name = write_events_function_name
         @lock_table = lock_table
@@ -31,7 +31,7 @@ module EventSourcery
         aggregate_ids = events.map(&:aggregate_id).uniq
         raise AtomicWriteToMultipleAggregatesNotSupported unless aggregate_ids.count == 1
         sql = write_events_sql(aggregate_ids.first, events, expected_version)
-        @pg_connection.run(sql)
+        @db_connection.run(sql)
         log_events_saved(events)
         true
       rescue Sequel::DatabaseError => e
@@ -94,7 +94,7 @@ module EventSourcery
       # @param after_listen the after listen call back block. default nil.
       # @param subscription_master the subscription master block
       def subscribe(from_id:, event_types: nil, after_listen: nil, subscription_master:, &block)
-        poll_waiter = OptimisedEventPollWaiter.new(pg_connection: @pg_connection, after_listen: after_listen)
+        poll_waiter = OptimisedEventPollWaiter.new(db_connection: @db_connection, after_listen: after_listen)
         args = {
           poll_waiter: poll_waiter,
           event_store: self,
@@ -110,7 +110,7 @@ module EventSourcery
       private
 
       def events_table
-        @pg_connection[@events_table_name]
+        @db_connection[@events_table_name]
       end
 
       def build_event(data)
@@ -159,7 +159,7 @@ module EventSourcery
                         else
                           value
                         end
-        @pg_connection.literal(wrapped_value)
+        @db_connection.literal(wrapped_value)
       end
 
       def log_events_saved(events)

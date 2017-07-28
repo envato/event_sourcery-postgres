@@ -1,8 +1,8 @@
 RSpec.describe EventSourcery::Postgres::Tracker do
-  subject(:postgres_tracker) { described_class.new(connection, table_name: table_name) }
+  subject(:postgres_tracker) { described_class.new(db_connection, table_name: table_name) }
   let(:table_name) { :tracker }
   let(:processor_name) { 'blah' }
-  let(:table) { connection[table_name] }
+  let(:table) { db_connection[table_name] }
   let(:track_entry) { table.where(name: processor_name).first }
 
   after do
@@ -14,19 +14,19 @@ RSpec.describe EventSourcery::Postgres::Tracker do
   end
 
   def setup_table
-    connection.execute "drop table if exists #{table_name}"
+    db_connection.execute "drop table if exists #{table_name}"
     postgres_tracker.setup(processor_name)
   end
 
   describe '#setup' do
     before do
-      connection.execute "drop table if exists #{table_name}"
+      db_connection.execute "drop table if exists #{table_name}"
     end
 
     context 'auto create projector tracker enabled' do
       it 'creates the table' do
         postgres_tracker.setup(processor_name)
-        expect(connection.table_exists?(table_name)).to be_truthy
+        expect(db_connection.table_exists?(table_name)).to be_truthy
       end
 
       it "creates an entry for the projector if it doesn't exist" do
@@ -44,7 +44,7 @@ RSpec.describe EventSourcery::Postgres::Tracker do
 
       it 'creates the table' do
         postgres_tracker.setup(processor_name)
-        expect(connection.table_exists?(table_name)).to be_truthy
+        expect(db_connection.table_exists?(table_name)).to be_truthy
       end
     end
 
@@ -92,11 +92,11 @@ RSpec.describe EventSourcery::Postgres::Tracker do
     end
 
     context 'unable to lock tracker row' do
-      let(:db) { new_connection }
+      let(:another_database_connection) { new_db_connection }
 
       it 'raises an error' do
         expect do
-          tracker = described_class.new(db, table_name: table_name)
+          tracker = described_class.new(another_database_connection, table_name: table_name)
           tracker.setup(processor_name)
         end.to raise_error(EventSourcery::UnableToLockProcessorError)
       end
@@ -104,13 +104,13 @@ RSpec.describe EventSourcery::Postgres::Tracker do
       context 'with obtain_processor_lock: false' do
         it "doesn't raises an error" do
           expect do
-            tracker = described_class.new(db, table_name: table_name, obtain_processor_lock: false)
+            tracker = described_class.new(another_database_connection, table_name: table_name, obtain_processor_lock: false)
             tracker.setup(processor_name)
           end.to_not raise_error
         end
       end
 
-      after { release_advisory_locks(db) }
+      after { release_advisory_locks(another_database_connection) }
     end
   end
 
@@ -139,7 +139,7 @@ RSpec.describe EventSourcery::Postgres::Tracker do
 
   describe '#tracked_processors' do
     before do
-      connection.execute "drop table if exists #{table_name}"
+      db_connection.execute "drop table if exists #{table_name}"
       postgres_tracker.setup
     end
 
