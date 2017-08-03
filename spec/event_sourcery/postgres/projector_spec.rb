@@ -188,5 +188,26 @@ RSpec.describe EventSourcery::Postgres::Projector do
         expect(db_connection[:profiles].count).to eq 0
       end
     end
+
+    describe 'logging' do
+      it 'logs debug messages for each processed event' do
+        expect(EventSourcery.logger).to receive(:debug) do |&block|
+          expect(block.call).to eq "[test_processor] Processed event: #{events[0].inspect}"
+        end
+        expect(EventSourcery.logger).to receive(:debug) do |&block|
+          expect(block.call).to eq "[test_processor] Processed event: #{events[1].inspect}"
+        end
+
+        projector.subscribe_to(event_store, subscription_master: subscription_master)
+      end
+
+      it 'logs an info message with the id of the last processed event' do
+        expect(EventSourcery.logger).to receive(:info) do |&block|
+          expect(block.call).to eq "[test_processor] Processed up to event id: 2"
+        end
+
+        projector.subscribe_to(event_store, subscription_master: subscription_master)
+      end
+    end
   end
 end
