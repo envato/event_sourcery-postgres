@@ -170,7 +170,6 @@ RSpec.describe EventSourcery::Postgres::Projector do
     end
 
     context 'when an error occurs processing the event' do
-
       it 'rolls back the projected changes' do
         projector.raise_error = true
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
