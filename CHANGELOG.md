@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
 
+- Only send info log after processing a group of events
 
 ## [0.5.0] - 2017-7-27
 - First Version of YARD documentation.
