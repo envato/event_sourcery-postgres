@@ -12,10 +12,10 @@ module EventSourcery
       end
 
       # Set up the given processor.
-      # This will create the projector tracker table if it does not exits.
+      # This will create the projector tracker table if it does not exist.
       # If given a processor_name it will then attempt to get a lock on the db.
       #
-      # @param processor_name the name of the procerror
+      # @param processor_name the name of the processor
       def setup(processor_name = nil)
         create_table_if_not_exists if EventSourcery::Postgres.config.auto_create_projector_tracker
 
@@ -34,7 +34,7 @@ module EventSourcery
       # This will updated the tracker table to the given event id value
       # for the given processor name.
       #
-      # @param processor_name the name of the processor to udpate
+      # @param processor_name the name of the processor to update
       # @param event_id the event id number to update to
       def processed_event(processor_name, event_id)
         table.
@@ -44,7 +44,7 @@ module EventSourcery
       end
 
       # This allows you to process an event and update the tracker table in
-      # a single transaction. Will yeild the given block first then update the
+      # a single transaction. Will yield the given block first then update the
       # the tracker table to the give event id for the given processor name.
       #
       # @param processor_name the name of the processor to update

@@ -9,14 +9,14 @@ module EventSourcery
       end
 
       module ClassMethods
-        # Hash of the tables and thier corresponding blocks.
+        # Hash of the tables and their corresponding blocks.
         #
         # @return [Hash] hash keyed by table names and block values
         def tables
           @tables ||= {}
         end
 
-        # For the givent table name assign to give block as the value.
+        # For the given table name assign to give block as the value.
         #
         # @param name the name of the table
         # @param block the block of code to assign for the table
