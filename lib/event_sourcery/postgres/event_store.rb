@@ -15,7 +15,7 @@ module EventSourcery
         @event_builder = event_builder
       end
 
-      # Like water flowing into a sink evenually it will go down the drain
+      # Like water flowing into a sink eventually it will go down the drain
       # into the goodness of the plumbing system.
       # So to will the given events you put in this 'sink'. Except the plumbing
       # system is the data base events table.
@@ -43,10 +43,10 @@ module EventSourcery
       end
 
       # Get the next set of events from the given event id. You can
-      # specify event typs and a limit.
+      # specify event types and a limit.
       # Default limit is 1000 and the default event types will be all.
       #
-      # @param id the event id to get next envents from
+      # @param id the event id to get next events from
       # @param event_types the event types to filter, default nil = all
       # @param limit the limit to the results, default 1000
       #

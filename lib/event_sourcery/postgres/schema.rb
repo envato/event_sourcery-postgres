@@ -58,7 +58,7 @@ module EventSourcery
         end
       end
 
-      # Create the 'create or update' fucntions.
+      # Create the 'create or update' functions.
       # Needs the database, table name, function name and aggregates table name.
       # The defaults will be whats specified in config.
       #
