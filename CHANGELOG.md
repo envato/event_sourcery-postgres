@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Only send info log after processing a group of events
 
+### Removed
+  - Remove `processes_events` and `projects_events` as these have been [removed
+  in event_sourcery](https://github.com/envato/event_sourcery/pull/161).
+
 ## [0.5.0] - 2017-7-27
 - First Version of YARD documentation.
 - Fix Sequel deprecation by globally loading pg extensions
