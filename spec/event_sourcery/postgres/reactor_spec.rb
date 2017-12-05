@@ -7,9 +7,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
     Class.new do
       include EventSourcery::Postgres::Reactor
 
-      processes_events :terms_accepted
-
-      def process(event)
+      process TermsAccepted do |event|
         @processed_event = event
       end
 
@@ -20,10 +18,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
     Class.new do
       include EventSourcery::Postgres::Reactor
 
-      processes_events :terms_accepted
       emits_events TermsConfirmationEmailSent
 
-      def process(event)
+      process TermsAccepted do |event|
       end
     end
   end
@@ -112,7 +109,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
   describe '#reset' do
     it 'resets last processed event ID' do
-      reactor.process(OpenStruct.new(type: :terms_accepted, id: 1))
+      reactor.process(TermsAccepted.new(id: 1))
       reactor.reset
       expect(tracker.last_processed_event_id(:test_processor)).to eq 0
     end
@@ -145,7 +142,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
   end
 
   describe '#process' do
-    let(:event) { OpenStruct.new(type: :terms_accepted, id: 1) }
+    let(:event) { TermsAccepted.new(id: 1) }
 
     it "projects events it's interested in" do
       reactor.process(event)
@@ -190,10 +187,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         Class.new do
           include EventSourcery::Postgres::Reactor
 
-          processes_events :terms_accepted
           emits_events EchoEvent
 
-          def process(event)
+          process TermsAccepted do |event|
             @event = event
             emit_event(EchoEvent.new(aggregate_id: event.aggregate_id, body: event.body)) do
               TestActioner.action(event.id)
@@ -222,10 +218,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           Class.new do
             include EventSourcery::Postgres::Reactor
 
-            processes_events :terms_accepted
             emits_events EchoEvent
 
-            def process(event)
+            process TermsAccepted do |event|
               emit_event(EchoEvent.new(aggregate_id: event.aggregate_id, body: event.body))
             end
           end
@@ -254,10 +249,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           Class.new do
             include EventSourcery::Postgres::Reactor
 
-            processes_events :terms_accepted
             emits_events EchoEvent
 
-            def process(event)
+            process TermsAccepted do |event|
               emit_event(ItemViewed.new(aggregate_id: event.aggregate_id, body: event.body))
             end
           end
@@ -276,10 +270,9 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           Class.new do
             include EventSourcery::Postgres::Reactor
 
-            processes_events :terms_accepted
             emits_events EchoEvent
 
-            def process(event)
+            process TermsAccepted do |event|
               emit_event(EchoEvent.new(aggregate_id: event.aggregate_id)) do |body|
                 body[:token] = 'secret-identifier'
               end

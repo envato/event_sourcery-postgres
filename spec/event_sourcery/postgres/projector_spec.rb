@@ -4,14 +4,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
       include EventSourcery::Postgres::Projector
       processor_name 'test_processor'
 
-      processes_events :terms_accepted
-
       table :profiles do
         column :user_uuid, 'UUID NOT NULL'
         column :terms_accepted, 'BOOLEAN DEFAULT FALSE'
       end
 
-      def process(event)
+      process TermsAccepted do |event|
         @processed_event = event
         table.insert(user_uuid: event.aggregate_id,
                      terms_accepted: true)
@@ -27,7 +25,6 @@ RSpec.describe EventSourcery::Postgres::Projector do
     Class.new do
       include EventSourcery::Postgres::Projector
       processor_name 'test_processor'
-      processes_events :terms_accepted
 
       table :profiles do
         column :user_uuid, 'UUID NOT NULL'
@@ -83,16 +80,6 @@ RSpec.describe EventSourcery::Postgres::Projector do
   describe '#project' do
     let(:event) { new_event(type: :terms_accepted) }
 
-    it 'processes events via project method' do
-      projector = new_projector do
-        def project(event)
-          @processed_event = event
-        end
-      end
-      projector.project(event)
-      expect(projector.processed_event).to eq(event)
-    end
-
     it 'processes events with custom classes' do
       projector = new_projector do
         project ItemAdded do |event|
@@ -102,23 +89,6 @@ RSpec.describe EventSourcery::Postgres::Projector do
       event = ItemAdded.new
       projector.project(event)
       expect(projector.processed_event).to eq(event)
-    end
-
-    it 'raises if neither are defined' do
-      projector = new_projector
-      expect {
-        projector.project(event)
-      }.to raise_error(EventSourcery::EventProcessingError)
-    end
-  end
-
-  describe '.projects_events' do
-    it 'is aliased to processes_events' do
-      projector_class = Class.new do
-        include EventSourcery::Postgres::Projector
-        projects_events :item_added
-      end
-      expect(projector_class.processes?(:item_added)).to eq true
     end
   end
 
@@ -142,8 +112,6 @@ RSpec.describe EventSourcery::Postgres::Projector do
         include EventSourcery::Postgres::Projector
         processor_name 'test_processor'
 
-        processes_events :terms_accepted
-
         table :profiles do
           column :user_uuid, 'UUID NOT NULL'
           column :terms_accepted, 'BOOLEAN DEFAULT FALSE'
@@ -151,7 +119,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
         attr_accessor :raise_error
 
-        def process(event)
+        process TermsAccepted do |event|
           table.insert(user_uuid: event.aggregate_id,
                        terms_accepted: true)
           raise 'boo' if raise_error
