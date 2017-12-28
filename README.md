@@ -22,7 +22,6 @@ gem 'event_sourcery-postgres'
 EventSourcery::Postgres.configure do |config|
   config.event_store_database = Sequel.connect(...)
   config.projections_database = Sequel.connect(...)
-  config.use_optimistic_concurrency = true
   config.write_events_function_name = 'writeEvents'
   config.events_table_name = :events
   config.aggregates_table_name = :aggregates
