@@ -1,3 +1,5 @@
+require 'timeout'
+
 RSpec.describe EventSourcery::Postgres::EventStore do
   let(:supports_versions) { true }
   subject(:event_store) { described_class.new(db_connection) }
