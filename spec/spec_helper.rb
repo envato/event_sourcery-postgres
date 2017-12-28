@@ -94,3 +94,9 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
+
+require 'event_sourcery/postgres'
+require 'event_sourcery/rspec/event_store_shared_examples'
+require 'timeout'
+
+Dir.glob(File.join(__dir__, 'support/**/*.rb')) { |f| require f }
