@@ -1,19 +1,21 @@
 module EventSourcery
   module Postgres
     class Config
-      attr_accessor :event_store_database,
-                    :lock_table_to_guarantee_linear_sequence_id_growth,
+      attr_accessor :lock_table_to_guarantee_linear_sequence_id_growth,
                     :write_events_function_name,
                     :events_table_name,
                     :aggregates_table_name,
                     :tracker_table_name,
                     :callback_interval_if_no_new_events,
                     :auto_create_projector_tracker,
-                    :event_tracker,
-                    :projections_database,
-                    :event_store,
-                    :event_source,
-                    :event_sink
+                    :event_tracker
+
+      attr_writer :event_store,
+                  :event_source,
+                  :event_sink
+
+      attr_reader :event_store_database,
+                  :projections_database
 
       def initialize
         @lock_table_to_guarantee_linear_sequence_id_growth = true
