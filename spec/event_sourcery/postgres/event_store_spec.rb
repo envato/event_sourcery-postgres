@@ -12,6 +12,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
           event_id = Integer(payload)
         end
       end
+      expect(event_id).not_to be_nil
     end
   end
 
