@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
   - Remove `processes_events` and `projects_events` as these have been [removed
   in event_sourcery](https://github.com/envato/event_sourcery/pull/161).
-  - Remove restriction on `sequel` gem dependency version. Now accepts versions
+  - Remove upperbound version restriction on `sequel` gem. Now accepts versions
     5 and higher.
 
 ## [0.5.0] - 2017-7-27
