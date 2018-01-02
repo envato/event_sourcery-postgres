@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.2.0'
 
-  spec.add_dependency 'sequel', '~> 4.38'
+  spec.add_dependency 'sequel', '>= 4.38'
   spec.add_dependency 'pg'
   spec.add_dependency 'event_sourcery', '>= 0.14.0'
   spec.add_development_dependency 'bundler', '~> 1.10'
