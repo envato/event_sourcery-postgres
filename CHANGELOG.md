@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Removed
+- Remove upper bound version restriction on `sequel` gem. Now accepts versions
+  5 and higher.
+
+## [0.6.0] - 2018-1-2
 ### Changed
 
 - Only send info log after processing a group of events
@@ -12,8 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
   - Remove `processes_events` and `projects_events` as these have been [removed
   in event_sourcery](https://github.com/envato/event_sourcery/pull/161).
-  - Remove upperbound version restriction on `sequel` gem. Now accepts versions
-    5 and higher.
 
 ## [0.5.0] - 2017-7-27
 - First Version of YARD documentation.
