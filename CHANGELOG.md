@@ -1,4 +1,5 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -55,8 +56,15 @@ or when the loop stops
 ### Added
 - Configure projector tracker table name via `EventSourcery::Postgres.configure`
 
-## [0.1.0] - 2017-5-26
+## 0.1.0 - 2017-5-26
 ### Changed
 - Imported code from the [event_sourcery](https://github.com/envato/event_sourcery).
 - Postgres related configuration is through `EventSourcery::Postgres.configure`
   instead of `EventSourcery.configure`.
+
+[Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.1.0...v0.2.0
