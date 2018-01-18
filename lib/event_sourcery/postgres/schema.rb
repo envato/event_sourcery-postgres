@@ -99,7 +99,7 @@ if not found then
     insert into #{aggregates_table_name}(aggregate_id, version) values(_aggregateId, numEvents);
     currentVersion := 0;
   else
-    raise 'Concurrency conflict. Current version: 0, expected version: %', _expectedVersion;
+    raise 'Concurrency conflict for (%) Current version: 0, expected version: %', _aggregateId, _expectedVersion;
   end if;
 else
   if _expectedVersion is null then
@@ -114,7 +114,7 @@ else
       -- currentVersion may not equal what it did in the database when the
       -- above update statement is executed (it may have been incremented by another
       -- process)
-      raise 'Concurrency conflict. Last known current version: %, expected version: %', currentVersion, _expectedVersion;
+      raise 'Concurrency conflict for (%) Current version: %, expected version: %', _aggregateId, currentVersion, _expectedVersion;
     end if;
   end if;
 end if;
