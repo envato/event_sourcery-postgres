@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Remove upper bound version restriction on `sequel` gem. Now accepts versions
   5 and higher.
+- Additional logging on writevents schema to include aggregate id
 
 ## [0.6.0] - 2018-1-2
 ### Changed
