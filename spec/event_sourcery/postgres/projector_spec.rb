@@ -119,7 +119,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
         attr_accessor :raise_error
 
-        process TermsAccepted do |event|
+        process do |event|
           table.insert(user_uuid: event.aggregate_id,
                        terms_accepted: true)
           raise 'boo' if raise_error
