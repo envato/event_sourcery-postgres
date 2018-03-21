@@ -78,7 +78,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
   end
 
   describe '#project' do
-    let(:event) { new_event(type: :terms_accepted) }
+    let(:event) { ItemAdded.new }
 
     it 'processes events with custom classes' do
       projector = new_projector do
@@ -86,8 +86,9 @@ RSpec.describe EventSourcery::Postgres::Projector do
           @processed_event = event
         end
       end
-      event = ItemAdded.new
+
       projector.project(event)
+
       expect(projector.processed_event).to eq(event)
     end
   end
