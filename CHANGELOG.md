@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add a `projector_transaction_size` config option to control how many events
+  are processed before the transaction is commited. The default value is 1 to
+  match the existing behavour.
+
+  We suggest setting this to match the number of events returned from the event
+  store subscription. This is [now configurable](https://github.com/envato/event_sourcery/pull/197)
+  in event_sourcery by configuring `subscription_batch_size`.
 
 ### Removed
 - Remove upper bound version restriction on `sequel` gem. Now accepts versions
