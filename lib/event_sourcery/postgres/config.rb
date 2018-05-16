@@ -27,7 +27,7 @@ module EventSourcery
         @callback_interval_if_no_new_events = 10
         @event_store_database = nil
         @auto_create_projector_tracker = true
-        @projector_transaction_size = 1
+        @projector_transaction_size = nil
       end
 
       def event_store

@@ -21,7 +21,7 @@ module EventSourcery
                        transaction_size: EventSourcery::Postgres.config.projector_transaction_size)
           @tracker = tracker
           @db_connection = db_connection
-          @transaction_size = transaction_size
+          @transaction_size = transaction_size || 1
         end
 
         private

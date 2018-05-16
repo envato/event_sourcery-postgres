@@ -51,7 +51,8 @@ module EventSourcery
       # @param limit the limit to the results, default 1000
       #
       # @return [Array] array of found events
-      def get_next_from(id, event_types: nil, limit: 1000)
+      def get_next_from(id, event_types: nil, limit: 1000) #EventSourcery::Postgres.config.batch_size)
+        # Default 1000
         query = events_table.
           order(:id).
           where(Sequel.lit('id >= ?', id)).
@@ -95,6 +96,7 @@ module EventSourcery
       # @param subscription_master the subscription master block
       def subscribe(from_id:, event_types: nil, after_listen: nil, subscription_master:, &block)
         poll_waiter = OptimisedEventPollWaiter.new(db_connection: @db_connection, after_listen: after_listen)
+        # TODO: Inline args
         args = {
           poll_waiter: poll_waiter,
           event_store: self,
@@ -104,7 +106,9 @@ module EventSourcery
           subscription_master: subscription_master,
           on_new_events: block
         }
-        EventSourcery::EventStore::Subscription.new(args).tap(&:start)
+        s = EventSourcery::EventStore::Subscription.new(args).tap(&:start)
+        require 'pry'; binding.pry
+        s
       end
 
       private
