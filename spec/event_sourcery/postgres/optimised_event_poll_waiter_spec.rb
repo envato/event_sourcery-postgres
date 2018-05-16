@@ -46,9 +46,11 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
     end
 
     it 'raise an error' do
-      expect {
-        waiter.poll {}
-      }.to raise_error(described_class::ListenThreadDied)
+      quiet_thread_report_on_exception do
+        expect {
+          waiter.poll {}
+        }.to raise_error(described_class::ListenThreadDied)
+      end
     end
   end
 
@@ -79,6 +81,19 @@ RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
           throw :stop
         end
       end
+    end
+  end
+
+  def quiet_thread_report_on_exception(&block)
+    if Thread.respond_to?(:report_on_exception)
+      orig_report_on_exception = Thread.report_on_exception
+      Thread.report_on_exception = false
+
+      block.call
+
+      Thread.report_on_exception = orig_report_on_exception
+    else
+      block.call
     end
   end
 end
