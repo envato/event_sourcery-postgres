@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove upper bound version restriction on `sequel` gem. Now accepts versions
   5 and higher.
 
-## [0.6.0] - 2018-1-2
+## [0.6.0] - 2018-01-02
 ### Changed
 
 - Only send info log after processing a group of events
@@ -28,11 +28,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Remove `processes_events` and `projects_events` as these have been [removed
   in event_sourcery](https://github.com/envato/event_sourcery/pull/161).
 
-## [0.5.0] - 2017-7-27
+## [0.5.0] - 2017-07-27
 - First Version of YARD documentation.
 - Fix Sequel deprecation by globally loading pg extensions
 
-## [0.4.0] - 2017-6-21
+## [0.4.0] - 2017-06-21
 ### Changed
 - Reactors store the UUID of the event being processed in the `causation_id`
   of any emitted events. This replaces the old behaviour of storing id of the
@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added index on the `events` table for `correlation_id` and `causation_id`
   columns.
 
-## [0.3.0] - 2017-6-16
+## [0.3.0] - 2017-06-16
 ### Changed
 - The event store persists the event `correlation_id` and `causation_id`.
   To facilitate this `correlation_id` and `causation_id` columns have been
@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The emit_events method now accepts typed events instead of symbols
 - Remove dynamic emit events methods from reactors (e.g. emit_item_added)
 
-## [0.2.0] - 2017-6-1
+## [0.2.0] - 2017-06-01
 ### Changed
 - Make `EventSourcery::Postgres::OptimisedEventPollWaiter#shutdown` private
 - Updated `EventSourcery::Postgres::OptimisedEventPollWaiter#poll` to ensure that `#shutdown!` is run when an error is raised
@@ -64,7 +64,7 @@ or when the loop stops
 ### Added
 - Configure projector tracker table name via `EventSourcery::Postgres.configure`
 
-## 0.1.0 - 2017-5-26
+## 0.1.0 - 2017-05-26
 ### Changed
 - Imported code from the [event_sourcery](https://github.com/envato/event_sourcery).
 - Postgres related configuration is through `EventSourcery::Postgres.configure`
