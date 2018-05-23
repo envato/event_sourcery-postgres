@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.7.0] - 2018-05-23
 ### Added
 - Add a `projector_transaction_size` config option to control how many events
   are processed before the transaction is commited. The default value is 1 to
