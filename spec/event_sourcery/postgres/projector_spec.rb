@@ -37,10 +37,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
     end.new(tracker: tracker, db_connection: db_connection)
   end
 
+  let(:projector_transaction_size) { 1 }
   subject(:projector) do
     projector_class.new(
       tracker: tracker,
-      db_connection: db_connection
+      db_connection: db_connection,
+      transaction_size: projector_transaction_size,
     )
   end
   let(:aggregate_id) { SecureRandom.uuid }
@@ -78,7 +80,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
   end
 
   describe '#project' do
-    let(:event) { new_event(type: :terms_accepted) }
+    let(:event) { ItemAdded.new }
 
     it 'processes events with custom classes' do
       projector = new_projector do
@@ -86,8 +88,9 @@ RSpec.describe EventSourcery::Postgres::Projector do
           @processed_event = event
         end
       end
-      event = ItemAdded.new
+
       projector.project(event)
+
       expect(projector.processed_event).to eq(event)
     end
   end
@@ -117,12 +120,12 @@ RSpec.describe EventSourcery::Postgres::Projector do
           column :terms_accepted, 'BOOLEAN DEFAULT FALSE'
         end
 
-        attr_accessor :raise_error
+        attr_accessor :raise_error, :raise_error_on_event_id
 
-        process TermsAccepted do |event|
+        process do |event|
           table.insert(user_uuid: event.aggregate_id,
                        terms_accepted: true)
-          raise 'boo' if raise_error
+          raise 'boo' if raise_error || raise_error_on_event_id == event.id
         end
       end
     end
@@ -140,6 +143,24 @@ RSpec.describe EventSourcery::Postgres::Projector do
     context 'when an error occurs processing the event' do
       it 'rolls back the projected changes' do
         projector.raise_error = true
+        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        expect(db_connection[:profiles].count).to eq 0
+      end
+    end
+
+    context 'with a transaction size of 1' do
+      it 'rolls back the projected changes for the single event' do
+        projector.raise_error_on_event_id = 2
+        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        expect(db_connection[:profiles].count).to eq 1
+      end
+    end
+
+    context 'with a transaction size of 2' do
+      let(:projector_transaction_size) { 2 }
+
+      it 'rolls back the projected changes for both events' do
+        projector.raise_error_on_event_id = 2
         projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
         expect(db_connection[:profiles].count).to eq 0
       end

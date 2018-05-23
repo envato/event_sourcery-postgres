@@ -17,22 +17,30 @@ module EventSourcery
 
       module InstanceMethods
         def initialize(tracker: EventSourcery::Postgres.config.event_tracker,
-                       db_connection: EventSourcery::Postgres.config.projections_database)
+                       db_connection: EventSourcery::Postgres.config.projections_database,
+                       transaction_size: EventSourcery::Postgres.config.projector_transaction_size)
           @tracker = tracker
           @db_connection = db_connection
+          @transaction_size = transaction_size
         end
 
         private
 
+        attr_reader :transaction_size
+
         def process_events(events, subscription_master)
-          events.each do |event|
+          events.each_slice(transaction_size) do |slice_of_events|
             subscription_master.shutdown_if_requested
+
             db_connection.transaction do
-              process(event)
-              tracker.processed_event(processor_name, event.id)
+              slice_of_events.each do |event|
+                process(event)
+                EventSourcery.logger.debug { "[#{processor_name}] Processed event: #{event.inspect}" }
+              end
+              tracker.processed_event(processor_name, slice_of_events.last.id)
             end
-            EventSourcery.logger.debug { "[#{processor_name}] Processed event: #{event.inspect}" }
           end
+
           EventSourcery.logger.info { "[#{processor_name}] Processed up to event id: #{events.last.id}" }
         end
       end
