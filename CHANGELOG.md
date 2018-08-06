@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.8.0]
+###
+- Add a `on_events_recorded` config option, that defaults to a no-op proc, \
+  to handle any app specific logic after the events are recoded on `EventStore#sink`
+
 ## [0.7.0] - 2018-05-23
 ### Added
 - Add a `projector_transaction_size` config option to control how many events

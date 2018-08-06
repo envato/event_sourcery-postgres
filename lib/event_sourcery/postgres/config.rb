@@ -9,7 +9,8 @@ module EventSourcery
                     :callback_interval_if_no_new_events,
                     :auto_create_projector_tracker,
                     :event_tracker,
-                    :projector_transaction_size
+                    :projector_transaction_size,
+                    :on_events_recorded
 
       attr_writer :event_store,
                   :event_source,
@@ -28,6 +29,7 @@ module EventSourcery
         @event_store_database = nil
         @auto_create_projector_tracker = true
         @projector_transaction_size = 1
+        @on_events_recorded = ->(events) {}
       end
 
       def event_store
