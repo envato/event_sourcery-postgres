@@ -7,12 +7,14 @@ module EventSourcery
                      events_table_name: EventSourcery::Postgres.config.events_table_name,
                      lock_table: EventSourcery::Postgres.config.lock_table_to_guarantee_linear_sequence_id_growth,
                      write_events_function_name: EventSourcery::Postgres.config.write_events_function_name,
-                     event_builder: EventSourcery.config.event_builder)
+                     event_builder: EventSourcery.config.event_builder,
+                     on_events_recorded: EventSourcery::Postgres.config.on_events_recorded)
         @db_connection = db_connection
         @events_table_name = events_table_name
         @write_events_function_name = write_events_function_name
         @lock_table = lock_table
         @event_builder = event_builder
+        @on_events_recorded = on_events_recorded
       end
 
       # Like water flowing into a sink eventually it will go down the drain
@@ -33,6 +35,7 @@ module EventSourcery
         sql = write_events_sql(aggregate_ids.first, events, expected_version)
         @db_connection.run(sql)
         log_events_saved(events)
+        on_events_recorded.call(events)
         true
       rescue Sequel::DatabaseError => e
         if e.message =~ /Concurrency conflict/
@@ -108,6 +111,8 @@ module EventSourcery
       end
 
       private
+
+      attr_reader :on_events_recorded
 
       def events_table
         @db_connection[@events_table_name]

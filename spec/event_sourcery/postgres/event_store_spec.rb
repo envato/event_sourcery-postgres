@@ -7,6 +7,14 @@ RSpec.describe EventSourcery::Postgres::EventStore do
   include_examples 'an event store'
 
   describe '#sink' do
+    let(:on_events_recorded_proc) { double("OnEventsRecordedProc", call: nil) }
+
+    before do
+      allow(EventSourcery::Postgres.config)
+        .to receive(:on_events_recorded)
+        .and_return(on_events_recorded_proc)
+    end
+
     it 'notifies about a new event' do
       event_id = nil
       Timeout.timeout(1) do
@@ -14,7 +22,9 @@ RSpec.describe EventSourcery::Postgres::EventStore do
           event_id = Integer(payload)
         end
       end
+
       expect(event_id).not_to be_nil
+      expect(on_events_recorded_proc).to have_received(:call)
     end
   end
 
