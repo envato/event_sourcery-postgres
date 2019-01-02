@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add Ruby 2.6 to the CI test matrix.
 
 ## [0.8.0]
-###
+### Added
 - Add a `on_events_recorded` config option, that defaults to a no-op proc, \
   to handle any app specific logic after the events are recoded on `EventStore#sink`
 
@@ -79,7 +79,9 @@ or when the loop stops
 - Postgres related configuration is through `EventSourcery::Postgres.configure`
   instead of `EventSourcery.configure`.
 
-[Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/envato/event_sourcery-postgres/compare/v0.3.0...v0.4.0
