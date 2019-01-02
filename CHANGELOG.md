@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Add Ruby 2.6 to the CI test matrix.
+
 ## [0.8.0]
 ###
 - Add a `on_events_recorded` config option, that defaults to a no-op proc, \
