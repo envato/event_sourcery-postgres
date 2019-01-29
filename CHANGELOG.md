@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add Ruby 2.6 to the CI test matrix.
 
+### Removed
+- Remove Ruby 2.2 from the CI test matrix.
+
 ## [0.8.0]
 ### Added
 - Add a `on_events_recorded` config option, that defaults to a no-op proc, \
