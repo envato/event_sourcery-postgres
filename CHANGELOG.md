@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Remove Ruby 2.2 from the CI test matrix.
 
+### Fixed
+- Upgrade development dependency Rake to version 13. This resolves
+  [CVE-2020-8130](https://github.com/advisories/GHSA-jppv-gw3r-w3q8).
+
 ## [0.8.0]
 ### Added
 - Add a `on_events_recorded` config option, that defaults to a no-op proc, \
