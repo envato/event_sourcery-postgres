@@ -10,7 +10,7 @@ module DBHelpers
   end
 
   module_function def postgres_url
-    ENV.fetch('BOXEN_POSTGRESQL_URL', 'postgres://127.0.0.1:5432/')
+    ENV.fetch('POSTGRESQL_URL', 'postgres://127.0.0.1:5432/')
   end
 
   def reset_database
