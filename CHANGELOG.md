@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Remove Ruby 2.2 from the CI test matrix.
+- Support for Boxen.
 
 ### Fixed
 - Upgrade development dependency Rake to version 13. This resolves
