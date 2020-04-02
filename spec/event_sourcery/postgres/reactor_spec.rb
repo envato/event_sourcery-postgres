@@ -35,8 +35,6 @@ RSpec.describe EventSourcery::Postgres::Reactor do
   let(:events) { [] }
   subject(:reactor) { reactor_class.new(tracker: tracker, event_source: event_source, event_sink: event_sink) }
 
-  after { release_advisory_locks }
-
   describe '.new' do
     let(:event_source) { double }
     let(:event_sink) { double }
