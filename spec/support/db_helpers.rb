@@ -38,4 +38,5 @@ RSpec.configure do |config|
   config.include(DBHelpers)
   config.before(:suite) { DBHelpers.recreate_database }
   config.before(:example) { DBHelpers.reset_database }
+  config.after(:example) { DBHelpers.release_advisory_locks }
 end
