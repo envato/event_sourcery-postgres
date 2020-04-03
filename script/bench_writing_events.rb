@@ -15,7 +15,7 @@ require 'securerandom'
 require 'sequel'
 require 'event_sourcery/postgres'
 
-pg_uri = ENV.fetch('BOXEN_POSTGRESQL_URL') { 'postgres://127.0.0.1:5432/' }.dup
+pg_uri = ENV.fetch('POSTGRESQL_URL', 'postgres://127.0.0.1:5432/').dup
 pg_uri << 'event_sourcery_test'
 pg_connection = Sequel.connect(pg_uri)
 
