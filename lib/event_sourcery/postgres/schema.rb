@@ -53,7 +53,7 @@ module EventSourcery
       def create_aggregates(db: EventSourcery::Postgres.config.event_store_database,
                             table_name: EventSourcery::Postgres.config.aggregates_table_name)
         db.create_table(table_name) do
-          primary_key :aggregate_id, :uuid
+          uuid :aggregate_id, primary_key: true
           column :version, :bigint, default: 1
         end
       end
