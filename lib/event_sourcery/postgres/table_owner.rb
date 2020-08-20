@@ -29,7 +29,9 @@ module EventSourcery
       def setup
         self.class.tables.each do |table_name, schema_block|
           prefixed_name = table_name_prefixed(table_name)
-          @db_connection.create_table?(prefixed_name, &schema_block)
+          unless @db_connection.table_exists? prefixed_name
+            @db_connection.create_table(prefixed_name, &schema_block)
+          end
         end
         super if defined?(super)
       end
