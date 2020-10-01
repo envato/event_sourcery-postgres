@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Add Ruby 2.6 to the CI test matrix.
+- Add Ruby 2.6 and 2.7 to the CI test matrix.
 
 ### Removed
 - Remove Ruby 2.2 from the CI test matrix.
