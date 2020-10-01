@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Upgrade development dependency Rake to version 13. This resolves
   [CVE-2020-8130](https://github.com/advisories/GHSA-jppv-gw3r-w3q8).
 
+- Resolve warnings raised when running on Ruby 2.7.
+
 ## [0.8.0]
 ### Added
 - Add a `on_events_recorded` config option, that defaults to a no-op proc, \
