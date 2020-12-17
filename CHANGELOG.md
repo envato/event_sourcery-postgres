@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- This project now uses `main` as its default branch.
+- Documentation updated to refer to `main` and update links accordingly.
+
 ## [0.8.1] - 2020-10-02
 ### Added
 - Add Ruby 2.6 and 2.7 to the CI test matrix.
