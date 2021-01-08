@@ -1,6 +1,6 @@
 # EventSourcery::Postgres
 
-[![Build Status](https://travis-ci.org/envato/event_sourcery-postgres.svg?branch=master)](https://travis-ci.org/envato/event_sourcery-postgres)
+[![Build Status](https://github.com/envato/event_sourcery-postgres/workflows/tests/badge.svg?branch=master)](https://github.com/envato/event_sourcery-postgres/actions?query=workflow%3Atests+branch%3Amaster)
 
 ## Development Status
 

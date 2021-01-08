@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+
+- Use GitHub Actions for the CI build instead of Travis CI ([#66]).
+
+[#66]: https://github.com/envato/event_sourcery-postgres/pull/66
 
 ## [0.8.1] - 2020-10-02
 ### Added
