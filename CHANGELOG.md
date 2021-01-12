@@ -6,11 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+
+- Test against Ruby 3.0 in the CI build ([#67]).
 
 ### Changed
 
-- This project now uses `main` as its default branch.
-- Documentation updated to refer to `main` and update links accordingly.
+- Use GitHub Actions for the CI build instead of Travis CI ([#66]).
+- This project now uses `main` as its default branch ([#68]).
+  - Documentation updated to refer to `main` and links updated accordingly.
+
+[#66]: https://github.com/envato/event_sourcery-postgres/pull/66
+[#67]: https://github.com/envato/event_sourcery-postgres/pull/67
+[#68]: https://github.com/envato/event_sourcery-postgres/pull/68
+
+### Changed
+
 
 ## [0.8.1] - 2020-10-02
 ### Added
