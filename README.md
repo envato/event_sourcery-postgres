@@ -1,6 +1,6 @@
 # EventSourcery::Postgres
 
-[![Build Status](https://github.com/envato/event_sourcery-postgres/workflows/tests/badge.svg?branch=master)](https://github.com/envato/event_sourcery-postgres/actions?query=workflow%3Atests+branch%3Amaster)
+[![Build Status](https://github.com/envato/event_sourcery-postgres/workflows/tests/badge.svg?branch=main)](https://github.com/envato/event_sourcery-postgres/actions?query=workflow%3Atests+branch%3Amain)
 
 ## Development Status
 
@@ -89,7 +89,7 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 To release a new version:
 
 1. Update the version number in `lib/event_sourcery/postgres/version.rb`
-2. Get this change onto master via the normal PR process
+2. Get this change onto main via the normal PR process
 3. Run `bundle exec rake release`, this will create a git tag for the
    version, push tags up to GitHub, and upload the gem to rubygems.org.
 

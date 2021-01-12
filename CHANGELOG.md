@@ -13,9 +13,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Use GitHub Actions for the CI build instead of Travis CI ([#66]).
+- This project now uses `main` as its default branch ([#68]).
+  - Documentation updated to refer to `main` and links updated accordingly.
 
 [#66]: https://github.com/envato/event_sourcery-postgres/pull/66
 [#67]: https://github.com/envato/event_sourcery-postgres/pull/67
+[#68]: https://github.com/envato/event_sourcery-postgres/pull/68
 
 ## [0.8.1] - 2020-10-02
 ### Added
