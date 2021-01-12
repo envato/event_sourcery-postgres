@@ -20,9 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [#67]: https://github.com/envato/event_sourcery-postgres/pull/67
 [#68]: https://github.com/envato/event_sourcery-postgres/pull/68
 
-### Changed
-
-
 ## [0.8.1] - 2020-10-02
 ### Added
 - Add Ruby 2.6 and 2.7 to the CI test matrix.
