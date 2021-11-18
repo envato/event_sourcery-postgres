@@ -16,9 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - This project now uses `main` as its default branch ([#68]).
   - Documentation updated to refer to `main` and links updated accordingly.
 
+### Removed
+- Remove Ruby 2.3, 2.4 and 2.5 from the CI test matrix ([#70]).
+
 [#66]: https://github.com/envato/event_sourcery-postgres/pull/66
 [#67]: https://github.com/envato/event_sourcery-postgres/pull/67
 [#68]: https://github.com/envato/event_sourcery-postgres/pull/68
+[#70]: https://github.com/envato/event_sourcery-postgres/pull/70
 
 ## [0.8.1] - 2020-10-02
 ### Added
