@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Changed
+
+- The `events` table `type` modified to include both `id` and `type` ([#69]).
+  - This change should not affect existing applications. However, it is **recommended** to apply similar changes to the `events` table by adding a new index.
+  - To create a new index, the following SQL could be executed manually on event store database:
+    ```sql
+    CREATE INDEX events_id_type_index ON events ("id", "type");
+    ```
+    Keep in mind that creating a new index will lock the table. To prevent that, you can use the following SQL:
+    ```sql
+    CREATE INDEX CONCURRENTLY events_id_type_index ON events ("id", "type");
+    ```
+    Read more about creating index on [PostgreSQL documentation](https://www.postgresql.org/docs/current/sql-createindex.html).
+  - (optional) To drop the existing `type` index, the following SQL could be executed manually on event store database:
+    ```sql
+    DROP INDEX events_type_index;
+    ```
+    Note that you might need to keep this index if you have a custom script that uses the index.
+  - _The above queries are suggestion so feel free to modify existing indexes as you wish._
+
 ## [0.9.0] - 2021-11-18
 
 ### Added
