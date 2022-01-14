@@ -118,7 +118,7 @@ module EventSourcery
         @db_connection[@events_table_name]
       end
 
-      def build_event(**data)
+      def build_event(data)
         @event_builder.build(**data)
       end
 
