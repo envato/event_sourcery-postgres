@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Changed
+
+- Removed the use of `**` for the private `EventStore#build_event`
+  method signature and places that call it.
+
 ## [0.9.0] - 2021-11-18
 
 ### Added

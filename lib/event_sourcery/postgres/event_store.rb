@@ -60,7 +60,7 @@ module EventSourcery
           where(Sequel.lit('id >= ?', id)).
           limit(limit)
         query = query.where(type: event_types) if event_types
-        query.map { |event_row| build_event(**event_row) }
+        query.map { |event_row| build_event(event_row) }
       end
 
       # Get last event id for a given event types.
@@ -86,7 +86,7 @@ module EventSourcery
       # @return [Array] of found events
       def get_events_for_aggregate_id(aggregate_id)
         events_table.where(aggregate_id: aggregate_id.to_str).order(:version).map do |event_hash|
-          build_event(**event_hash)
+          build_event(event_hash)
         end
       end
 
@@ -118,7 +118,7 @@ module EventSourcery
         @db_connection[@events_table_name]
       end
 
-      def build_event(**data)
+      def build_event(data)
         @event_builder.build(**data)
       end
 
