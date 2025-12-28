@@ -18,9 +18,7 @@ module EventSourcery
       def setup(processor_name = nil)
         create_table_if_not_exists if EventSourcery::Postgres.config.auto_create_projector_tracker
 
-        unless tracker_table_exists?
-          raise UnableToLockProcessorError, 'Projector tracker table does not exist'
-        end
+        raise UnableToLockProcessorError, 'Projector tracker table does not exist' unless tracker_table_exists?
 
         return unless processor_name
 

@@ -38,9 +38,7 @@ module EventSourcery
       def reset
         self.class.tables.keys.each do |table_name|
           prefixed_name = table_name_prefixed(table_name)
-          if @db_connection.table_exists?(prefixed_name)
-            @db_connection.drop_table(prefixed_name, cascade: true)
-          end
+          @db_connection.drop_table(prefixed_name, cascade: true) if @db_connection.table_exists?(prefixed_name)
         end
         super if defined?(super)
         setup

@@ -156,13 +156,6 @@ Style/HashEachMethods:
     - 'lib/event_sourcery/postgres/table_owner.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/event_sourcery/postgres/table_owner.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-    - 'spec/support/warnings.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/KeywordParametersOrder:
   Exclude:
     - 'lib/event_sourcery/postgres/event_store.rb'
