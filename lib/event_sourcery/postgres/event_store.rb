@@ -41,9 +41,9 @@ module EventSourcery
       rescue Sequel::DatabaseError => e
         if e.message =~ /Concurrency conflict/
           raise ConcurrencyError, "expected version was not #{expected_version}. Error: #{e.message}"
-        else
-          raise
         end
+
+        raise
       end
 
       # Get the next set of events from the given event id. You can
@@ -98,7 +98,7 @@ module EventSourcery
       # @param event_types the event_types to subscribe to, default all.
       # @param after_listen the after listen call back block. default nil.
       # @param subscription_master the subscription master block
-      def subscribe(from_id:, event_types: nil, after_listen: nil, subscription_master:, &block)
+      def subscribe(from_id:, subscription_master:, event_types: nil, after_listen: nil, &block)
         poll_waiter = OptimisedEventPollWaiter.new(db_connection: @db_connection, after_listen: after_listen)
         args = {
           poll_waiter: poll_waiter,
@@ -160,9 +160,9 @@ module EventSourcery
       def to_sql_literal(value)
         return 'null' unless value
 
-        wrapped_value = if Time === value
+        wrapped_value = if value.is_a?(Time)
                           value.iso8601(6)
-                        elsif Hash === value
+                        elsif value.is_a?(Hash)
                           Sequel.pg_json(value)
                         else
                           value

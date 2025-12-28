@@ -18,16 +18,14 @@ module EventSourcery
       def setup(processor_name = nil)
         create_table_if_not_exists if EventSourcery::Postgres.config.auto_create_projector_tracker
 
-        unless tracker_table_exists?
-          raise UnableToLockProcessorError, 'Projector tracker table does not exist'
-        end
+        raise UnableToLockProcessorError, 'Projector tracker table does not exist' unless tracker_table_exists?
 
-        if processor_name
-          create_track_entry_if_not_exists(processor_name)
-          if @obtain_processor_lock
-            obtain_global_lock_on_processor(processor_name)
-          end
-        end
+        return unless processor_name
+
+        create_track_entry_if_not_exists(processor_name)
+        return unless @obtain_processor_lock
+
+        obtain_global_lock_on_processor(processor_name)
       end
 
       # This will updated the tracker table to the given event id value
@@ -83,16 +81,16 @@ module EventSourcery
       def obtain_global_lock_on_processor(processor_name)
         lock_obtained = @db_connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})")
                                       .to_a.first[:pg_try_advisory_lock]
-        if lock_obtained == false
-          raise UnableToLockProcessorError, "Unable to get a lock on #{processor_name} #{@track_entry_id}"
-        end
+        return unless lock_obtained == false
+
+        raise UnableToLockProcessorError, "Unable to get a lock on #{processor_name} #{@track_entry_id}"
       end
 
       def create_table_if_not_exists
-        unless tracker_table_exists?
-          EventSourcery.logger.info { "Projector tracker missing - attempting to create 'projector_tracker' table" }
-          EventSourcery::Postgres::Schema.create_projector_tracker(db: @db_connection, table_name: @table_name)
-        end
+        return if tracker_table_exists?
+
+        EventSourcery.logger.info { "Projector tracker missing - attempting to create 'projector_tracker' table" }
+        EventSourcery::Postgres::Schema.create_projector_tracker(db: @db_connection, table_name: @table_name)
       end
 
       def create_track_entry_if_not_exists(processor_name)

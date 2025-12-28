@@ -42,7 +42,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
     projector_class.new(
       tracker: tracker,
       db_connection: db_connection,
-      transaction_size: projector_transaction_size,
+      transaction_size: projector_transaction_size
     )
   end
   let(:aggregate_id) { SecureRandom.uuid }
@@ -143,7 +143,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
     context 'when an error occurs processing the event' do
       it 'rolls back the projected changes' do
         projector.raise_error = true
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 0
       end
     end
@@ -151,7 +155,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
     context 'with a transaction size of 1' do
       it 'rolls back the projected changes for the single event' do
         projector.raise_error_on_event_id = 2
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 1
       end
     end
@@ -161,7 +169,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       it 'rolls back the projected changes for both events' do
         projector.raise_error_on_event_id = 2
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 0
       end
     end
@@ -173,7 +185,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
       end
 
       it 'rolls back the projected changes' do
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 0
       end
     end
@@ -192,7 +208,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       it 'logs an info message with the id of the last processed event' do
         expect(EventSourcery.logger).to receive(:info) do |&block|
-          expect(block.call).to eq "[test_processor] Processed up to event id: 2"
+          expect(block.call).to eq '[test_processor] Processed up to event id: 2'
         end
 
         projector.subscribe_to(event_store, subscription_master: subscription_master)

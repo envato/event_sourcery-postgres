@@ -154,7 +154,7 @@ RSpec.describe EventSourcery::Postgres::Tracker do
       end
 
       it 'returns an array of tracked processors' do
-        expect(postgres_tracker.tracked_processors).to eq ['one', 'two']
+        expect(postgres_tracker.tracked_processors).to eq %w[one two]
       end
     end
 

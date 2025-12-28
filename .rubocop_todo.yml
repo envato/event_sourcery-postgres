@@ -6,12 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: TreatCommentsAsGroupSeparators, ConsiderPunctuation.
-Gemspec/OrderedDependencies:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
@@ -22,13 +16,6 @@ Lint/ConstantDefinitionInBlock:
 Lint/NonDeterministicRequireOrder:
   Exclude:
     - 'spec/spec_helper.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
@@ -104,24 +91,6 @@ Style/AccessModifierDeclarations:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ProceduralMethods, FunctionalMethods, AllowedMethods, AllowedPatterns, AllowBracesOnProceduralOneLiners, BracesRequiredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining, always_braces
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# AllowedMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'spec/event_sourcery/postgres/optimised_event_poll_waiter_spec.rb'
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowOnConstant, AllowOnSelfClass.
-Style/CaseEquality:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
@@ -135,16 +104,6 @@ Style/Documentation:
     - 'lib/event_sourcery/postgres/reactor.rb'
     - 'lib/event_sourcery/postgres/schema.rb'
     - 'lib/event_sourcery/postgres/table_owner.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/Encoding:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExpandPathArguments:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
@@ -189,38 +148,12 @@ Style/GlobalVars:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
-Style/GuardClause:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedReceivers.
 # AllowedReceivers: Thread.current
 Style/HashEachMethods:
   Exclude:
     - 'lib/event_sourcery/postgres/table_owner.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowIfModifier.
-Style/IfInsideElse:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/event_sourcery/postgres/table_owner.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-    - 'spec/support/warnings.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/KeywordParametersOrder:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, Autocorrect.
@@ -229,34 +162,11 @@ Style/ModuleFunction:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinBodyLength, AllowConsecutiveConditionals.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
 Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'spec/support/db_helpers.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/event_sourcery/postgres/reactor.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RescueModifier:
-  Exclude:
-    - 'spec/event_sourcery/postgres/projector_spec.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
@@ -270,48 +180,3 @@ Style/SafeNavigation:
 Style/SlicingWithRange:
   Exclude:
     - 'spec/event_sourcery/postgres/reactor_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowModifier.
-Style/SoleNestedConditional:
-  Exclude:
-    - 'lib/event_sourcery/postgres/reactor.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'bin/console'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-    - 'spec/event_sourcery/postgres/projector_spec.rb'
-    - 'spec/spec_helper.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: .
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: percent
-  MinSize: 3
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
-Style/TrailingCommaInArguments:
-  Exclude:
-    - 'spec/event_sourcery/postgres/projector_spec.rb'
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinSize, WordRegex.
-# SupportedStyles: percent, brackets
-Style/WordArray:
-  Exclude:
-    - 'spec/event_sourcery/postgres/tracker_spec.rb'

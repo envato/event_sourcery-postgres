@@ -48,11 +48,10 @@ module EventSourcery
           @event_source = event_source
           @event_sink = event_sink
           @db_connection = db_connection
-          if self.class.emits_events?
-            if event_sink.nil? || event_source.nil?
-              raise ArgumentError, 'An event sink and source is required for processors that emit events'
-            end
-          end
+          return unless self.class.emits_events?
+          return unless event_sink.nil? || event_source.nil?
+
+          raise ArgumentError, 'An event sink and source is required for processors that emit events'
         end
       end
 
@@ -61,7 +60,7 @@ module EventSourcery
       attr_reader :event_sink, :event_source
 
       def emit_event(event_or_hash, &block)
-        event = if Event === event_or_hash
+        event = if event_or_hash.is_a?(Event)
                   event_or_hash
                 else
                   Event.new(event_or_hash)
@@ -70,7 +69,7 @@ module EventSourcery
 
         event = event.with(causation_id: _event.uuid, correlation_id: _event.correlation_id)
         invoke_action_and_emit_event(event, block)
-        EventSourcery.logger.debug { "[#{self.processor_name}] Emitted event: #{event.inspect}" }
+        EventSourcery.logger.debug { "[#{processor_name}] Emitted event: #{event.inspect}" }
       end
 
       def invoke_action_and_emit_event(event, action)
