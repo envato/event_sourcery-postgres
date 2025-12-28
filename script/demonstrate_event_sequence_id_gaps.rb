@@ -130,8 +130,9 @@ stop = false
 Signal.trap(:INT) { stop = true }
 
 def wait_for_missing_ids(db, first_sequence, last_sequence, attempt: 1)
-  missing_ids = db[:events].where(Sequel.lit('id > ? AND id < ?', first_sequence, last_sequence)).order(:id).map {|e| e[:id] }
-  expected_missing_ids = (first_sequence+1)..(last_sequence-1)
+  missing_ids = db[:events].where(Sequel.lit('id > ? AND id < ?', first_sequence, last_sequence))
+                           .order(:id).map { |e| e[:id] }
+  expected_missing_ids = (first_sequence + 1)..(last_sequence - 1)
   if missing_ids == expected_missing_ids.to_a
     print "Missing events showed up after #{attempt} subsequent query. IDs: #{missing_ids}"
   else
@@ -146,12 +147,12 @@ end
 until stop
 
   # query for the last 2 sequences in the events table
-  first_sequence, last_sequence = *db[:events].
-    order(Sequel.desc(:id)).
-    select(:id).
-    limit(2).
-    map { |e| e[:id] }.
-    reverse
+  first_sequence, last_sequence = *db[:events]
+    .order(Sequel.desc(:id))
+    .select(:id)
+    .limit(2)
+    .map { |e| e[:id] }
+    .reverse
 
   next if first_sequence.nil? || last_sequence.nil?
 

@@ -32,6 +32,7 @@ module EventSourcery
         events = Array(event_or_events)
         aggregate_ids = events.map(&:aggregate_id).uniq
         raise AtomicWriteToMultipleAggregatesNotSupported unless aggregate_ids.count == 1
+
         sql = write_events_sql(aggregate_ids.first, events, expected_version)
         @db_connection.run(sql)
         log_events_saved(events)
@@ -55,10 +56,11 @@ module EventSourcery
       #
       # @return [Array] array of found events
       def get_next_from(id, event_types: nil, limit: 1000)
-        query = events_table.
-          order(:id).
-          where(Sequel.lit('id >= ?', id)).
-          limit(limit)
+        query =
+          events_table
+          .order(:id)
+          .where(Sequel.lit('id >= ?', id))
+          .limit(limit)
         query = query.where(type: event_types) if event_types
         query.map { |event_row| build_event(event_row) }
       end
@@ -157,6 +159,7 @@ module EventSourcery
 
       def to_sql_literal(value)
         return 'null' unless value
+
         wrapped_value = if Time === value
                           value.iso8601(6)
                         elsif Hash === value

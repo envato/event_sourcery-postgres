@@ -11,7 +11,7 @@ module EventSourcery
         @after_listen = after_listen
       end
 
-      def poll(after_listen: proc { }, &block)
+      def poll(after_listen: proc {}, &block)
         @events_queue.callback = proc do
           ensure_listen_thread_alive!
           block.call

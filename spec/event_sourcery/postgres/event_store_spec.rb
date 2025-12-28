@@ -60,10 +60,14 @@ RSpec.describe EventSourcery::Postgres::EventStore do
 
   context 'aggregates table version' do
     def save_event(expected_version: nil)
-      event_store.sink(new_event(aggregate_id: aggregate_id,
-                       type: :billing_details_provided,
-                       body: { my_event: 'data' }),
-                       expected_version: expected_version)
+      event_store.sink(
+        new_event(
+          aggregate_id: aggregate_id,
+          type: :billing_details_provided,
+          body: { my_event: 'data' }
+        ),
+        expected_version: expected_version
+      )
     end
 
     def add_event
@@ -75,9 +79,10 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     end
 
     def aggregate_version
-      result = db_connection[:aggregates].
-               where(aggregate_id: aggregate_id).
-               first
+      result =
+        db_connection[:aggregates]
+        .where(aggregate_id: aggregate_id)
+        .first
       result[:version] if result
     end
 

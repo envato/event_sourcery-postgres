@@ -12,106 +12,9 @@ Gemspec/OrderedDependencies:
   Exclude:
     - 'event_sourcery-postgres.gemspec'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/ClosingHeredocIndentation:
-  Exclude:
-    - 'lib/event_sourcery/postgres/schema.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment.
-Layout/CommentIndentation:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: leading, trailing
-Layout/DotPosition:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterMagicComment:
+Gemspec/RequiredRubyVersion:
   Exclude:
     - 'event_sourcery-postgres.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'lib/event_sourcery/postgres/tracker.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Layout/FirstHashElementIndentation:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/HashAlignment:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Max, AllowHeredoc, AllowURI, AllowQualifiedName, URISchemes, AllowRBSInlineAnnotation, AllowCopDirectives, AllowedPatterns, SplitStrings.
-# URISchemes: http, https
-Layout/LineLength:
-  Exclude:
-    - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
-    - 'lib/event_sourcery/postgres/schema.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-    - 'script/bench_reading_events.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-    - 'spec/event_sourcery/postgres/tracker_spec.rb'
-    - 'spec/support/event_helpers.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator, EnforcedStyleForRationalLiterals.
-# SupportedStylesForExponentOperator: space, no_space
-# SupportedStylesForRationalLiterals: space, no_space
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideBlockBraces:
-  Exclude:
-    - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
 
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
@@ -247,6 +150,44 @@ Style/ExpandPathArguments:
   Exclude:
     - 'event_sourcery-postgres.gemspec'
 
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: always, always_true, never
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - '**/*.arb'
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'bin/console'
+    - 'event_sourcery-postgres.gemspec'
+    - 'lib/event_sourcery/postgres.rb'
+    - 'lib/event_sourcery/postgres/config.rb'
+    - 'lib/event_sourcery/postgres/event_store.rb'
+    - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
+    - 'lib/event_sourcery/postgres/projector.rb'
+    - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
+    - 'lib/event_sourcery/postgres/reactor.rb'
+    - 'lib/event_sourcery/postgres/schema.rb'
+    - 'lib/event_sourcery/postgres/table_owner.rb'
+    - 'lib/event_sourcery/postgres/tracker.rb'
+    - 'lib/event_sourcery/postgres/version.rb'
+    - 'script/bench_reading_events.rb'
+    - 'script/bench_writing_events.rb'
+    - 'script/demonstrate_event_sequence_id_gaps.rb'
+    - 'spec/event_sourcery/postgres/config_spec.rb'
+    - 'spec/event_sourcery/postgres/event_store_spec.rb'
+    - 'spec/event_sourcery/postgres/optimised_event_poll_waiter_spec.rb'
+    - 'spec/event_sourcery/postgres/projector_spec.rb'
+    - 'spec/event_sourcery/postgres/reactor_spec.rb'
+    - 'spec/event_sourcery/postgres/table_owner_spec.rb'
+    - 'spec/event_sourcery/postgres/tracker_spec.rb'
+    - 'spec/event_sourcery/postgres_spec.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/support/db_helpers.rb'
+    - 'spec/support/event_helpers.rb'
+    - 'spec/support/logging.rb'
+    - 'spec/support/test_events.rb'
+
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
   Exclude:
@@ -320,6 +261,19 @@ Style/RedundantSelf:
 Style/RescueModifier:
   Exclude:
     - 'spec/event_sourcery/postgres/projector_spec.rb'
+
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
+# AllowedMethods: present?, blank?, presence, try, try!
+Style/SafeNavigation:
+  Exclude:
+    - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
+    - 'lib/event_sourcery/postgres/reactor.rb'
+
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Style/SlicingWithRange:
+  Exclude:
+    - 'spec/event_sourcery/postgres/reactor_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowModifier.
