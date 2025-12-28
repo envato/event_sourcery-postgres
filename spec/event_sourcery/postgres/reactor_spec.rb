@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe EventSourcery::Postgres::Reactor do
-  TermsConfirmationEmailSent = Class.new(EventSourcery::Event)
-  ItemViewed = Class.new(EventSourcery::Event)
-  EchoEvent = Class.new(EventSourcery::Event)
+TermsConfirmationEmailSent = Class.new(EventSourcery::Event)
+ItemViewed = Class.new(EventSourcery::Event)
+EchoEvent = Class.new(EventSourcery::Event)
 
+RSpec.describe EventSourcery::Postgres::Reactor do
   let(:reactor_class) do
     Class.new do
       include EventSourcery::Postgres::Reactor
