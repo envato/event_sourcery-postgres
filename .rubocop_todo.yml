@@ -106,11 +106,6 @@ Style/Documentation:
     - 'lib/event_sourcery/postgres/table_owner.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/Encoding:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/ExpandPathArguments:
   Exclude:
     - 'event_sourcery-postgres.gemspec'
