@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EventSourcery
   module Postgres
     # This will set up a persisted event id tracker for processors.

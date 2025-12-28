@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EventSourcery::Postgres::TableOwner do
   let(:table_owner_class) do
     Class.new do

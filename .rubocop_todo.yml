@@ -50,7 +50,6 @@ Metrics/MethodLength:
     - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
     - 'lib/event_sourcery/postgres/projector.rb'
     - 'lib/event_sourcery/postgres/schema.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
@@ -104,44 +103,6 @@ Style/Documentation:
     - 'lib/event_sourcery/postgres/reactor.rb'
     - 'lib/event_sourcery/postgres/schema.rb'
     - 'lib/event_sourcery/postgres/table_owner.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - '**/*.arb'
-    - 'Gemfile'
-    - 'Rakefile'
-    - 'bin/console'
-    - 'event_sourcery-postgres.gemspec'
-    - 'lib/event_sourcery/postgres.rb'
-    - 'lib/event_sourcery/postgres/config.rb'
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
-    - 'lib/event_sourcery/postgres/projector.rb'
-    - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-    - 'lib/event_sourcery/postgres/schema.rb'
-    - 'lib/event_sourcery/postgres/table_owner.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-    - 'lib/event_sourcery/postgres/version.rb'
-    - 'script/bench_reading_events.rb'
-    - 'script/bench_writing_events.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-    - 'spec/event_sourcery/postgres/config_spec.rb'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-    - 'spec/event_sourcery/postgres/optimised_event_poll_waiter_spec.rb'
-    - 'spec/event_sourcery/postgres/projector_spec.rb'
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'
-    - 'spec/event_sourcery/postgres/table_owner_spec.rb'
-    - 'spec/event_sourcery/postgres/tracker_spec.rb'
-    - 'spec/event_sourcery/postgres_spec.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/db_helpers.rb'
-    - 'spec/support/event_helpers.rb'
-    - 'spec/support/logging.rb'
-    - 'spec/support/test_events.rb'
 
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:

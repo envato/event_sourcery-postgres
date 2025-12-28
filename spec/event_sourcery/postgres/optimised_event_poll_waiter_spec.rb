@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EventSourcery::Postgres::OptimisedEventPollWaiter do
   let(:after_listen) { proc {} }
   subject(:waiter) { described_class.new(db_connection: db_connection, after_listen: after_listen) }

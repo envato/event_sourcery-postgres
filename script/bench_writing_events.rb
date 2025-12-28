@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Usage:
 #
 # ❯ bundle exec ruby script/bench_writing_events.rb

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EventSourcery::Postgres::Reactor do
   TermsConfirmationEmailSent = Class.new(EventSourcery::Event)
   ItemViewed = Class.new(EventSourcery::Event)

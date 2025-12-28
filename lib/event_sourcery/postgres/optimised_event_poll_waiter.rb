@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EventSourcery
   module Postgres
     # Optimise poll interval with Postgres listen/notify
