@@ -156,12 +156,6 @@ Style/HashEachMethods:
     - 'lib/event_sourcery/postgres/table_owner.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowIfModifier.
-Style/IfInsideElse:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/IfUnlessModifier:
   Exclude:
     - 'lib/event_sourcery/postgres/table_owner.rb'

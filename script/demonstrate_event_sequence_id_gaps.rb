@@ -135,12 +135,10 @@ def wait_for_missing_ids(db, first_sequence, last_sequence, attempt: 1)
   expected_missing_ids = (first_sequence + 1)..(last_sequence - 1)
   if missing_ids == expected_missing_ids.to_a
     print "Missing events showed up after #{attempt} subsequent query. IDs: #{missing_ids}"
+  elsif attempt < 2
+    wait_for_missing_ids(db, first_sequence, last_sequence, attempt: attempt + 1)
   else
-    if attempt < 2
-      wait_for_missing_ids(db, first_sequence, last_sequence, attempt: attempt + 1)
-    else
-      print "Missing events didn't show up after #{attempt} subsequent queries"
-    end
+    print "Missing events didn't show up after #{attempt} subsequent queries"
   end
 end
 
