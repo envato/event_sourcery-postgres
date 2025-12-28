@@ -12,10 +12,6 @@ Gemspec/OrderedDependencies:
   Exclude:
     - 'event_sourcery-postgres.gemspec'
 
-Gemspec/RequiredRubyVersion:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
