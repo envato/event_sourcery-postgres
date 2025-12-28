@@ -147,7 +147,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           id: 1,
           aggregate_id: aggregate_id,
           body: { time: Time.now },
-          correlation_id: SecureRandom.uuid,
+          correlation_id: SecureRandom.uuid
         )
       end
       let(:event_2) do
@@ -156,7 +156,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           aggregate_id: aggregate_id,
           body: event_1.body,
           correlation_id: event_1.correlation_id,
-          causation_id: event_1.uuid,
+          causation_id: event_1.uuid
         )
       end
       let(:event_3) { TermsAccepted.new(id: 3, aggregate_id: aggregate_id, body: { time: Time.now }) }

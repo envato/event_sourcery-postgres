@@ -42,7 +42,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
     projector_class.new(
       tracker: tracker,
       db_connection: db_connection,
-      transaction_size: projector_transaction_size,
+      transaction_size: projector_transaction_size
     )
   end
   let(:aggregate_id) { SecureRandom.uuid }
