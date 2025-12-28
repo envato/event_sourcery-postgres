@@ -42,7 +42,7 @@ module EventSourcery
           column :causation_id,   :uuid
           column :created_at,     :'timestamp without time zone', null: false,
                                                                   default: Sequel.lit("(now() at time zone 'utc')")
-          index [:aggregate_id, :version], unique: true
+          index %i[aggregate_id version], unique: true
           index :uuid, unique: true
           index :type
           index :correlation_id
