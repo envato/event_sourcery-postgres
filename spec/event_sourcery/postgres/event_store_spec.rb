@@ -7,7 +7,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
   include_examples 'an event store'
 
   describe '#sink' do
-    let(:on_events_recorded_proc) { double("OnEventsRecordedProc", call: nil) }
+    let(:on_events_recorded_proc) { double('OnEventsRecordedProc', call: nil) }
 
     before do
       allow(EventSourcery::Postgres.config)

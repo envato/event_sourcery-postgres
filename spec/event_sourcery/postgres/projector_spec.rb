@@ -208,7 +208,7 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       it 'logs an info message with the id of the last processed event' do
         expect(EventSourcery.logger).to receive(:info) do |&block|
-          expect(block.call).to eq "[test_processor] Processed up to event id: 2"
+          expect(block.call).to eq '[test_processor] Processed up to event id: 2'
         end
 
         projector.subscribe_to(event_store, subscription_master: subscription_master)
