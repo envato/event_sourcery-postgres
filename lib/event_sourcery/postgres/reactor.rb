@@ -61,7 +61,7 @@ module EventSourcery
       attr_reader :event_sink, :event_source
 
       def emit_event(event_or_hash, &block)
-        event = if Event === event_or_hash
+        event = if event_or_hash.is_a?(Event)
                   event_or_hash
                 else
                   Event.new(event_or_hash)

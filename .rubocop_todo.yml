@@ -91,13 +91,6 @@ Style/AccessModifierDeclarations:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowOnConstant, AllowOnSelfClass.
-Style/CaseEquality:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
