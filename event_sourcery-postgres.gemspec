@@ -32,13 +32,13 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.6.0'
 
-  spec.add_dependency 'sequel', '>= 4.38'
-  spec.add_dependency 'pg'
   spec.add_dependency 'event_sourcery', '>= 0.14.0'
+  spec.add_dependency 'pg'
+  spec.add_dependency 'sequel', '>= 4.38'
+  spec.add_development_dependency 'benchmark-ips'
   spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'benchmark-ips'
   spec.add_development_dependency 'rubocop', '~> 1'
 end
