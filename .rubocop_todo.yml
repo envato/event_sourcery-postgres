@@ -180,17 +180,3 @@ Style/SafeNavigation:
 Style/SlicingWithRange:
   Exclude:
     - 'spec/event_sourcery/postgres/reactor_spec.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'event_sourcery-postgres.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinSize, WordRegex.
-# SupportedStyles: percent, brackets
-Style/WordArray:
-  Exclude:
-    - 'spec/event_sourcery/postgres/tracker_spec.rb'
