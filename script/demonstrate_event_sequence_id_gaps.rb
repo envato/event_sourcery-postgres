@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Demonstrates that sequence IDs may not be inserted linearly with concurrent
 # writers.
 #

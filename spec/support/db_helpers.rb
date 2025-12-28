@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module DBHelpers
-  extend self
+  module_function
 
   def db_connection
     $db_connection ||= new_db_connection
   end
 
-  module_function def new_db_connection
+  def new_db_connection
     Sequel.connect("#{postgres_url}event_sourcery_test").extension(:pg_json)
   end
 
-  module_function def postgres_url
+  def postgres_url
     ENV.fetch('POSTGRESQL_URL', 'postgres://127.0.0.1:5432/')
   end
 

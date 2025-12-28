@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Resolve issues as identified by RuboCop ([#78], [#82]).
+- Resolve issues as identified by RuboCop ([#78], [#82], [#83]).
 - Minor fixups in gem metadata ([#79]).
 - Remove support for older Ruby versions: Ruby 2.6 or greater is now required ([#80]).
 
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [#79]: https://github.com/envato/event_sourcery-postgres/pull/79
 [#80]: https://github.com/envato/event_sourcery-postgres/pull/80
 [#82]: https://github.com/envato/event_sourcery-postgres/pull/82
+[#83]: https://github.com/envato/event_sourcery-postgres/pull/83
 
 ## [0.9.1] - 2022-01-20
 

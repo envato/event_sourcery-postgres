@@ -1,8 +1,10 @@
-RSpec.describe EventSourcery::Postgres::Reactor do
-  TermsConfirmationEmailSent = Class.new(EventSourcery::Event)
-  ItemViewed = Class.new(EventSourcery::Event)
-  EchoEvent = Class.new(EventSourcery::Event)
+# frozen_string_literal: true
 
+TermsConfirmationEmailSent = Class.new(EventSourcery::Event)
+ItemViewed = Class.new(EventSourcery::Event)
+EchoEvent = Class.new(EventSourcery::Event)
+
+RSpec.describe EventSourcery::Postgres::Reactor do
   let(:reactor_class) do
     Class.new do
       include EventSourcery::Postgres::Reactor
@@ -202,7 +204,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
       end
 
       def latest_events(n = 1)
-        event_source.get_next_from(0, limit: 100)[-n..-1]
+        event_source.get_next_from(0, limit: 100)[-n..]
       end
 
       context "when the event emitted doesn't take actions" do

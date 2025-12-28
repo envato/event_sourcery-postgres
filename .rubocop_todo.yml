@@ -6,17 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/NonDeterministicRequireOrder:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
@@ -50,7 +39,6 @@ Metrics/MethodLength:
     - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
     - 'lib/event_sourcery/postgres/projector.rb'
     - 'lib/event_sourcery/postgres/schema.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
@@ -84,13 +72,6 @@ Naming/VariableNumber:
   Exclude:
     - 'spec/event_sourcery/postgres/reactor_spec.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowModifiersOnSymbols, AllowModifiersOnAttrs, AllowModifiersOnAliasMethod.
-# SupportedStyles: inline, group
-Style/AccessModifierDeclarations:
-  Exclude:
-    - 'spec/support/db_helpers.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
@@ -105,44 +86,6 @@ Style/Documentation:
     - 'lib/event_sourcery/postgres/schema.rb'
     - 'lib/event_sourcery/postgres/table_owner.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - '**/*.arb'
-    - 'Gemfile'
-    - 'Rakefile'
-    - 'bin/console'
-    - 'event_sourcery-postgres.gemspec'
-    - 'lib/event_sourcery/postgres.rb'
-    - 'lib/event_sourcery/postgres/config.rb'
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
-    - 'lib/event_sourcery/postgres/projector.rb'
-    - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-    - 'lib/event_sourcery/postgres/schema.rb'
-    - 'lib/event_sourcery/postgres/table_owner.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-    - 'lib/event_sourcery/postgres/version.rb'
-    - 'script/bench_reading_events.rb'
-    - 'script/bench_writing_events.rb'
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-    - 'spec/event_sourcery/postgres/config_spec.rb'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-    - 'spec/event_sourcery/postgres/optimised_event_poll_waiter_spec.rb'
-    - 'spec/event_sourcery/postgres/projector_spec.rb'
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'
-    - 'spec/event_sourcery/postgres/table_owner_spec.rb'
-    - 'spec/event_sourcery/postgres/tracker_spec.rb'
-    - 'spec/event_sourcery/postgres_spec.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/db_helpers.rb'
-    - 'spec/support/event_helpers.rb'
-    - 'spec/support/logging.rb'
-    - 'spec/support/test_events.rb'
-
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
   Exclude:
@@ -154,13 +97,6 @@ Style/GlobalVars:
 Style/HashEachMethods:
   Exclude:
     - 'lib/event_sourcery/postgres/table_owner.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, Autocorrect.
-# SupportedStyles: module_function, extend_self, forbidden
-Style/ModuleFunction:
-  Exclude:
-    - 'spec/support/db_helpers.rb'
 
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
@@ -175,8 +111,3 @@ Style/SafeNavigation:
   Exclude:
     - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
     - 'lib/event_sourcery/postgres/reactor.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/SlicingWithRange:
-  Exclude:
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'

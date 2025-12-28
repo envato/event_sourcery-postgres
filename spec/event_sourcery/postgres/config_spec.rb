@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EventSourcery::Postgres::Config do
   subject(:config) { described_class.new }
 

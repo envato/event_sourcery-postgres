@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe EventSourcery::Postgres::Tracker do
   subject(:postgres_tracker) { described_class.new(db_connection, table_name: table_name) }
   let(:table_name) { :tracker }
