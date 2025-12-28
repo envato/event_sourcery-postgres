@@ -143,7 +143,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
     context 'when an error occurs processing the event' do
       it 'rolls back the projected changes' do
         projector.raise_error = true
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 0
       end
     end
@@ -151,7 +155,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
     context 'with a transaction size of 1' do
       it 'rolls back the projected changes for the single event' do
         projector.raise_error_on_event_id = 2
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 1
       end
     end
@@ -161,7 +169,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
 
       it 'rolls back the projected changes for both events' do
         projector.raise_error_on_event_id = 2
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 0
       end
     end
@@ -173,7 +185,11 @@ RSpec.describe EventSourcery::Postgres::Projector do
       end
 
       it 'rolls back the projected changes' do
-        projector.subscribe_to(event_store, subscription_master: subscription_master) rescue nil
+        begin
+          projector.subscribe_to(event_store, subscription_master: subscription_master)
+        rescue StandardError
+          nil
+        end
         expect(db_connection[:profiles].count).to eq 0
       end
     end

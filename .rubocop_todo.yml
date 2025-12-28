@@ -168,11 +168,6 @@ Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/RescueModifier:
-  Exclude:
-    - 'spec/event_sourcery/postgres/projector_spec.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
 # AllowedMethods: present?, blank?, presence, try, try!
