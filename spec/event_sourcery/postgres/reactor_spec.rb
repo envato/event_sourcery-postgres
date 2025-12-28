@@ -73,30 +73,22 @@ RSpec.describe EventSourcery::Postgres::Reactor do
 
   context "a processor that doesn't emit events" do
     it "doesn't require an event sink" do
-      expect {
-        reactor_class.new(tracker: tracker, event_source: event_source)
-      }.to_not raise_error
+      expect { reactor_class.new(tracker: tracker, event_source: event_source) }.to_not raise_error
     end
 
     it "doesn't require an event source" do
-      expect {
-        reactor_class.new(tracker: tracker, event_sink: event_sink)
-      }.to_not raise_error
+      expect { reactor_class.new(tracker: tracker, event_sink: event_sink) }.to_not raise_error
       expect { reactor.setup }.to_not raise_error
     end
   end
 
   context 'a processor that does emit events' do
     it 'requires an event sink' do
-      expect {
-        reactor_class_with_emit.new(tracker, event_source, nil)
-      }.to raise_error(ArgumentError)
+      expect { reactor_class_with_emit.new(tracker, event_source, nil) }.to raise_error(ArgumentError)
     end
 
     it 'requires an event source' do
-      expect {
-        reactor_class_with_emit.new(tracker, nil, event_sink)
-      }.to raise_error(ArgumentError)
+      expect { reactor_class_with_emit.new(tracker, nil, event_sink) }.to raise_error(ArgumentError)
     end
   end
 
@@ -258,9 +250,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         end
 
         it 'raises an error' do
-          expect {
-            reactor.process(event_1)
-          }.to raise_error(EventSourcery::EventProcessingError)
+          expect { reactor.process(event_1) }.to raise_error(EventSourcery::EventProcessingError)
         end
       end
 
