@@ -72,13 +72,6 @@ Naming/VariableNumber:
   Exclude:
     - 'spec/event_sourcery/postgres/reactor_spec.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowModifiersOnSymbols, AllowModifiersOnAttrs, AllowModifiersOnAliasMethod.
-# SupportedStyles: inline, group
-Style/AccessModifierDeclarations:
-  Exclude:
-    - 'spec/support/db_helpers.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
