@@ -69,7 +69,7 @@ module EventSourcery
 
         event = event.with(causation_id: _event.uuid, correlation_id: _event.correlation_id)
         invoke_action_and_emit_event(event, block)
-        EventSourcery.logger.debug { "[#{self.processor_name}] Emitted event: #{event.inspect}" }
+        EventSourcery.logger.debug { "[#{processor_name}] Emitted event: #{event.inspect}" }
       end
 
       def invoke_action_and_emit_event(event, action)

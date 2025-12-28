@@ -169,11 +169,6 @@ Style/OptionalBooleanParameter:
     - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/event_sourcery/postgres/reactor.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/RescueModifier:
   Exclude:
     - 'spec/event_sourcery/postgres/projector_spec.rb'
