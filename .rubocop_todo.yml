@@ -111,8 +111,3 @@ Style/SafeNavigation:
   Exclude:
     - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
     - 'lib/event_sourcery/postgres/reactor.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/SlicingWithRange:
-  Exclude:
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'

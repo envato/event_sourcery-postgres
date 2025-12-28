@@ -204,7 +204,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
       end
 
       def latest_events(n = 1)
-        event_source.get_next_from(0, limit: 100)[-n..-1]
+        event_source.get_next_from(0, limit: 100)[-n..]
       end
 
       context "when the event emitted doesn't take actions" do
