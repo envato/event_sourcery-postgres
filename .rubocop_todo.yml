@@ -12,11 +12,6 @@ Lint/ConstantDefinitionInBlock:
   Exclude:
     - 'spec/event_sourcery/postgres/reactor_spec.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/NonDeterministicRequireOrder:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
