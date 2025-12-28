@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'event_sourcery/postgres/version'
@@ -13,12 +14,12 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Postgres event store for use with EventSourcery'
   spec.homepage      = 'https://github.com/envato/event_sourcery-postgres'
   spec.metadata      = {
-                         'bug_tracker_uri' => 'https://github.com/envato/event_sourcery-postgres/issues',
-                         'changelog_uri'   => 'https://github.com/envato/event_sourcery-postgres/blob/HEAD/CHANGELOG.md',
-                         'source_code_uri' => 'https://github.com/envato/event_sourcery-postgres',
-                       }
+    'bug_tracker_uri' => 'https://github.com/envato/event_sourcery-postgres/issues',
+    'changelog_uri' => 'https://github.com/envato/event_sourcery-postgres/blob/HEAD/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/envato/event_sourcery-postgres',
+  }
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(\.|bin/|Gemfile|Rakefile|script/|spec/)})
   end
   spec.bindir        = 'exe'
@@ -35,4 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'benchmark-ips'
+  spec.add_development_dependency 'rubocop', '~> 1'
 end

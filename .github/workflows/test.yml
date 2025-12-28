@@ -27,4 +27,14 @@ jobs:
           POSTGRES_PASSWORD: secretdb
         ports:
           - 25432:5432
-
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+      - name: Rubocop
+        run: bundle exec rake rubocop

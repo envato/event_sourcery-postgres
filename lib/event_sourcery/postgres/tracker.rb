@@ -2,7 +2,6 @@ module EventSourcery
   module Postgres
     # This will set up a persisted event id tracker for processors.
     class Tracker
-
       def initialize(db_connection = EventSourcery::Postgres.config.projections_database,
                      table_name: EventSourcery::Postgres.config.tracker_table_name,
                      obtain_processor_lock: true)
@@ -37,9 +36,9 @@ module EventSourcery
       # @param processor_name the name of the processor to update
       # @param event_id the event id number to update to
       def processed_event(processor_name, event_id)
-        table.
-          where(name: processor_name.to_s).
-          update(last_processed_event_id: event_id)
+        table
+          .where(name: processor_name.to_s)
+          .update(last_processed_event_id: event_id)
         true
       end
 
@@ -82,7 +81,8 @@ module EventSourcery
       private
 
       def obtain_global_lock_on_processor(processor_name)
-        lock_obtained = @db_connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})").to_a.first[:pg_try_advisory_lock]
+        lock_obtained = @db_connection.fetch("select pg_try_advisory_lock(#{@track_entry_id})")
+                                      .to_a.first[:pg_try_advisory_lock]
         if lock_obtained == false
           raise UnableToLockProcessorError, "Unable to get a lock on #{processor_name} #{@track_entry_id}"
         end

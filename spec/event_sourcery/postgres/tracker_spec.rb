@@ -104,7 +104,11 @@ RSpec.describe EventSourcery::Postgres::Tracker do
       context 'with obtain_processor_lock: false' do
         it "doesn't raises an error" do
           expect do
-            tracker = described_class.new(another_database_connection, table_name: table_name, obtain_processor_lock: false)
+            tracker = described_class.new(
+              another_database_connection,
+              table_name: table_name,
+              obtain_processor_lock: false
+            )
             tracker.setup(processor_name)
           end.to_not raise_error
         end

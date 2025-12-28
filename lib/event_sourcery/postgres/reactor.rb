@@ -67,6 +67,7 @@ module EventSourcery
                   Event.new(event_or_hash)
                 end
         raise UndeclaredEventEmissionError unless self.class.emits_event?(event.class)
+
         event = event.with(causation_id: _event.uuid, correlation_id: _event.correlation_id)
         invoke_action_and_emit_event(event, block)
         EventSourcery.logger.debug { "[#{self.processor_name}] Emitted event: #{event.inspect}" }

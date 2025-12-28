@@ -53,7 +53,10 @@ puts "Took #{time} to create events"
 
 seen_events_count = 0
 time = Benchmark.realtime do
-  event_store.subscribe(from_id: 0, subscription_master: EventSourcery::EventStore::SignalHandlingSubscriptionMaster.new) do |events|
+  event_store.subscribe(
+    from_id: 0,
+    subscription_master: EventSourcery::EventStore::SignalHandlingSubscriptionMaster.new
+  ) do |events|
     seen_events_count += events.count
     throw :stop if seen_events_count >= NUM_EVENTS
   end
