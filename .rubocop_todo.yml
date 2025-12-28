@@ -162,13 +162,6 @@ Style/ModuleFunction:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinBodyLength, AllowConsecutiveConditionals.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
 Style/OptionalBooleanParameter:

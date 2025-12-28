@@ -154,12 +154,12 @@ until stop
 
   next if first_sequence.nil? || last_sequence.nil?
 
-  if last_sequence != first_sequence + 1
-    num_missing = last_sequence - first_sequence - 1
-    print "GAP: #{num_missing} missing sequence IDs. #{last_sequence} != #{first_sequence} + 1. "
-    wait_for_missing_ids(db, first_sequence, last_sequence)
-    puts
-  end
+  next unless last_sequence != first_sequence + 1
+
+  num_missing = last_sequence - first_sequence - 1
+  print "GAP: #{num_missing} missing sequence IDs. #{last_sequence} != #{first_sequence} + 1. "
+  wait_for_missing_ids(db, first_sequence, last_sequence)
+  puts
 end
 
 Process.waitall
