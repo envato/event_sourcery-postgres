@@ -98,7 +98,7 @@ module EventSourcery
       # @param event_types the event_types to subscribe to, default all.
       # @param after_listen the after listen call back block. default nil.
       # @param subscription_master the subscription master block
-      def subscribe(from_id:, event_types: nil, after_listen: nil, subscription_master:, &block)
+      def subscribe(from_id:, subscription_master:, event_types: nil, after_listen: nil, &block)
         poll_waiter = OptimisedEventPollWaiter.new(db_connection: @db_connection, after_listen: after_listen)
         args = {
           poll_waiter: poll_waiter,

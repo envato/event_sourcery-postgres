@@ -155,11 +155,6 @@ Style/HashEachMethods:
   Exclude:
     - 'lib/event_sourcery/postgres/table_owner.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/KeywordParametersOrder:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, Autocorrect.
 # SupportedStyles: module_function, extend_self, forbidden
