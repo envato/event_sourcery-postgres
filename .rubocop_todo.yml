@@ -148,14 +148,6 @@ Style/GlobalVars:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
-Style/GuardClause:
-  Exclude:
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-    - 'lib/event_sourcery/postgres/tracker.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedReceivers.
 # AllowedReceivers: Thread.current

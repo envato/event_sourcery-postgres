@@ -48,11 +48,10 @@ module EventSourcery
           @event_source = event_source
           @event_sink = event_sink
           @db_connection = db_connection
-          if self.class.emits_events?
-            if event_sink.nil? || event_source.nil?
-              raise ArgumentError, 'An event sink and source is required for processors that emit events'
-            end
-          end
+          return unless self.class.emits_events?
+          return unless event_sink.nil? || event_source.nil?
+
+          raise ArgumentError, 'An event sink and source is required for processors that emit events'
         end
       end
 

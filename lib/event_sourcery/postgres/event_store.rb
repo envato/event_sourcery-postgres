@@ -41,9 +41,9 @@ module EventSourcery
       rescue Sequel::DatabaseError => e
         if e.message =~ /Concurrency conflict/
           raise ConcurrencyError, "expected version was not #{expected_version}. Error: #{e.message}"
-        else
-          raise
         end
+
+        raise
       end
 
       # Get the next set of events from the given event id. You can
