@@ -114,7 +114,7 @@ sleep 0.3
 
 NUM_WRITER_PROCESSES = 5
 NUM_WRITER_PROCESSES.times do
-  fork do |pid|
+  fork do |_pid|
     stop = false
     Signal.trap(:INT) { stop = true }
     db = connect

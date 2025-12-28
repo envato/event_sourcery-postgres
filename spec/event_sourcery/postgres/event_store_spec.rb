@@ -18,7 +18,7 @@ RSpec.describe EventSourcery::Postgres::EventStore do
     it 'notifies about a new event' do
       event_id = nil
       Timeout.timeout(1) do
-        db_connection.listen('new_event', loop: false, after_listen: proc { add_event }) do |channel, pid, payload|
+        db_connection.listen('new_event', loop: false, after_listen: proc { add_event }) do |_channel, _pid, payload|
           event_id = Integer(payload)
         end
       end

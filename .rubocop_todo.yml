@@ -17,13 +17,6 @@ Lint/NonDeterministicRequireOrder:
   Exclude:
     - 'spec/spec_helper.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'script/demonstrate_event_sequence_id_gaps.rb'
-    - 'spec/event_sourcery/postgres/event_store_spec.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
