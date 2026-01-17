@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Schema management for creating event store and projector tables in PostgreSQL.
     module Schema
       module_function
 

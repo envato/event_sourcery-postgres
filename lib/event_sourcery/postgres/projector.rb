@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Mixin providing projection capabilities for processing events into read models.
     module Projector
       def self.included(base)
         base.include(EventProcessing::EventStreamProcessor)
@@ -17,6 +18,7 @@ module EventSourcery
         end
       end
 
+      # Instance methods for projector event processing and tracking.
       module InstanceMethods
         def initialize(tracker: EventSourcery::Postgres.config.event_tracker,
                        db_connection: EventSourcery::Postgres.config.projections_database,

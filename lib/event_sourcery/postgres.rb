@@ -17,6 +17,7 @@ require 'event_sourcery/postgres/reactor'
 require 'event_sourcery/postgres/tracker'
 
 module EventSourcery
+  # PostgreSQL adapter for EventSourcery providing event store and projection capabilities.
   module Postgres
     def self.configure
       yield config

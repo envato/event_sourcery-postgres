@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Queue that invokes a callback at regular intervals when no items are available.
     class QueueWithIntervalCallback < ::Queue
       attr_accessor :callback
 
@@ -16,7 +17,7 @@ module EventSourcery
         super()
       end
 
-      def pop(non_block_without_callback = false)
+      def pop(non_block_without_callback = false) # rubocop:disable Style/OptionalBooleanParameter
         return super if non_block_without_callback
 
         pop_with_interval_callback

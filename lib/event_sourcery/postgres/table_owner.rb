@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Mixin providing table management capabilities for projectors and reactors.
     module TableOwner
       DefaultTableError = Class.new(StandardError)
       NoSuchTableError = Class.new(StandardError)
@@ -10,6 +11,7 @@ module EventSourcery
         base.extend(ClassMethods)
       end
 
+      # Class methods for defining and managing database tables.
       module ClassMethods
         # Hash of the tables and their corresponding blocks.
         #
@@ -38,7 +40,7 @@ module EventSourcery
 
       # Reset by dropping each table.
       def reset
-        self.class.tables.keys.each do |table_name|
+        self.class.tables.each_key do |table_name|
           prefixed_name = table_name_prefixed(table_name)
           @db_connection.drop_table(prefixed_name, cascade: true) if @db_connection.table_exists?(prefixed_name)
         end
@@ -49,7 +51,7 @@ module EventSourcery
       # This will truncate all the tables and reset the tracker back to 0,
       # done as a transaction.
       def truncate
-        self.class.tables.each do |table_name, _|
+        self.class.tables.each_key do |table_name|
           @db_connection.transaction do
             prefixed_name = table_name_prefixed(table_name)
             @db_connection[prefixed_name].truncate

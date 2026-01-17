@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # PostgreSQL implementation of an event store for persisting and retrieving domain events.
     class EventStore
       include EventSourcery::EventStore::EachByRange
 

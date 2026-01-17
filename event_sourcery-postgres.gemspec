@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
     'allowed_push_host' => 'https://rubygems.org',
     'bug_tracker_uri' => "#{spec.homepage}/issues",
     'changelog_uri' => "#{spec.homepage}/blob/HEAD/CHANGELOG.md",
-    'documentation_uri' => "https://www.rubydoc.info/gems/event_sourcery-postgres/#{spec.version}",
+    'documentation_uri' => "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}",
     'source_code_uri' => "#{spec.homepage}/tree/v#{spec.version}"
   }
 

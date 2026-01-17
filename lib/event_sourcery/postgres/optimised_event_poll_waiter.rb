@@ -54,7 +54,7 @@ module EventSourcery
         after_listen_callback = if after_listen
                                   proc do
                                     after_listen.call
-                                    @after_listen.call if @after_listen
+                                    @after_listen&.call
                                   end
                                 else
                                   @after_listen
