@@ -50,18 +50,6 @@ Metrics/ParameterLists:
     - 'lib/event_sourcery/postgres/event_store.rb'
     - 'spec/support/event_helpers.rb'
 
-# Configuration parameters: AllowedConstants.
-Style/Documentation:
-  Exclude:
-    - 'lib/event_sourcery/postgres.rb'
-    - 'lib/event_sourcery/postgres/config.rb'
-    - 'lib/event_sourcery/postgres/event_store.rb'
-    - 'lib/event_sourcery/postgres/projector.rb'
-    - 'lib/event_sourcery/postgres/queue_with_interval_callback.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
-    - 'lib/event_sourcery/postgres/schema.rb'
-    - 'lib/event_sourcery/postgres/table_owner.rb'
-
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
   Exclude:

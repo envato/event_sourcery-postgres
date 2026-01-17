@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Mixin providing reactor capabilities for processing events and emitting new events in response.
     module Reactor
       UndeclaredEventEmissionError = Class.new(StandardError)
 
@@ -12,6 +13,7 @@ module EventSourcery
         base.include(InstanceMethods)
       end
 
+      # Class methods for declaring and querying emitted event types.
       module ClassMethods
         # Assign the types of events this reactor can emit.
         #
@@ -41,6 +43,7 @@ module EventSourcery
         end
       end
 
+      # Instance methods for reactor initialisation and event emission.
       module InstanceMethods
         def initialize(tracker: EventSourcery::Postgres.config.event_tracker,
                        db_connection: EventSourcery::Postgres.config.projections_database,

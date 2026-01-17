@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Queue that invokes a callback at regular intervals when no items are available.
     class QueueWithIntervalCallback < ::Queue
       attr_accessor :callback
 

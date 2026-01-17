@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Mixin providing table management capabilities for projectors and reactors.
     module TableOwner
       DefaultTableError = Class.new(StandardError)
       NoSuchTableError = Class.new(StandardError)
@@ -10,6 +11,7 @@ module EventSourcery
         base.extend(ClassMethods)
       end
 
+      # Class methods for defining and managing database tables.
       module ClassMethods
         # Hash of the tables and their corresponding blocks.
         #

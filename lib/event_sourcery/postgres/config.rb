@@ -2,6 +2,7 @@
 
 module EventSourcery
   module Postgres
+    # Configuration settings for the PostgreSQL event store and projections.
     class Config
       attr_accessor :lock_table_to_guarantee_linear_sequence_id_growth,
                     :write_events_function_name,
