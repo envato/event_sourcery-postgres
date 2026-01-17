@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Resolve issues as identified by RuboCop ([#85]).
+
 [Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v1.0.0...HEAD
+[#85]: https://github.com/envato/event_sourcery-postgres/pull/85
 
 ## [1.0.0] - 2025-12-28
 

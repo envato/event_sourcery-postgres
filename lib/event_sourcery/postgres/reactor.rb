@@ -78,7 +78,7 @@ module EventSourcery
       end
 
       def invoke_action_and_emit_event(event, action)
-        action.call(event.body) if action
+        action&.call(event.body)
         event_sink.sink(event)
       end
     end

@@ -54,11 +54,3 @@ Metrics/ParameterLists:
 Style/GlobalVars:
   Exclude:
     - 'spec/support/db_helpers.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'lib/event_sourcery/postgres/optimised_event_poll_waiter.rb'
-    - 'lib/event_sourcery/postgres/reactor.rb'
