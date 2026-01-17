@@ -18,7 +18,6 @@ Metrics/AbcSize:
 # AllowedMethods: refine
 Metrics/BlockLength:
   Exclude:
-    - '**/*.gemspec'
     - 'spec/event_sourcery/postgres/config_spec.rb'
     - 'spec/event_sourcery/postgres/event_store_spec.rb'
     - 'spec/event_sourcery/postgres/optimised_event_poll_waiter_spec.rb'
@@ -75,8 +74,6 @@ Naming/VariableNumber:
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
     - 'lib/event_sourcery/postgres.rb'
     - 'lib/event_sourcery/postgres/config.rb'
     - 'lib/event_sourcery/postgres/event_store.rb'
