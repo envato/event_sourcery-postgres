@@ -144,7 +144,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
     end
 
     context 'with a reactor that emits events' do
-      let(:event_1) do
+      let(:event1) do
         TermsAccepted.new(
           id: 1,
           aggregate_id: aggregate_id,
@@ -152,20 +152,20 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           correlation_id: SecureRandom.uuid
         )
       end
-      let(:event_2) do
+      let(:event2) do
         EchoEvent.new(
           id: 2,
           aggregate_id: aggregate_id,
-          body: event_1.body,
-          correlation_id: event_1.correlation_id,
-          causation_id: event_1.uuid
+          body: event1.body,
+          correlation_id: event1.correlation_id,
+          causation_id: event1.uuid
         )
       end
-      let(:event_3) { TermsAccepted.new(id: 3, aggregate_id: aggregate_id, body: { time: Time.now }) }
-      let(:event_4) { TermsAccepted.new(id: 4, aggregate_id: aggregate_id, body: { time: Time.now }) }
-      let(:event_5) { TermsAccepted.new(id: 5, aggregate_id: aggregate_id, body: { time: Time.now }) }
-      let(:event_6) { EchoEvent.new(id: 6, aggregate_id: aggregate_id, body: event_3.body, causation_id: event_3.uuid) }
-      let(:events) { [event_1, event_2, event_3, event_4] }
+      let(:event3) { TermsAccepted.new(id: 3, aggregate_id: aggregate_id, body: { time: Time.now }) }
+      let(:event4) { TermsAccepted.new(id: 4, aggregate_id: aggregate_id, body: { time: Time.now }) }
+      let(:event5) { TermsAccepted.new(id: 5, aggregate_id: aggregate_id, body: { time: Time.now }) }
+      let(:event6) { EchoEvent.new(id: 6, aggregate_id: aggregate_id, body: event3.body, causation_id: event3.uuid) }
+      let(:events) { [event1, event2, event3, event4] }
       let(:action_stub_class) do
         Class.new do
           def self.action(id)
@@ -221,20 +221,20 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         end
 
         it 'processes the events as usual' do
-          [event_1, event_2, event_3, event_4, event_5].each do |event|
+          [event1, event2, event3, event4, event5].each do |event|
             reactor.process(event)
           end
           expect(event_count).to eq 8
         end
 
         it 'stores the event causation id' do
-          reactor.process(event_1)
-          expect(latest_events(1).first.causation_id).to eq event_1.uuid
+          reactor.process(event1)
+          expect(latest_events(1).first.causation_id).to eq event1.uuid
         end
 
         it 'stores the event correlation id' do
-          reactor.process(event_1)
-          expect(latest_events(1).first.correlation_id).to eq event_1.correlation_id
+          reactor.process(event1)
+          expect(latest_events(1).first.correlation_id).to eq event1.correlation_id
         end
       end
 
@@ -252,7 +252,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         end
 
         it 'raises an error' do
-          expect { reactor.process(event_1) }.to raise_error(EventSourcery::EventProcessingError)
+          expect { reactor.process(event1) }.to raise_error(EventSourcery::EventProcessingError)
         end
       end
 
@@ -273,18 +273,18 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         end
 
         it 'can manupulate the event body as part of the action' do
-          reactor.process(event_1)
+          reactor.process(event1)
           expect(latest_events(1).first.body['token']).to eq 'secret-identifier'
         end
 
         it 'stores the event causation id' do
-          reactor.process(event_1)
-          expect(latest_events(1).first.causation_id).to eq event_1.uuid
+          reactor.process(event1)
+          expect(latest_events(1).first.causation_id).to eq event1.uuid
         end
 
         it 'stores the event correlation id' do
-          reactor.process(event_1)
-          expect(latest_events(1).first.correlation_id).to eq event_1.correlation_id
+          reactor.process(event1)
+          expect(latest_events(1).first.correlation_id).to eq event1.correlation_id
         end
       end
     end
