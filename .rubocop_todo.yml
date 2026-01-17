@@ -50,14 +50,6 @@ Metrics/ParameterLists:
     - 'lib/event_sourcery/postgres/event_store.rb'
     - 'spec/support/event_helpers.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyleForLeadingUnderscores.
-# SupportedStylesForLeadingUnderscores: disallowed, required, optional
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'lib/event_sourcery/postgres/reactor.rb'
-    - 'spec/event_sourcery/postgres/reactor_spec.rb'
-
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:

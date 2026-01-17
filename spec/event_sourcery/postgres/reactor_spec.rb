@@ -173,7 +173,7 @@ RSpec.describe EventSourcery::Postgres::Reactor do
           end
 
           def self.actioned
-            @actions ||= []
+            @actioned ||= []
           end
         end
       end

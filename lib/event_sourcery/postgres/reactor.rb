@@ -22,7 +22,7 @@ module EventSourcery
 
         # @return [Array] an array of the types of events this reactor can emit
         def emit_events
-          @emits_event_types ||= []
+          @emits_event_types ||= [] # rubocop:disable Naming/MemoizedInstanceVariableName
         end
 
         # This will tell you if this reactor emits any type of event.
