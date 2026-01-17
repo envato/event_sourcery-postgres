@@ -55,13 +55,6 @@ Style/GlobalVars:
   Exclude:
     - 'spec/support/db_helpers.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: Thread.current
-Style/HashEachMethods:
-  Exclude:
-    - 'lib/event_sourcery/postgres/table_owner.rb'
-
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
 Style/OptionalBooleanParameter:
