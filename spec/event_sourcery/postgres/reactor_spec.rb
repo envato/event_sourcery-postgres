@@ -203,8 +203,8 @@ RSpec.describe EventSourcery::Postgres::Reactor do
         event_source.get_next_from(0, limit: 100).count
       end
 
-      def latest_events(n = 1)
-        event_source.get_next_from(0, limit: 100)[-n..]
+      def latest_events(index = 1)
+        event_source.get_next_from(0, limit: 100)[-index..]
       end
 
       context "when the event emitted doesn't take actions" do
