@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v1.0.2...HEAD
+
+## [1.0.2] - 2026-03-01
+
+### Changed
+
+- Constrain `event_sourcery` to version 1 ([#86]).
+
+[1.0.2]: https://github.com/envato/event_sourcery-postgres/compare/v1.0.1...v1.0.2
+[#86]: https://github.com/envato/event_sourcery-postgres/pull/86
 
 ## [1.0.1] - 2026-01-17
 
