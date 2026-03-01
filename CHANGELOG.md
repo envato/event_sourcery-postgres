@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Constrain `event_sourcery` to version 1 ([#86]).
+
 [Unreleased]: https://github.com/envato/event_sourcery-postgres/compare/v1.0.1...HEAD
+[#86]: https://github.com/envato/event_sourcery-postgres/pull/86
 
 ## [1.0.1] - 2026-01-17
 
