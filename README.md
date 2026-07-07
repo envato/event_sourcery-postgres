@@ -6,6 +6,16 @@
 
 EventSourcery::Postgres is in production use at [Envato](http://envato.com).
 
+## Requirements
+
+- Ruby >= 2.6.0
+- PostgreSQL
+
+The event store relies on the `uuid-ossp` PostgreSQL extension (enabled
+automatically by `EventSourcery::Postgres::Schema.create_events`) and the
+Sequel `pg_json` extension (loaded automatically when you assign a database
+connection in the configuration).
+
 ## Installation
 
 Add this line to your application's Gemfile:
