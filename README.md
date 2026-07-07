@@ -2,9 +2,22 @@
 
 [![Build Status](https://github.com/envato/event_sourcery-postgres/actions/workflows/test.yml/badge.svg)](https://github.com/envato/event_sourcery-postgres/actions/workflows/test.yml)
 
+A PostgreSQL event store and projections adapter for
+[EventSourcery](https://github.com/envato/event_sourcery).
+
 ## Development Status
 
 EventSourcery::Postgres is in production use at [Envato](http://envato.com).
+
+## Requirements
+
+- Ruby >= 2.6.0
+- PostgreSQL
+
+The event store relies on the `uuid-ossp` PostgreSQL extension (enabled
+automatically by `EventSourcery::Postgres::Schema.create_events`) and the
+Sequel `pg_json` extension (loaded automatically when you assign a database
+connection in the configuration).
 
 ## Installation
 
@@ -27,6 +40,30 @@ EventSourcery::Postgres.configure do |config|
 end
 ```
 
+## Database setup
+
+Before events can be stored or projected the required tables and database
+functions need to be created. Once the databases are configured (see above),
+create the event store schema:
+
+```ruby
+# Creates the events table, the aggregates table, and the `writeEvents`
+# database function on the event store database.
+EventSourcery::Postgres::Schema.create_event_store
+```
+
+Projectors and reactors track their progress in a tracker table. By default
+this table is created automatically the first time a processor runs (via the
+`auto_create_projector_tracker` config option). To create it explicitly
+instead:
+
+```ruby
+EventSourcery::Postgres::Schema.create_projector_tracker
+```
+
+Each of these methods accepts keyword arguments (`db:`, `events_table_name:`,
+etc.) if you need to override the defaults taken from the configuration.
+
 ## Usage
 
 
@@ -35,8 +72,8 @@ end
 ```ruby
 ItemAdded = EventSourcery::Event
 
-EventSourcery::Postgres.event_store.sink(ItemAdded.new(aggregate_id: uuid, body: { }}))
-EventSourcery::Postgres.event_store.get_next_from(0).each do |event|
+EventSourcery::Postgres.config.event_store.sink(ItemAdded.new(aggregate_id: uuid, body: {}))
+EventSourcery::Postgres.config.event_store.get_next_from(0).each do |event|
   puts event.inspect
 end
 ```
@@ -94,3 +131,8 @@ To release a new version:
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/envato/event_sourcery-postgres.
+
+## License
+
+The gem is available as open source under the terms of the
+[MIT License](LICENSE.txt).
