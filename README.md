@@ -2,6 +2,9 @@
 
 [![Build Status](https://github.com/envato/event_sourcery-postgres/actions/workflows/test.yml/badge.svg)](https://github.com/envato/event_sourcery-postgres/actions/workflows/test.yml)
 
+A PostgreSQL event store and projections adapter for
+[EventSourcery](https://github.com/envato/event_sourcery).
+
 ## Development Status
 
 EventSourcery::Postgres is in production use at [Envato](http://envato.com).
