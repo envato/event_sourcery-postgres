@@ -35,8 +35,8 @@ end
 ```ruby
 ItemAdded = EventSourcery::Event
 
-EventSourcery::Postgres.event_store.sink(ItemAdded.new(aggregate_id: uuid, body: { }}))
-EventSourcery::Postgres.event_store.get_next_from(0).each do |event|
+EventSourcery::Postgres.config.event_store.sink(ItemAdded.new(aggregate_id: uuid, body: {}))
+EventSourcery::Postgres.config.event_store.get_next_from(0).each do |event|
   puts event.inspect
 end
 ```
