@@ -107,3 +107,8 @@ To release a new version:
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/envato/event_sourcery-postgres.
+
+## License
+
+The gem is available as open source under the terms of the
+[MIT License](LICENSE.txt).
