@@ -40,6 +40,30 @@ EventSourcery::Postgres.configure do |config|
 end
 ```
 
+## Database setup
+
+Before events can be stored or projected the required tables and database
+functions need to be created. Once the databases are configured (see above),
+create the event store schema:
+
+```ruby
+# Creates the events table, the aggregates table, and the `writeEvents`
+# database function on the event store database.
+EventSourcery::Postgres::Schema.create_event_store
+```
+
+Projectors and reactors track their progress in a tracker table. By default
+this table is created automatically the first time a processor runs (via the
+`auto_create_projector_tracker` config option). To create it explicitly
+instead:
+
+```ruby
+EventSourcery::Postgres::Schema.create_projector_tracker
+```
+
+Each of these methods accepts keyword arguments (`db:`, `events_table_name:`,
+etc.) if you need to override the defaults taken from the configuration.
+
 ## Usage
 
 
